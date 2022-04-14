@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>极客大挑战2019——HTTP | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="WEB">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="本题需要对 HTTP 请求的请求头部中的一些属性有一定的了解 😎😎">
+<meta property="og:type" content="article">
+<meta property="og:title" content="极客大挑战2019——HTTP">
+<meta property="og:url" content="https://ghdemi.github.io/2022/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019--HTTP/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="本题需要对 HTTP 请求的请求头部中的一些属性有一定的了解 😎😎">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_202204021735313.jpg">
+<meta property="article:published_time" content="2022-04-14T11:10:39.863Z">
+<meta property="article:modified_time" content="2022-04-14T12:03:37.045Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="WEB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_202204021735313.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">GhDemi</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        极客大挑战2019——HTTP
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/04/" class="post-meta__date button">2022-04-14</a>
+        
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">主要知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="toc-text">解题过程</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="toc-text">主要知识点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98%E8%BF%87%E7%A8%8B"><span class="toc-text">解题过程</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_202204021735313.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>本题需要对 HTTP 请求的请求头部中的一些属性有一定的了解 😎😎</p>
+<span id="more"></span>
+<h3 id="主要知识点">主要知识点</h3>
+<ul>
+<li>X-Forwarded-For：简称 xff，用来识别通过HTTP代理或负载均衡方式连接到Web服务器的客户端最原始的IP地址的HTTP头字段。简而言之，xff 就是告诉服务器发送方最原始的IP地址。</li>
+<li>Referer：采用 URL 的形式表示从哪儿链接到目前的网页。换句话说，就是告诉服务器，是哪个网页引导你进来的。</li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/023f7cd1927c">User-Agent</a>：中文名为用户代理，简称 UA，它是一个特殊字符串头，使得服务器能够识别客户使用的操作系统及版本、CPU 类型、浏览器及版本、浏览器渲染引擎、浏览器语言、浏览器插件等。</li>
+</ul>
+<p>以上这三个属性全部都位于 HTTP 请求的请求头部且都是可以进行修改、伪造的。</p>
+<h3 id="解题过程">解题过程</h3>
+<p>打开靶机，进入界面，浏览一番，发现并没有啥。右键，查看源代码，发现了个小东西</p>
+<p><img src="image-20220323171107089.png" alt="image-20220323171107089"></p>
+<p>点击进入，出现如下页面<img src="image-20220323171145214.png" alt="image-20220323171145214"></p>
+<p>它不是来自<code>https://Sycsecret.buuoj.cn</code>。那按照网页的意思就是它希望你是从这个网址中进入当前页面的，而HTTP请求头中的 referer 字段就有这个功能。因此在HTTP请求头部添加 referer 字段<img src="image-20220323172705150.png" alt="image-20220323172705150"></p>
+<p>网页的回应告诉我们，请使用 Sylover 浏览器，那就要用到 user-agent 这个属性了，修改如图<img src="image-20220323173301319.png" alt="image-20220323173301319"></p>
+<p>得到如图回应，它要求我们必须要在本地阅读，而HTTP请求头中的 xff 就是告诉服务器请求的原始 IP 地址</p>
+<p><img src="image-20220323173336190.png" alt="image-20220323173336190"></p>
+<p>添加 xff 字段<img src="image-20220323195403057.png" alt="image-20220323195403057"></p>
+<p>最后 flag 到手。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019--HTTP/">https://ghdemi.github.io/2022/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019--HTTP/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-04-14</p></div> 
+    <div class="post-entry__tags"><a href="/tags/WEB/" class="post-tags__link button"># WEB</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/04/09/My-Blog-Built/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            My Blog Built
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
