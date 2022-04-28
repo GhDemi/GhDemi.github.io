@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Authentication——2FA | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Point">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="身份认证——双因素认证🚛 Authentication 即身份认证，就是验证给定用户或客户端身份的过程。我的理解就是：让服务器知道你确实就是你所声称的那个人的过程。 提供身份认证证明的三个因素：  what you know(你知道的)，你所知道的信息，例如用户名、密码等 what you have(你拥有的)，你拥有的物理对象，例如手机、安全令牌等 who you are(你是谁)，独有的生物">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Authentication——2FA">
+<meta property="og:url" content="https://ghdemi.github.io/2022/04/28/Authentication%E2%80%94%E2%80%942FA/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="身份认证——双因素认证🚛 Authentication 即身份认证，就是验证给定用户或客户端身份的过程。我的理解就是：让服务器知道你确实就是你所声称的那个人的过程。 提供身份认证证明的三个因素：  what you know(你知道的)，你所知道的信息，例如用户名、密码等 what you have(你拥有的)，你拥有的物理对象，例如手机、安全令牌等 who you are(你是谁)，独有的生物">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/201909170622276693.jpg.h700.webp">
+<meta property="article:published_time" content="2022-04-28T07:26:56.000Z">
+<meta property="article:modified_time" content="2022-04-28T08:46:19.696Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Point">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/201909170622276693.jpg.h700.webp">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">GhDemi</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Authentication——2FA
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/04/" class="post-meta__date button">2022-04-28</a>
+        
+    <span class="separate-dot"></span><a href="/categories/PortSwigger/" class="button">PortSwigger</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Authentication"><span class="toc-text">Authentication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2FA"><span class="toc-text">2FA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2FA%E6%BC%8F%E6%B4%9E"><span class="toc-text">2FA漏洞</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Authentication"><span class="toc-text">Authentication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2FA"><span class="toc-text">2FA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2FA%E6%BC%8F%E6%B4%9E"><span class="toc-text">2FA漏洞</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/201909170622276693.jpg.h700.webp');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>身份认证——双因素认证🚛</p>
+<h3 id="Authentication">Authentication</h3>
+<p>即身份认证，就是验证给定用户或客户端身份的过程。我的理解就是：让服务器知道你确实就是你所声称的那个人的过程。</p>
+<p>提供身份认证证明的三个因素：</p>
+<blockquote>
+<p>what you know(你知道的)，你所知道的信息，例如用户名、密码等</p>
+<p>what you have(你拥有的)，你拥有的物理对象，例如手机、安全令牌等</p>
+<p>who you are(你是谁)，独有的生物特征，例如指纹，虹膜等</p>
+</blockquote>
+<p>身份认证就是基于一系列技术通过这三个因素中的一个或多个来验证你的身份。</p>
+<h3 id="2FA">2FA</h3>
+<p>即双因素认证(Two-factor authentication，简称 2FA)。对于大多数网站而言双因素一般都是：你知道的和你拥有的。例如我们在一些网页上登录时除了在网上输入用户名和密码之外还需要输入手机中的验证码，此时</p>
+<p>双因素=密码(你知道的)+手机(你拥有的)</p>
+<h3 id="2FA漏洞">2FA漏洞</h3>
+<p>尽管双因素认证使网站的安全性有所提高，但是有时可能依旧存在着实施的缺陷，我们依旧可以使用一些方法去让绕过。</p>
+<ol>
+<li>
+<p>绕过 2FA 验证</p>
+<p>有些网站在你输入了用户名和密码之后提供一个单独的页面让你输入验证码，但在其实你可能已经处于了登录状态，在这种情况下可以尝试直接进入网站。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-simple-bypass">靶场</a></p>
+<p>实验室要求我们登录进入 Carlos 的账户页面</p>
+<p>首先我们利用题目提供给我们的已知的用户名: wiener 密码: peter 以及邮箱验证码登录进入账户。观察账户页面的URL</p>
+</li>
+</ul>
+<p><img src="image-20220406164318779.png" alt="image-20220406164318779"></p>
+<p>我们可以发现正确进入账户后  get 请求所请求的页面是 my-account，由于网页漏洞当我们输入用户名密码之后其实已经处于了登录状态网站并不会去验证你是否真正输入了验证码，因此我们可以在输入验证码界面直接修改 get 请求所请求的页面<img src="image-20220406164945326.png" alt="image-20220406164945326"></p>
+<ol start="2">
+<li>
+<p>暴露破解 2FA 验证码</p>
+<p>在用户输入用户名和密码并且进入第二步输入验证码之前，用户会被服务器分配一个cookie，在提交验证码时用户将携带 cookie 和验证码的请求发送给服务器，服务器利用cookie来确定该用户是否曾尝试登录。</p>
+<p>2.1 无登出的暴力破解</p>
+<p>​	有时一些网站并不会将 cookie 和用户进行匹配，服务器只是记录着这些 cookie 而并不会记录这些 cookie 分别都发给了谁。那就意味着只要我修改请求中的用户名，我就可以让服务器认为我所修改的那个用户正在尝试登陆。基于这个 bug再加上验证码一般是4-6位的数字，我们可以爆破验证码，然后就可以登陆目标用户。</p>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-broken-logic">靶场</a></p>
+<p>利用 cookie 来登录目标用户 carlos 的账户。首先利用已知账户 wiener:peter 的信息来登录账户，利用 bp 抓包，对请求进行分析。</p>
+<p><img src="image-20220413135906075.png" alt="image-20220413135906075">可以发现，在第一次登录 post 请求发送中，如果输入的是正确的用户名密码的话，服务器会发送状态为302的 response 。在浏览器接收到 response 之后，浏览器又会自动发送一个 get 请求，请求的内容是验证码进行验证登录的页面。也就是该界面</p>
+<p><img src="image-20220413141010325.png" alt="image-20220413141010325"></p>
+<p>仔细观察第一次登录时发出 post 请求后(前提是用户名、密码正确的情况下)，服务器返回给我们的 response 以及浏览器自动发送的 get 请求中的内容。</p>
+<p><img src="image-20220413141640660.png" alt="image-20220413141640660"></p>
+<p>我们可以发现浏览器将返回的 response 中的 cookie 添加在了发送的 get 请求中。换言之，在第一次成功登录后，服务器是依靠浏览器所发送的 get 请求中的 cookie 来判断是哪个用户第一次成功登录了，现在要进行的是验证码验证的工作了。</p>
+<p>问题的关键也就出在这里，服务器会储存 cookie 中的 session，但服务器并不会将 session 和 verify 进行一个绑定，并且对于浏览器所发送的 get 请求，服务器只会对其中的 session 进行是否存在的一个验证。那就意味着只要我拥有一个有效的 session 和 用户名，我就可以进行验证码验证操作了。</p>
+<p>解决过程</p>
+<ol>
+<li>
+<p>发送 get 请求至 repeater，更改cookie中的verify，让服务器认为用户 carlos 需要进行验证码验证</p>
+<p><img src="image-20220413142956918.png" alt="image-20220413142956918"></p>
+</li>
+<li>
+<p>利用已知账户获取验证码的请求并发送至 intruder 进行验证码爆破</p>
+<p><img src="image-20220413143311921.png" alt="image-20220413143311921"></p>
+<p><img src="image-20220413143416394.png" alt="image-20220413143416394"></p>
+</li>
+<li>
+<p>将返回状态为302的 response 进行 show in browser 操作</p>
+<p><img src="image-20220413143614378.png" alt="image-20220413143614378"></p>
+</li>
+</ol>
+<p>注意：在进行 show in browser 的操作时，浏览器应当处于 bp 代理模式。</p>
+<p>2.2 有登出的暴力破解</p>
+<p>道理基本上和上一题的相同，都是依靠 cookie 中的 session 来让服务器知晓是哪个用户需要进行验证码验证。但这题的重点在于宏的使用，所以此题直接将目标用户名和密码告诉我们了。而且这是有登出的，这就意味着当我们进行一定数量的验证码尝试时，由于失败次数过多导致服务器自动将我们的账户进行了登出操作，所以我们是无法直接使用 intruder 进行爆破操作的。宏的作用就是记录服务器返回的 csrf 并且自动填充到下一个请求的包体中去。有了宏，我们就可以进行一个相当于自动登录了的操作，intruder 也可以进行持续爆破。</p>
+</li>
+</ol>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/04/28/Authentication%E2%80%94%E2%80%942FA/">https://ghdemi.github.io/2022/04/28/Authentication%E2%80%94%E2%80%942FA/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-04-28</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Point/" class="post-tags__link button"># Point</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/04/20/%E5%91%BD%E4%BB%A4%E6%B3%A8%E5%85%A5/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            命令注入
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
