@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>业务逻辑漏洞 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Point">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="简介 业务逻辑漏洞是应用程序设计和实现中的缺陷，这使得攻击者可以利用应用程序中的一些功能实现一些恶意的目标。这些缺陷通常都是因为没有预测到会发生这样的异常应用程序状态，因此也没有相应的解决办法，无法安全地处理它们。 如何产生 业务逻辑漏洞产生的核心原因就是：设计人员在编写程序时，只对用户的常规操作进行了考虑而没有考虑到用户执行了意料之外的行为应当如何处理。 它是与应用程序&#x2F;业务领域有紧密关联的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="业务逻辑漏洞">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/02/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="简介 业务逻辑漏洞是应用程序设计和实现中的缺陷，这使得攻击者可以利用应用程序中的一些功能实现一些恶意的目标。这些缺陷通常都是因为没有预测到会发生这样的异常应用程序状态，因此也没有相应的解决办法，无法安全地处理它们。 如何产生 业务逻辑漏洞产生的核心原因就是：设计人员在编写程序时，只对用户的常规操作进行了考虑而没有考虑到用户执行了意料之外的行为应当如何处理。 它是与应用程序&#x2F;业务领域有紧密关联的。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220502205814.jpg">
+<meta property="article:published_time" content="2022-05-02T12:53:08.000Z">
+<meta property="article:modified_time" content="2022-05-02T13:04:59.281Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Point">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220502205814.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">GhDemi</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        业务逻辑漏洞
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-02</a>
+        
+    <span class="separate-dot"></span><a href="/categories/PortSwigger/" class="button">PortSwigger</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-v3"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F"><span class="toc-text">如何产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%B1%BB%E5%9E%8B"><span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E5%BA%A6%E4%BF%A1%E4%BB%BB%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A7%E5%88%B6"><span class="toc-text">过度信任客户端控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E5%A4%84%E7%90%86%E9%9D%9E%E5%B8%B8%E8%A7%84%E8%BE%93%E5%85%A5"><span class="toc-text">无法处理非常规输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E4%BD%9C%E5%87%BA%E6%9C%89%E7%BC%BA%E9%99%B7%E7%9A%84%E5%81%87%E8%AE%BE"><span class="toc-text">对用户行为作出有缺陷的假设</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E9%A2%86%E5%9F%9F%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="toc-text">特定领域的缺陷</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E5%8A%A0%E5%AF%86-Oracle"><span class="toc-text">提供加密 Oracle</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-v3"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BA%A7%E7%94%9F"><span class="toc-text">如何产生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E7%B1%BB%E5%9E%8B"><span class="toc-text">漏洞类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%87%E5%BA%A6%E4%BF%A1%E4%BB%BB%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%8E%A7%E5%88%B6"><span class="toc-text">过度信任客户端控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%B3%95%E5%A4%84%E7%90%86%E9%9D%9E%E5%B8%B8%E8%A7%84%E8%BE%93%E5%85%A5"><span class="toc-text">无法处理非常规输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E7%94%A8%E6%88%B7%E8%A1%8C%E4%B8%BA%E4%BD%9C%E5%87%BA%E6%9C%89%E7%BC%BA%E9%99%B7%E7%9A%84%E5%81%87%E8%AE%BE"><span class="toc-text">对用户行为作出有缺陷的假设</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%AE%9A%E9%A2%86%E5%9F%9F%E7%9A%84%E7%BC%BA%E9%99%B7"><span class="toc-text">特定领域的缺陷</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8F%90%E4%BE%9B%E5%8A%A0%E5%AF%86-Oracle"><span class="toc-text">提供加密 Oracle</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220502205814.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <h3 id="简介-v3">简介</h3>
+<p>业务逻辑漏洞是应用程序设计和实现中的缺陷，这使得攻击者可以利用应用程序中的一些功能实现一些恶意的目标。这些缺陷通常都是因为没有预测到会发生这样的异常应用程序状态，因此也没有相应的解决办法，无法安全地处理它们。</p>
+<h3 id="如何产生">如何产生</h3>
+<p>业务逻辑漏洞产生的核心原因就是：设计人员在编写程序时，只对用户的常规操作进行了考虑而没有考虑到用户执行了意料之外的行为应当如何处理。</p>
+<p>它是与应用程序/业务领域有紧密关联的。</p>
+<h3 id="漏洞类型">漏洞类型</h3>
+<h4 id="过度信任客户端控制">过度信任客户端控制</h4>
+<p>简单来说就是：无条件信任客户端所发送过来的数据，认为这个数据只是用户通过 web 交互而得到的，忽略了数据可能被截获、篡改的可能性。</p>
+<ul>
+<li>
+<p>Excessive trust in client-side controls</p>
+<p>要求我们能够以比价格更少的钱购买到物品，之前一直都以为是在交付页面对物品的金额或者账户的金额进行修改结果是在添加至购物车的 POST 请求中进行物品金额的修改，直接上图了<img src="image-20220422150004981.png" alt="image-20220422150004981"></p>
+</li>
+<li>
+<p><a target="_blank" rel="noopener" href="https://portswigger.net/web-security/authentication/multi-factor/lab-2fa-broken-logic">2FA broken logic</a></p>
+<p>该题目的要求是让我们利用已知的有效账户来登录一个只知道用户名的账户。</p>
+<p>首先对验证码提交界面的数据包进行分析<img src="image-20220422141116146.png" alt="image-20220422141116146"></p>
+</li>
+</ul>
+<p>首先我们可以发现，要进行第二步验证的用户的用户名被放在了 cookie 中，也可以初步进行推断：服务器是依靠 cookie 中的 verify 的值来确定是哪一位用户需要进行第二步验证，然后服务器就根据这个用户名发送响应的验证码到用户的邮箱中去。</p>
+<p>然后对提交验证码的数据包进行分析</p>
+<p><img src="image-20220422141619029.png" alt="image-20220422141619029"></p>
+<p>同样我们可以看出来，在该数据包中是以 cookie 中 verify 的值来确定验证码提交者的身份，然后以 post 的方式将输入的验证码的值传给服务器。</p>
+<p>那么解题思路也就出来了，首先将 GET/login2 数据包中 verify 的值修改成目标用户，让服务器误以为目标用户要进行第二步验证</p>
+<p><img src="image-20220422142112208.png" alt="image-20220422142112208"></p>
+<p>然后再对 POST/login2 的验证码处进行爆破</p>
+<p><img src="image-20220422142234096.png" alt="image-20220422142234096"></p>
+<p>看到爆破回复状态为 302 时即为爆破成功。</p>
+<h4 id="无法处理非常规输入">无法处理非常规输入</h4>
+<p>开发者并未考虑到用户会输入一些不符合逻辑的内容而导致应用程序无法正确进行处理，一些过长的文本输入、一个非常大的数字、 一个不合逻辑的负数…</p>
+<p>例如：</p>
+<blockquote>
+<p>考虑两个银行账户之间的资金转移。此功能几乎肯定会在完成转账之前检查发件人是否有足够的资金：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt;$transferAmount = $_POST[&#x27;amount&#x27;]; </span><br><span class="line">&gt;$currentBalance = $user-&gt;getBalance(); </span><br><span class="line"></span><br><span class="line">&gt;if ($transferAmount &lt;= $currentBalance) </span><br><span class="line">&gt;&#123;    </span><br><span class="line">// Complete the transfer </span><br><span class="line">&gt;&#125; </span><br><span class="line">&gt;else </span><br><span class="line">&gt;&#123;   </span><br><span class="line">// Block the transfer: insufficient funds </span><br><span class="line">&gt;&#125;</span><br></pre></td></tr></table></figure>
+<p>但是，如果逻辑不能充分防止用户在参数中提供负值<code>amount</code>，攻击者可能会利用这一点绕过余额检查并将资金转移到“错误”的方向。如果攻击者将 -$1000 发送到受害者的帐户，这可能会导致他们从受害者那里收到 1000 美元。逻辑将始终评估 -1000 小于当前余额并批准转移。</p>
+</blockquote>
+<ul>
+<li>
+<p>High-level logic vulnerability</p>
+<p>在添加商品至 cart 时抓包，可以发现商品数量是可以更改的</p>
+<p><img src="image-20220423211557122.png" alt="image-20220423211557122"></p>
+<p>发现 cart 也存在我们添加的 -1 件商品</p>
+<p><img src="image-20220423211715794.png" alt="image-20220423211715794"></p>
+<p>但是在结算时发现</p>
+<p><img src="image-20220423211805230.png" alt="image-20220423211805230"></p>
+<p>因为我们要买的物品是 Jacket 所以 Jacket 的数目要大于 1，然后利用别的负数个数的商品使金额小于账户中的余额</p>
+<p><img src="image-20220423212317469.png" alt="image-20220423212317469"></p>
+</li>
+<li>
+<p>Low-level logic flaw</p>
+<p>首先观察题目可以发现每次输入商品的最大个数为99，然后使用 bp intruder 循环发包，测试购物车最大的金额承受能力</p>
+<p><img src="image-20220424181228028.png" alt="image-20220424181228028"></p>
+<p><img src="image-20220424181239966.png" alt="image-20220424181239966"></p>
+</li>
+</ul>
+<p>我们可以发现当 cart 中的商品金额达到一定高的数目时会突然跳到一个很大的负数，这里可能是因为价格已超过后端编程语言中允许的整数最大值，结果该值循环回到了可能的最小值。</p>
+<p><img src="image-20220424191843762.png" alt="image-20220424191843762"></p>
+<p>继续利用 bp 添加这个商品，我们会发现金额又会慢慢升回上去。这就说明购物车中的总金额是在一个极大的负数和一个极大的正数之间循环的。</p>
+<p>利用这个 bug 我们就可以一直添加 jacket 这个商品直至购物车中的金额小于0但最接近0。</p>
+<p><img src="image-20220424193219859.png" alt="image-20220424193219859"></p>
+<p>然后利用别的商品使金额大于0但是小于100，最后结算即可。</p>
+<p><img src="image-20220424193759883.png" alt="image-20220424193759883"></p>
+<ul>
+<li>
+<p>Inconsistent handling of exceptional input</p>
+<p>这题用到了 bp 的 target 功能模块，利用如下功能，能够对目标域下的各个目录进行扫描</p>
+<p><img src="image-20220424201732320.png" alt="image-20220424201732320"></p>
+</li>
+</ul>
+<p>发现该域下存在着 admin 的目录</p>
+<p><img src="image-20220424201830187.png" alt="image-20220424201830187"></p>
+<p>尝试访问发现如图提示</p>
+<p><img src="image-20220424201934842.png" alt="image-20220424201934842"></p>
+<p>那就意味着我们需要使用 dontwannacry 的邮箱注册才可以，我们需要利用业务逻辑漏洞使发往 dontwannacry 的邮件发往我们的邮箱。</p>
+<p>而这道题目的业务逻辑漏洞就在过长的邮箱名输入会导致服务器的响应异常，我们在注册界面利用一个非常长的邮箱名去注册成功时，我们登录所注册的账户，会发现我们的邮箱到达一定长度之后会被拦截。</p>
+<p><img src="image-20220424203758250.png" alt="image-20220424203758250"></p>
+<p>我们需要利用这个拦截使我们的邮箱看上去是属于 dontwannacry 的。依据邮箱最大长度的限制构造 payload</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">very-long-string@dontwannacry.com.YOUR-EMAIL-ID.web-security-academy.net</span><br><span class="line">我们要确保 very-long-string@dontwannacry.com 这些字符的总长度=邮箱显示的最大长度</span><br></pre></td></tr></table></figure>
+<p>登录我们注册的这个账户，我们可以发现我们是以 admin 身份注册的账户。</p>
+<p><img src="image-20220424204647258.png" alt="image-20220424204647258"></p>
+<p>最后利用 admin panel 模块将目标用户清除即可。</p>
+<h4 id="对用户行为作出有缺陷的假设">对用户行为作出有缺陷的假设</h4>
+<p>用户作出了开发者意料之外的行为使应用程序无法按预期响应，也是逻辑漏洞的根本原因之一。</p>
+<p>个人感觉这个类别应当是能够包含上一个无法处理非常规输入这个类别的，因为导致无法处理非常规输入的原因就是开发者对用户行为的假设有缺陷。</p>
+<p>这些缺陷具体有如下几个方面：</p>
+<ol>
+<li>一直信任受信任的用户</li>
+<li>用户不会总是提供强制输入</li>
+<li>用户不会一直按照预期的步骤执行</li>
+</ol>
+<ul>
+<li>
+<p>Inconsistent security controls</p>
+<p>感觉这题有点无脑，利用邮箱注册一个账户之后进入 my account，在此处可以进行邮箱的更新，可以发现只要输入格式正确邮箱都可以更新成功。那么 payload 就很明显了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">string@dontwannacry.com </span><br></pre></td></tr></table></figure>
+<p>然后点击 update email 消除目标账户即可</p>
+<p><img src="image-20220425114012224.png" alt="image-20220425114012224"></p>
+</li>
+<li>
+<p>Weak isolation on dual-use endpoint</p>
+<p>利用已知的账户进行登录，在 my account 的更改密码功能中有四个必须输入的值，分别是 ：用户名、原始密码、新密码、重复新密码。对应的更改密码的 post 请求中的如下属性</p>
+<p><img src="image-20220425131517636.png" alt="image-20220425131517636"></p>
+<p>我们的目的是访问 administrator 的账户，但如果我们直接对该账户进行修改密码操作是无法成功的，因为我们不知道该账户的原始密码，而服务器会对用户名和原始密码进行校验，校验正确了之后才能修改成功。</p>
+<p>既然我们不知道这个原始密码的值，那么我们就直接将这个必须输入的内容给删除，只给服务器传入用户名、新密码、重复新密码</p>
+<p><img src="image-20220425132153813.png" alt="image-20220425132153813"></p>
+<p>密码修改成功后那就可以想干啥就干啥了~</p>
+</li>
+<li>
+<p>Insufficient workflow validation</p>
+<p>观察购买商品流程时 bp 中数据包</p>
+<p><img src="image-20220425165009747.png" alt="image-20220425165009747"></p>
+<p>主要是框框中的这下些请求，当我们在购物车界面按下 place order 按钮时网页会向服务器发送一个 post 的请求来对我们的购物车进行校验，校验结束之后我们会收到服务器的一个 response，而这个 response 中其实就包含了校验的结果，之后网页会根据这个 response 向服务器发送 get 请求并使用户能够看见place order 的最终结果。</p>
+<p>不同的校验结果会使服务器返回的 response 不同</p>
+<p><img src="image-20220425170010281.png" alt="image-20220425170010281"></p>
+<p>网页收到不同结果的 response 后所发送的 get 请求的请求头也不同</p>
+<p><img src="image-20220425170451192.png" alt="image-20220425170451192"></p>
+<p>因此，place order 的最终结果是依据网页向服务器发送的 get 请求所决定的。</p>
+<p>那么解决方式就很明显了：</p>
+<ol>
+<li>
+<p>通过购买一个低价的商品获取到 place order 结算成功后网页发送的 get 请求，也就是 <code>post /cart/checkout</code>后面的那个 get 请求</p>
+</li>
+<li>
+<p>使用 bp 截获后买 Jacket 时网页向服务器发送的 post 请求</p>
+</li>
+<li>
+<p>利用 bp 的 repeater 向服务器发送之前我们所获取的结算成功的 get 请求</p>
+</li>
+</ol>
+<p>通过这3个步骤，我们就可以成功跳过 checkout 这个步骤从而直接购买商品。</p>
+</li>
+<li>
+<p>Authentication bypass via flawed state machine</p>
+<p>这题与上一题思路是类似的，利用 bp 看一下登录过程的数据包</p>
+<p><img src="image-20220425195501210.png" alt="image-20220425195501210"></p>
+<p>网页发送一个 post 请求其中包含登录的信息，网页接收到服务器的 response 并会根据 response 发送一个 get 请求。如果登录信息是正确的那么浏览器就会发送上图红色框中的 get 请求。</p>
+<p>但是这题利用的是跳过预期的步骤，这里直接放一下解题过程：</p>
+<ol>
+<li>利用账户进行登录同时打开 bp 对请求进行拦截</li>
+<li>将第一个 post 请求进行放行，丢弃掉下面的 get 请求</li>
+<li>回到账户界面时可以发现我们已经是 administrator 的身份了</li>
+</ol>
+</li>
+</ul>
+<h4 id="特定领域的缺陷">特定领域的缺陷</h4>
+<p>在一些特殊的场景中或者是业务领域，由于开发者不熟悉该领域的特定知识，有极大的可能存在着逻辑漏洞。</p>
+<ul>
+<li>
+<p>Flawed enforcement of business rules</p>
+<p>首先在最开始的界面顶部我们可以看到如图信息</p>
+<p><img src="image-20220426195819976.png" alt="image-20220426195819976"></p>
+<p>在购物车中随意添加商品，然后在 coupon 处添加这个优惠码之后我们可以发现金额少了 $5 ,但是重复添加是没有用的，它会告诉你</p>
+<p><img src="image-20220426200144266.png" alt="image-20220426200144266"></p>
+<p>尝试过修改 NEWCUST5 后面的数字，但是也失败了。看了 wp 之后才发现原来页面的底部还有小东西，随便填个邮箱就能获得另一个优惠码。</p>
+<p>重复添加同一个优惠码会有上图的提示，但是交替重复添加优惠码服务器是无法检测出来的。所以交替重复添加你拥有的2个优惠码即可。<img src="image-20220426200721149.png" alt="image-20220426200721149"></p>
+</li>
+<li>
+<p>Infinite money logic flaw</p>
+<p>这道题目，emmmmm，个人觉得有点脑洞，而且有点难，不看 wp 我感觉我永远都做不出来。</p>
+<p>这道题目的关键是利用这个商店中的 gift card 商品和 SIGNUP30 优惠券达到增加账户金额的目标，具体流程如下：</p>
+<ol>
+<li>添加该物品至购物车并添加优惠券</li>
+<li>结算商品并获得礼物码</li>
+<li>在 my account 界面填入优惠码</li>
+</ol>
+<p>经过以上操作，我们就可以发现我们的账户中多了 $3。</p>
+<p>那么解题思路是很明显了，我们就是要反复这一套操作使我们账户的金额增加。</p>
+<p>那么这道题目的另一个难点也来了，这里涉及到了宏的应用。</p>
+<p>首先在添加宏的规则中选中如下请求</p>
+<p><img src="image-20220426210716272.png" alt="image-20220426210716272"></p>
+</li>
+</ul>
+<p>选中上图中高亮的请求，添加获取 gift card 的规则<img src="image-20220426210935269.png" alt="image-20220426210935269"></p>
+<p>在下一 post/gift-card 中应用在上一个 get 中获取的礼品码<img src="image-20220426211717422.png" alt="image-20220426211717422"></p>
+<p>之后再进行宏的测试，如果得到的是302回复那就是成功了。</p>
+<p>制定好宏的规则后我们将宏添加到 session handing rules 中去就可以了。</p>
+<p><img src="image-20220426213147762.png" alt="image-20220426213147762"></p>
+<p>然后我们将 get/my account 这个请求发送至 intruder 选择 null payload 进行 412 次的发送该请求就可以了。</p>
+<p>宏的作用应该就是在每次发送这个 get/my account 请求之前，根据我们的设定向服务器发送了前面的那几个数据包，这样就相当于帮助我们完成了从添加 gift card 这个商品到获得礼品码、填入礼品码、点击 Redeem 这个按钮的操作。</p>
+<p>最后，等金额高到一定的程度去结算就ok了。</p>
+<h4 id="提供加密-Oracle">提供加密 Oracle</h4>
+<ul>
+<li>
+<p>Authentication bypass via encryption oracle</p>
+<p>首先需要意识到两点东西：1、该网页是依靠 cookie 中的 stay-logged-in 字段来辨别登录者身份的。2、提交完 comment 后服务器所返回的 response 中的 cookie 是会用于紧接着的 get 请求中的，而这个 cookie 所传递的信息就是非法邮箱的内容。</p>
+<p><img src="image-20220502184502711.png" alt="image-20220502184502711"></p>
+<p><img src="image-20220502190543654.png" alt="image-20220502190543654"></p>
+<p>也就是说 cookie 中的 notification 的值是 Invalid email address：xxxx 进过一系列加密得到的。</p>
+<p>我们的目的是要让服务器认为我们是 administrator，那也就是说我们需要通过更改 stay-logged-in 的值来达到此目的，但是这个字段是通过了加密的，我们并不知道这个字段原来的值的含义是什么，所以我们接下来需要做的是：知道原本该字段的值。</p>
+<p>我们可以发现 notification 和 stay-logged-in 字段的结构是很相似的，如果这两者的加密方式是相同的话，那我应该可以利用 get 请求对 notification 字段的回显得到我想要的信息。</p>
+<p>利用 repeater 将 notification 字段的字段值改成 stay-logged-in 字段的字段值并发送，我们可以在回应中发现该值被解析之后的情况</p>
+<p><img src="image-20220502192205633.png" alt="image-20220502192205633"></p>
+<p>应该是一个用户名加上时间戳的一个形式。</p>
+<p>接下来我们来理一下思路：</p>
+<ol>
+<li>我们现在已经知道了 stay-logged-in 字段的含义，并且拥有了一个有效的时间戳。</li>
+<li>我们可以通过利用服务器对 post/comment 请求的回应中的 notification 字段获得加密后的值</li>
+<li>我们可以通过服务器对 get 请求的回应查看解密后的 notification 的值</li>
+<li>我们的目的是得到 administrator：有效时间戳 加密后的值</li>
+</ol>
+<p>那么解决方案也就大致出来了</p>
+<p>首先我们通过修改 post 请求中的 email 字段值获得 administrator：有效时间戳  字符串加密后的值 ，其中时间戳就是通过上图中有效账户获得的</p>
+<p><img src="image-20220502194122207.png" alt="image-20220502194122207"></p>
+<p>因为输入无效邮箱会自带 Invalid email address：字段也就是说上图中的 notification 值中是包含了 Invalid email address：加密后的值的，这部分并不是我们所需要的，所以我们要删去。但是为了保证服务器能够接收删除后的字段，我们需要通过添加9个字符来达到删除后的字段字段数为16的倍数。</p>
+<p>对获得加密后的值进行如下操作获得我们所需要的的加密后的 administrator：时间戳 的值</p>
+<p><img src="image-20220502195513303.png" alt="image-20220502195513303"></p>
+<p>将获得的值放入 get 请求中进行测试，得到网页的回显显示为如图即为成功</p>
+<p><img src="image-20220502195917659.png" alt="image-20220502195917659"></p>
+<p>然后我们利用 bp 拦截访问 home 界面的请求，删除 cookie 中的 session 字段，修改 stay-logged-in 字段，修改完毕后放行</p>
+<p><img src="image-20220502200408782.png" alt="image-20220502200408782"></p>
+<p>我们就已经是以管理员的身份进入界面了。</p>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/02/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/">https://ghdemi.github.io/2022/05/02/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-02</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Point/" class="post-tags__link button"># Point</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/04/28/Authentication%E2%80%94%E2%80%942FA/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Authentication——2FA
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
