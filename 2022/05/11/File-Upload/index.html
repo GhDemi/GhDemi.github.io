@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>File-Upload | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="PortSwigger">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="文件上传漏洞，利用该漏洞使服务器执行我们所上传的 webshell 来达到我们的目的。🌙💤">
+<meta property="og:type" content="article">
+<meta property="og:title" content="File-Upload">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/11/File-Upload/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="文件上传漏洞，利用该漏洞使服务器执行我们所上传的 webshell 来达到我们的目的。🌙💤">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/photo-1648819955157-a9a96e307d56">
+<meta property="article:published_time" content="2022-05-11T12:49:04.000Z">
+<meta property="article:modified_time" content="2022-05-11T13:21:14.641Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="PortSwigger">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/photo-1648819955157-a9a96e307d56">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">GhDemi</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        File-Upload
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-11</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E6%BC%8F%E6%B4%9E/" class="button">漏洞</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-text">什么是文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">文件上传漏洞的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%B6%E5%9C%BA%E4%BD%93%E9%AA%8C"><span class="toc-text">靶场体验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-text">基础文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E9%99%90%E5%88%B6%E7%BB%95%E8%BF%87"><span class="toc-text">基础文件类型限制绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E4%B8%8D%E6%89%A7%E8%A1%8C%E7%BB%95%E8%BF%87"><span class="toc-text">上传文件不执行绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87"><span class="toc-text">文件黑名单绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E7%BB%95%E8%BF%87"><span class="toc-text">修改服务器配置绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E7%BB%95%E8%BF%87"><span class="toc-text">修改文件扩展名绕过</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-text">文件内容验证绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E4%B8%8A%E4%BC%A0-webshell"><span class="toc-text">利用竞争条件上传 webshell</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-text">什么是文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">文件上传漏洞的影响</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%B6%E5%9C%BA%E4%BD%93%E9%AA%8C"><span class="toc-text">靶场体验</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E"><span class="toc-text">基础文件上传漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B%E9%99%90%E5%88%B6%E7%BB%95%E8%BF%87"><span class="toc-text">基础文件类型限制绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E4%B8%8D%E6%89%A7%E8%A1%8C%E7%BB%95%E8%BF%87"><span class="toc-text">上传文件不执行绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E9%BB%91%E5%90%8D%E5%8D%95%E7%BB%95%E8%BF%87"><span class="toc-text">文件黑名单绕过</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%85%8D%E7%BD%AE%E7%BB%95%E8%BF%87"><span class="toc-text">修改服务器配置绕过</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D%E7%BB%95%E8%BF%87"><span class="toc-text">修改文件扩展名绕过</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E9%AA%8C%E8%AF%81%E7%BB%95%E8%BF%87"><span class="toc-text">文件内容验证绕过</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E4%B8%8A%E4%BC%A0-webshell"><span class="toc-text">利用竞争条件上传 webshell</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/photo-1648819955157-a9a96e307d56');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>文件上传漏洞，利用该漏洞使服务器执行我们所上传的 webshell 来达到我们的目的。🌙💤</p>
+<span id="more"></span>
+<h2 id="简介">简介</h2>
+<h3 id="什么是文件上传漏洞">什么是文件上传漏洞</h3>
+<p>由于 web 服务器对用户上传的文件没有进行充分的检验，从而导致用户可以上传任意具有危险性的文件，这种具有危险性的文件可是木马、病毒、恶意脚本或者 webshell 等。如果服务器的处理逻辑不够安全，对这些有问题的文件进行了处理、解析那就会导致严重后果产生。</p>
+<h3 id="文件上传漏洞的影响">文件上传漏洞的影响</h3>
+<p>文件上传漏洞最终产生的影响或者说是影响的大小主要取决于2个因素</p>
+<blockquote>
+<p>网站未能正确验证文件的哪个方面，无论是其大小、类型、内容等。</p>
+<p>文件成功上传后会受到哪些限制。</p>
+</blockquote>
+<p>如果服务器对上传的文件类型没有限制，且允许将某些类型的文件(例如.php 和 .jsp)作为代码执行。在这种情况下，最严重的后果可能是攻击者成功使服务器执行一个充当 webshell 的服务器端代码文件，并且获得服务器的完全控制权。</p>
+<p>如果服务器对于上传的文件名没有充分限制，那么服务器还可能存在着目录遍历漏洞，这就意味着攻击者可以将文件上传至其他他们所想要的位置。</p>
+<h2 id="靶场体验">靶场体验</h2>
+<h3 id="基础文件上传漏洞">基础文件上传漏洞</h3>
+<p>这个靶场对于上传文件的类型和上传文件的内容都没有限制，因此我们只需要将读取文件的 PHP 代码文件上传即可。</p>
+<p><img src="image-20220504132801930.png" alt="image-20220504132801930"></p>
+<p>文件中的内容是</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php echo file_get_contents(&#x27;/home/carlos/secret&#x27;); ?&gt;</span><br></pre></td></tr></table></figure>
+<p>服务器会接收并且执行这段代码，因此当我们用浏览器访问我们所上传的文件时，我们可以发现我们想要的东西已经通过服务器的执行显示出来了</p>
+<p><img src="image-20220504133509068.png" alt="image-20220504133509068"></p>
+<h3 id="基础文件类型限制绕过">基础文件类型限制绕过</h3>
+<p>HTTP 请求的响应表头中有 Content-Type 类，该类中的内容是服务器通过我们所上传的文件内容自动判断后填入的。当服务器对于上传文件的类型作出限制时，服务器会对 Content-Type 中的数据与预期的 MIME 类型进行匹配，如果匹配结果不同那么服务器就会不接收此文件。</p>
+<p>当我们直接上传 .php 类型的文件时，我们会发现服务器并不接收此文件，因为服务器对文件的类型进行了限制，只允许 jpeg 和 png 类型的图片文件上传。</p>
+<p><img src="image-20220504140728142.png" alt="image-20220504140728142"></p>
+<p>服务器拒绝文件的依据是通过比较请求标头中的 Content-Type 值与预期的 MIME 类型是否相同，但是 bp 是可以对请求进行拦截和修改的，因此我们可以利用 bp 来绕过服务器对于文件类型的限制。</p>
+<p>因此，我们在上传文件时将请求拦截，并修改标头中 Content-Type 值，将其修改成 image/jpeg 或者是 image/png 然后再放行，我们可以发现我们的文件上传成功了</p>
+<p><img src="image-20220504141638645.png" alt="image-20220504141638645"></p>
+<p>接下来在浏览器中访问我们所上传的文件即可。</p>
+<h3 id="上传文件不执行绕过">上传文件不执行绕过</h3>
+<p>在我们可以访问的上传目录中，服务器只会执行 MIME 类型明确配置的执行脚本，那也就以为这，在上传目录中我们的文件内容并不会被执行。</p>
+<p>但是如果服务器存在着目录遍历漏洞，那么我们可以将文件传输至其他目录下，服务器依旧有可能执行我们所上传的脚本。</p>
+<p><strong>上靶场</strong>，我们发现我们的文件是可以成功上传的，但是当我们访问我们所上传的文件时，我们可以发现我们所上传的内容被原封不动地输了出来</p>
+<p><img src="image-20220504210328174.png" alt="image-20220504210328174"></p>
+<p>这也就说明了服务器在这个目录下并不会对我们的代码进行执行。</p>
+<p>我们可以通过目录遍历，将文件传至其他目录下，但是该题目对目录遍历字符做了过滤。</p>
+<p><img src="image-20220504212946468.png" alt="image-20220504212946468"></p>
+<p>因此，正确的 payload 应该如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filename=&quot;..%2f&lt;your-filename&gt;&quot;</span><br></pre></td></tr></table></figure>
+<p><img src="image-20220504213100092.png" alt="image-20220504213100092"></p>
+<p>我们通过对其进行 URL 编码绕过过滤，这样我们的文件就成功被上传至上一级目录了。</p>
+<p><img src="image-20220504212552686.png" alt="image-20220504212552686"></p>
+<h3 id="文件黑名单绕过">文件黑名单绕过</h3>
+<p>黑名单是什么意思想必也不用多做解释了，服务器将一些存在危险的文件扩展名加入至黑名单，只要所上传的文件类型在黑名单中，那我们的文件就寄了。</p>
+<h4 id="修改服务器配置绕过">修改服务器配置绕过</h4>
+<p>而服务器对于一个文件是否执行是由开发人员进行配置的。</p>
+<blockquote>
+<p>例如，在 Apache 服务器执行客户端请求的 PHP 文件之前，开发人员可能必须将以下指令添加到他们的<code>/etc/apache2/apache2.conf</code>文件中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;LoadModule php_module /usr/lib/apache2/modules/libphp.so</span><br><span class="line">&gt;AddType application/x-httpd-php .php</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p>如果我们能够通过一些方式改变服务器的这种配置，那么我们就能够让被列入黑名单的文件成功上传并且被执行。</p>
+<p>当我们上传 .php 格式的文件时，我们会发现我们的文件被拒收了，和上一个类型的区别是：上一个类型的文件被接收了但是没有进行对文件内容的执行，而这个是直接不接收文件。</p>
+<p><img src="image-20220505094646811.png" alt="image-20220505094646811"></p>
+<p>接下来，我们要上传一个更改服务器配置的文件，修改方式如下</p>
+<ul>
+<li>
+<p><code>filename</code>将参数 的值更改为<code>.htaccess</code>。</p>
+</li>
+<li>
+<p><code>Content-Type</code>将标头 的值更改为<code>text/plain</code>.</p>
+</li>
+<li>
+<p>将文件的内容（ PHP 有效负载）替换为以下 Apache 指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AddType application/x-httpd-php .l33t</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这些操作能够使服务器将扩展名为 .l33t 的文件当做 php文件去执行。</p>
+<p><img src="image-20220505102641716.png" alt="image-20220505102641716"></p>
+<p>之后我们在我们原来提交的 php 文件请求中修改文件后缀名</p>
+<p><img src="image-20220505102855928.png" alt="image-20220505102855928"></p>
+<p>可以发现文件成功上传并且被执行了，接下来在浏览器中访问我们所上传的文件即可。</p>
+<h4 id="修改文件扩展名绕过">修改文件扩展名绕过</h4>
+<p>通过修改文件扩展名达到绕过初步验证的目的，我们可以通过如下方式进行修改绕过</p>
+<ul>
+<li>提供多个扩展名。如：webshell.php.jpg</li>
+<li>添加尾随字符。如 webshell.php. 这种可以在初期绕过后缀验证，由于一些组件对尾随字符的去除，我们的文件最后会被解析成 webshell.php</li>
+<li>对字符进行 URL 编码。如：webshell%2Ephp</li>
+<li>使用 %00 截断字符。如：webshell.asp%00.jpg  %00最终会被解释成为空字符串，也就是 null。null 后面的内容会被忽略。最终 webshell.asp.jpg 的内容会被写入 webshell.asp中。</li>
+<li>混合大小写。如：webshell.pHp</li>
+</ul>
+<p>同样，在该靶场中我们所上传的文件遭到了拦截</p>
+<p><img src="image-20220505110522502.png" alt="image-20220505110522502"></p>
+<p>接下来尝试各种方式绕过，首先尝试多重后缀名</p>
+<p><img src="image-20220505110822012.png" alt="image-20220505110822012"></p>
+<p>上传成功了，但是我们发现我们并没有得到我们想要的东西，可能是因为我们的文件被当成图片去解析了。</p>
+<p><img src="image-20220505111101856.png" alt="image-20220505111101856"></p>
+<p>尝试%00截断，我们可以发现 %00 后的内容被丢弃了</p>
+<p><img src="image-20220505111336807.png" alt="image-20220505111336807"></p>
+<p>最后还是老样子，访问我们所上传的文件即可。</p>
+<h3 id="文件内容验证绕过">文件内容验证绕过</h3>
+<p>在这种类型的漏洞中，服务器依靠对文件内容的检查来判断所上传的文件是否为预期类型。例如：</p>
+<blockquote>
+<p>在图像上传功能的情况下，服务器可能会尝试验证图像的某些内在属性，例如其尺寸。如果我们上传的是 php 脚本，它根本不具有任何的维度，因此，服务器可以推断它不可能是图像，并相应地拒绝上传。</p>
+</blockquote>
+<p>当然这只是服务器对文件内容的一种验证方式之一。</p>
+<p>还有一些类型的文件可能在文件的头部或者尾部有一些字节存放指定的内容用来标识文件，例如，JPEG 文件总是以<code>FF D8 FF</code> bytes 开头。</p>
+<p>在这题中我们需要通过使用工具 exiftool 来创建带有一句话木马的图片。</p>
+<p>在该工具所在的文件夹下添加一个 jpg 文件，使用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./exiftool -Comment=&quot;&lt;?php echo &#x27;START &#x27; . file_get_contents(&#x27;/home/carlos/secret&#x27;) . &#x27; END&#x27;; ?&gt;&quot; &lt;YOUR-INPUT-IMAGE&gt;.jpg -o polyglot.php</span><br></pre></td></tr></table></figure>
+<p><img src="image-20220505164021195.png" alt="image-20220505164021195"></p>
+<p>生成的 polyglot 文件就是我们所需要的的目标文件。</p>
+<p>对目标文件进行上传，然后在回应中找到我们的东西即可</p>
+<p><img src="image-20220505164401626.png" alt="image-20220505164401626"></p>
+<p>这道题目我尝试过用 cmd 的 copy 命令来制作木马图片，但是总是有如图错误</p>
+<p><img src="image-20220505164633732.png" alt="image-20220505164633732"></p>
+<p>也尝试过使用 notepad++ 制作图片，但是也无果，访问上传文件时这句 php 脚本被原封不动地输了出来。</p>
+<h3 id="利用竞争条件上传-webshell">利用竞争条件上传 webshell</h3>
+<p>我的 bp 插件 turbo intruder 寄了，先挖坑到时候再填。</p>
+<ul>
+<li>
+<p>首先需要了解什么是竞争条件(race condition)</p>
+<blockquote>
+<p>竞争条件（Race Condition）：计算机运行过程中，并发、无序、大量的进程在使用有限、独占、不可抢占的资源，由于进程无限，资源有限，产生矛盾，这种矛盾称为竞争（Race）。竞争条件（Race Condition）旨在描述一个系统或者进程的输出依赖于不受控制的事件出现顺序或者出现时机。由于两个或者多个进程竞争使用不能被同时访问的资源，使得这些进程有可能因为时间上推进的先后原因而出现问题。</p>
+</blockquote>
+</li>
+</ul>
+<p>简单来说就是多个进程需要访问一个互斥的资源，但这些进程对于该资源的访问顺序是由调度算法所决定的，也就是说我们无法知道这些进行进程对于互斥资源的访问顺序。因此，数据变化的结果取决于线程调度算法，即两个线程都“竞相”访问/改变数据。<a target="_blank" rel="noopener" href="https://www.itranslater.com/qa/details/2098729992527021056">详细了解竞争条件</a></p>
+<p>简单说说解法，从服务器解析我们所上传的 php 文件到发现是无用文件并丢弃者之间是有一个时间间隔的，在这个时间间隔中，资源就被 webshell 所占用，而我们的攻击也就利用这时间间隔。</p>
+<p>利用 bp 的插件 Turbo 使我们能够在短时间内发送多个 web 请求，第一个请求是上传 webshell 的请求，第二个请求是访问我们所上传的 webshell 文件，而这个访问就是在服务器从判断我们的文件到丢弃我们的文件之间的时间间隔中进行的。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/11/File-Upload/">https://ghdemi.github.io/2022/05/11/File-Upload/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PortSwigger/" class="post-tags__link button"># PortSwigger</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/05/02/%E4%B8%9A%E5%8A%A1%E9%80%BB%E8%BE%91%E6%BC%8F%E6%B4%9E/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            业务逻辑漏洞
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
