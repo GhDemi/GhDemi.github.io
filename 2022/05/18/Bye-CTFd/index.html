@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Bye CTFd | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Practice">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="搭建 ctfd 真的太难了💥❗  整整一个月的阶段性尝试，换过环境搭建，按照过不同的教程搭建，总结一句话：不同的环境，不同的教程，不同的报错，真的累💦">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bye CTFd">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/18/Bye-CTFd/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="搭建 ctfd 真的太难了💥❗  整整一个月的阶段性尝试，换过环境搭建，按照过不同的教程搭建，总结一句话：不同的环境，不同的教程，不同的报错，真的累💦">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/Snipaste_2022-05-18_16-49-13.png">
+<meta property="article:published_time" content="2022-05-18T07:14:44.000Z">
+<meta property="article:modified_time" content="2022-05-18T08:52:45.917Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Practice">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/Snipaste_2022-05-18_16-49-13.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Bye CTFd
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-18</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E8%B8%A9%E5%9D%91/" class="button">踩坑</a>
+
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#kali-%E6%90%AD%E5%BB%BA"><span class="toc-text">kali 搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%B8%80"><span class="toc-text">教程一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-docker-%E9%9B%86%E7%BE%A4%E8%AE%BE%E7%BD%AE"><span class="toc-text">1.docker 集群设置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%94%BE%E5%85%A5ctfd-whale"><span class="toc-text">2.放入ctfd-whale</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85frps"><span class="toc-text">3.安装frps</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE-ctfd"><span class="toc-text">4.配置 ctfd</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%BA%8C"><span class="toc-text">教程二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-text">前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4-v2"><span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-CTFd"><span class="toc-text">初始化 CTFd</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-frps"><span class="toc-text">配置 frps</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-frpc"><span class="toc-text">配置 frpc</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-compose-up-d-%E5%87%BA%E9%94%99"><span class="toc-text">docker-compose up -d 出错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#frp-%E9%85%8D%E7%BD%AE%E5%87%BA%E9%94%99"><span class="toc-text">frp 配置出错</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-%E6%90%AD%E5%BB%BA"><span class="toc-text">Ubuntu 搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%B8%80-v2"><span class="toc-text">教程一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99"><span class="toc-text">报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E5%B1%80"><span class="toc-text">结局</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%BA%8C-v2"><span class="toc-text">教程二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99-v2"><span class="toc-text">报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E5%B1%80-v2"><span class="toc-text">结局</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E6%83%B3"><span class="toc-text">感想</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#kali-%E6%90%AD%E5%BB%BA"><span class="toc-text">kali 搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%B8%80"><span class="toc-text">教程一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87"><span class="toc-text">准备</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4"><span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-docker-%E9%9B%86%E7%BE%A4%E8%AE%BE%E7%BD%AE"><span class="toc-text">1.docker 集群设置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E6%94%BE%E5%85%A5ctfd-whale"><span class="toc-text">2.放入ctfd-whale</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-%E5%AE%89%E8%A3%85frps"><span class="toc-text">3.安装frps</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-%E9%85%8D%E7%BD%AE-ctfd"><span class="toc-text">4.配置 ctfd</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%BA%8C"><span class="toc-text">教程二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E6%8F%90"><span class="toc-text">前提</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%AD%A5%E9%AA%A4-v2"><span class="toc-text">安装步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-CTFd"><span class="toc-text">初始化 CTFd</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-frps"><span class="toc-text">配置 frps</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-frpc"><span class="toc-text">配置 frpc</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#docker-compose-up-d-%E5%87%BA%E9%94%99"><span class="toc-text">docker-compose up -d 出错</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#frp-%E9%85%8D%E7%BD%AE%E5%87%BA%E9%94%99"><span class="toc-text">frp 配置出错</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ubuntu-%E6%90%AD%E5%BB%BA"><span class="toc-text">Ubuntu 搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%B8%80-v2"><span class="toc-text">教程一</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99"><span class="toc-text">报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E5%B1%80"><span class="toc-text">结局</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%99%E7%A8%8B%E4%BA%8C-v2"><span class="toc-text">教程二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99-v2"><span class="toc-text">报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E5%B1%80-v2"><span class="toc-text">结局</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E6%83%B3"><span class="toc-text">感想</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/Snipaste_2022-05-18_16-49-13.png');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>搭建 ctfd 真的太难了💥❗  整整一个月的阶段性尝试，换过环境搭建，按照过不同的教程搭建，总结一句话：不同的环境，不同的教程，不同的报错，真的累💦</p>
+<span id="more"></span>
+<h2 id="kali-搭建">kali 搭建</h2>
+<h3 id="教程一"><a target="_blank" rel="noopener" href="https://err0r.top/article/CTFD/">教程一</a></h3>
+<h4 id="准备">准备</h4>
+<ol>
+<li>
+<p>安装好 docker 、docker-compose 、docker swarm</p>
+</li>
+<li>
+<p>搭建需求下载</p>
+<blockquote>
+<p>下载赵师傅改写的ctfd，赵师傅已经完成了镜像换源等操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/CTFd/CTFd --depth=1 </span><br></pre></td></tr></table></figure>
+<p>下载frp</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.29.0/frp_0.29.0_linux_amd64.tar.gz</span><br><span class="line"></span><br><span class="line">tar -zxvf frp_0.29.0_linux_amd64.tar.gz</span><br></pre></td></tr></table></figure>
+<p>也可以直接访问链接下载然后解压上传</p>
+<p>下载ctf-whale</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/glzjin/CTFd-Whale</span><br></pre></td></tr></table></figure>
+<p>下载docker的frps</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/glzjin/Frp-Docker-For-CTFd-Whale</span><br></pre></td></tr></table></figure>
+</blockquote>
+<p><strong>以上除ctfd解压后请确保字母小写，并只有一级文件夹</strong></p>
+</li>
+</ol>
+<h4 id="安装步骤">安装步骤</h4>
+<h5 id="1-docker-集群设置">1.docker 集群设置</h5>
+<p>输入以下命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker swarm init //初始化 docker 群集</span><br><span class="line"></span><br><span class="line">docker node ls //列出节点</span><br><span class="line"></span><br><span class="line">docker node update --label-add name=linux-1 &lt;节点 ID&gt; //运行后无返回信息</span><br><span class="line"></span><br><span class="line">以上命令均需要在 root 的身份下运行</span><br></pre></td></tr></table></figure>
+<p><img src="image-20220417205556123.png" alt="image-20220417205556123"></p>
+<h5 id="2-放入ctfd-whale">2.放入ctfd-whale</h5>
+<p>将解压的ctfd-whale改小写后放入/CTFd/CTFd/plugins</p>
+<h5 id="3-安装frps">3.安装frps</h5>
+<p>**重点：**frp并不是安装在服务器上的， frpc 是在 ctfd 中的，frps 是在 docker中的。</p>
+<p>进入所下载的 Frp-Docker-For-CTFd-Whale，在此文件夹下运行命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br><span class="line"></span><br><span class="line">docker ps //查看运行的 frps 容器</span><br><span class="line"></span><br><span class="line">以上命令均要在 root 身份下运行</span><br></pre></td></tr></table></figure>
+<p><img src="image-20220417211342496.png" alt="image-20220417211342496"></p>
+<p><img src="image-20220417211403268.png" alt=" "></p>
+<h5 id="4-配置-ctfd">4.配置 ctfd</h5>
+<p>进入下载的 CTFd 文件，在 docker-compose.yml 同目录下创建文件夹 frpc，并将解压 frp_0.29.0_linux_amd64 文件夹中的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">frpc</span><br><span class="line">frpc.ini</span><br><span class="line">frpc_full.ini</span><br><span class="line">LICENSE</span><br></pre></td></tr></table></figure>
+<p>放入新建的 frpc 中。</p>
+<p>可能因为版本或者什么原因总之就是导致在 docker-compose 的时候反复报错，无法找到解决办法，寄了</p>
+<p><img src="image-20220518153541813.png" alt="image-20220518153541813"></p>
+<hr>
+<h3 id="教程二"><a target="_blank" rel="noopener" href="https://github.com/frankli0324/ctfd-whale/blob/763aea4224a1a9095c4afa902511b70d2c60df33/docs/install.zh-cn.md">教程二</a></h3>
+<p>这个教程是 ctfd 的作者，赵师傅的官方文档搭建步骤</p>
+<h4 id="前提">前提</h4>
+<p>安装好了 git、python3、python3-pip</p>
+<p>安装好了 docker、docker swarm、docker-compose</p>
+<p>能够成功进行 git clone 命令</p>
+<p>docker 已进行换源操作</p>
+<h4 id="安装步骤-v2">安装步骤</h4>
+<h5 id="初始化-CTFd">初始化 CTFd</h5>
+<p>执行以下命令初始化集群</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">docker swarm init //初始化 docker 群集</span><br><span class="line"></span><br><span class="line">docker node ls //列出节点</span><br><span class="line"></span><br><span class="line">docker node update --label-add name=linux-1 &lt;节点 ID&gt; //运行后无返回信息</span><br><span class="line"></span><br><span class="line">以上命令均需要在 root 的身份下运行</span><br></pre></td></tr></table></figure>
+<p>执行以下命令下载 CTFd</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/CTFd/CTFd --depth=1   //将 CTFd 克隆至一级文件夹下</span><br><span class="line">cd CTFd  # 注：以下全部内容的cwd均为此目录</span><br></pre></td></tr></table></figure>
+<p>将文件 docker-compose.yml 的 version 属性进行修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">version &#x27;2&#x27;` -&gt; `version &#x27;3&#x27;</span><br></pre></td></tr></table></figure>
+<p>接着尝试命令<code>docker-compose build</code>，第一次 build 尝试了很多次，而且第一次成功时中途也有一些内容有问题，但是貌似不影响。</p>
+<p>build 成功后尝试命令<code>docker-compose up -d</code>，显示如图界面并且能够成功访问到http://localhost （或8000端口）那就成功了。</p>
+<p><img src="image-20220418174514316.png" alt="image-20220418174514316"></p>
+<p><img src="image-20220418174901226.png" alt="image-20220418174901226"></p>
+<p>可以在这里对 CTFd 进行初始配置</p>
+<h5 id="配置-frps">配置 frps</h5>
+<p>在文件 docker-compose.yml 中添加如下配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    ...</span><br><span class="line">    frps:</span><br><span class="line">        image: glzjin/frp</span><br><span class="line">        restart: always</span><br><span class="line">        volumes:</span><br><span class="line">            - ./conf/frp:/conf</span><br><span class="line">        entrypoint:</span><br><span class="line">            - /usr/local/bin/frps</span><br><span class="line">            - -c</span><br><span class="line">            - /conf/frps.ini</span><br><span class="line">        ports:</span><br><span class="line">            - 10000-10100:10000-10100  # 映射direct类型题目的端口</span><br><span class="line">            - 8001:8001  # 映射http类型题目的端口</span><br><span class="line">        networks:</span><br><span class="line">            default:  # 需要将frps暴露到公网以正常访问题目容器</span><br><span class="line">            frp_connect:</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">    ...</span><br><span class="line">    frp_connect:</span><br><span class="line">        driver: overlay</span><br><span class="line">        internal: true</span><br><span class="line">        ipam:</span><br><span class="line">            config:</span><br><span class="line">                - subnet: 172.1.0.0/16</span><br></pre></td></tr></table></figure>
+<p>然后在 CTFd 文件夹的 conf 文件夹中创建 frp 文件夹，并新建 frps.ini 文件，在文件中填入如下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line"># 下面两个端口注意不要与direct类型题目端口范围重合</span><br><span class="line">bind_port = 7987  # frpc 连接到 frps 的端口</span><br><span class="line">vhost_http_port = 8001  # frps 映射http类型题目的端口</span><br><span class="line">token = your_token</span><br><span class="line">subdomain_host = node3.buuoj.cn  # 访问http题目容器的主机名</span><br></pre></td></tr></table></figure>
+<h5 id="配置-frpc">配置 frpc</h5>
+<p>同样，继续在 docker-compose.yml 文件中添加如下配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">services:</span><br><span class="line">    ...</span><br><span class="line">    frpc:</span><br><span class="line">        image: glzjin/frp:latest</span><br><span class="line">        restart: always</span><br><span class="line">        volumes:</span><br><span class="line">          - ./conf/frp:/conf/</span><br><span class="line">        entrypoint:</span><br><span class="line">          - /usr/local/bin/frpc</span><br><span class="line">          - -c</span><br><span class="line">          - /conf/frpc.ini</span><br><span class="line">        depends_on:</span><br><span class="line">          - frps #frps需要先成功运行</span><br><span class="line">        networks:</span><br><span class="line">            frp_containers:  # 供frpc访问题目容器</span><br><span class="line">            frp_connect:  # 供frpc访问frps, CTFd访问frpc</span><br><span class="line">                ipv4_address: 172.1.0.3</span><br><span class="line"></span><br><span class="line">networks:</span><br><span class="line">    ...</span><br><span class="line">    frp_containers:</span><br><span class="line">        driver: overlay</span><br><span class="line">        internal: true  # 如果允许题目容器访问外网，则可以去掉</span><br><span class="line">        attachable: true</span><br><span class="line">        ipam:</span><br><span class="line">            config:</span><br><span class="line">                - subnet: 172.2.0.0/16</span><br></pre></td></tr></table></figure>
+<p>在和刚刚 frps.ini 的同一个文件夹 frp 中新建文件 frpc.ini 并填入以下内容</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[common]</span><br><span class="line">token = your_token</span><br><span class="line">server_addr = frps</span><br><span class="line">server_port = 7897  # 对应 frps 的 bind_port</span><br><span class="line">admin_addr = 172.1.0.3  # 请参考“安全事项”</span><br><span class="line">admin_port = 7400</span><br></pre></td></tr></table></figure>
+<h4 id="踩坑">踩坑</h4>
+<h5 id="docker-compose-up-d-出错">docker-compose up -d 出错</h5>
+<p>按照赵师傅的使用指南来时，在执行<code>docker-compose up -d</code>命令时疯狂报错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">WARNING: The Docker Engine you&#x27;re using is running in swarm mode.</span><br><span class="line"></span><br><span class="line">Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.</span><br><span class="line"></span><br><span class="line">To deploy your application across the swarm, use `docker stack deploy`.</span><br><span class="line"></span><br><span class="line">Building ctfd</span><br><span class="line">Sending build context to Docker daemon  27.16MB</span><br><span class="line">Step 1/13 : FROM python:3.7-slim-buster</span><br><span class="line"> ---&gt; c2b8b72df8cd</span><br><span class="line">Step 2/13 : WORKDIR /opt/CTFd</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 3dc01e1b5345</span><br><span class="line">Step 3/13 : RUN mkdir -p /opt/CTFd /var/log/CTFd /var/uploads</span><br><span class="line"> ---&gt; Using cache</span><br><span class="line"> ---&gt; 61dc7349094e</span><br><span class="line">Step 4/13 : RUN apt-get update     &amp;&amp; apt-get install -y --no-install-recommends         build-essential         libffi-dev         libssl-dev         git     &amp;&amp; apt-get clean     &amp;&amp; rm -rf /var/lib/apt/lists/*</span><br><span class="line"> ---&gt; Running in 69568ae5b0f2</span><br><span class="line">Get:1 http://deb.debian.org/debian buster InRelease [122 kB]</span><br><span class="line">Get:2 http://deb.debian.org/debian buster-updates InRelease [51.9 kB]</span><br><span class="line">Get:3 http://deb.debian.org/debian buster/main amd64 Packages [7911 kB]</span><br><span class="line">Err:4 http://security.debian.org/debian-security buster/updates InRelease</span><br><span class="line">  Could not connect to debian.map.fastlydns.net:80 (151.101.110.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.194.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.66.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.130.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.2.132). - connect (111: Connection refused)</span><br><span class="line">Ign:3 http://deb.debian.org/debian buster/main amd64 Packages</span><br><span class="line">Ign:5 http://deb.debian.org/debian buster-updates/main amd64 Packages</span><br><span class="line">Ign:3 http://deb.debian.org/debian buster/main amd64 Packages</span><br><span class="line">Ign:5 http://deb.debian.org/debian buster-updates/main amd64 Packages</span><br><span class="line">Ign:3 http://deb.debian.org/debian buster/main amd64 Packages</span><br><span class="line">Ign:5 http://deb.debian.org/debian buster-updates/main amd64 Packages</span><br><span class="line">Ign:3 http://deb.debian.org/debian buster/main amd64 Packages</span><br><span class="line">Ign:5 http://deb.debian.org/debian buster-updates/main amd64 Packages</span><br><span class="line">Ign:3 http://deb.debian.org/debian buster/main amd64 Packages</span><br><span class="line">Ign:5 http://deb.debian.org/debian buster-updates/main amd64 Packages</span><br><span class="line">Err:3 http://deb.debian.org/debian buster/main amd64 Packages</span><br><span class="line">  Could not connect to debian.map.fastlydns.net:80 (151.101.110.132). - connect (111: Connection refused) Unable to connect to deb.debian.org:http: [IP: 151.101.110.132 80]</span><br><span class="line">Err:5 http://deb.debian.org/debian buster-updates/main amd64 Packages</span><br><span class="line">  Unable to connect to deb.debian.org:http: [IP: 151.101.110.132 80]</span><br><span class="line">Fetched 173 kB in 1min 10s (2473 B/s)</span><br><span class="line">Reading package lists...</span><br><span class="line">W: Failed to fetch http://security.debian.org/debian-security/dists/buster/updates/InRelease  Could not connect to debian.map.fastlydns.net:80 (151.101.110.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.194.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.66.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.130.132). - connect (111: Connection refused) Could not connect to security.debian.org:80 (151.101.2.132). - connect (111: Connection refused)                                                                                                                             </span><br><span class="line">W: Failed to fetch http://deb.debian.org/debian/dists/buster/main/binary-amd64/Packages  Could not connect to debian.map.fastlydns.net:80 (151.101.110.132). - connect (111: Connection refused) Unable to connect to deb.debian.org:http: [IP: 151.101.110.132 80]                           </span><br><span class="line">W: Failed to fetch http://deb.debian.org/debian/dists/buster-updates/main/binary-amd64/Packages  Unable to connect to deb.debian.org:http: [IP: 151.101.110.132 80]                                                                                                                           </span><br><span class="line">W: Some index files failed to download. They have been ignored, or old ones used instead.                                                      </span><br><span class="line">Reading package lists...                                                                                                                       </span><br><span class="line">Building dependency tree...</span><br><span class="line">Reading state information...</span><br><span class="line">E: Unable to locate package build-essential</span><br><span class="line">E: Unable to locate package libffi-dev                                                                                                         </span><br><span class="line">E: Unable to locate package libssl-dev                                                                                                         </span><br><span class="line">E: Unable to locate package git                                                                                                                </span><br><span class="line">The command &#x27;/bin/sh -c apt-get update     &amp;&amp; apt-get install -y --no-install-recommends         build-essential         libffi-dev         libssl-dev         git     &amp;&amp; apt-get clean     &amp;&amp; rm -rf /var/lib/apt/lists/*&#x27; returned a non-zero code: 100</span><br><span class="line">ERROR: Service &#x27;ctfd&#x27; failed to build : Build failed</span><br></pre></td></tr></table></figure>
+<p>原来是自己 python3-pip 没有安装，比较新的 kali 里面有 docker-compose 但是没有 python3-pip 所以要自己装一下，以为安装了之后应该就没问题了，结果依旧报错，报错如图所示</p>
+<p><img src="image-20220418150355183.png" alt="image-20220418150355183"></p>
+<p>之后在尝试<code>docker-compose up -d</code>之前尝试了一下 <code>docker-compose build</code>发现不成功，在网上找方法，找到<a target="_blank" rel="noopener" href="https://blog.csdn.net/dongxingpeng/article/details/115698738">这个</a>,但是执行第一个命令之后就G了</p>
+<p><img src="image-20220418170827392.png" alt="image-20220418170827392">头铁，又多次尝试<code>docker-compose build</code>又成功了，薛定谔啊。紧接着尝试<code>docker-compose up -d</code>也成功了。</p>
+<h5 id="frp-配置出错">frp 配置出错</h5>
+<p>frps 和 frpc 配置好后进行查看，发现出错</p>
+<p><img src="image-20220418201319001.png" alt="image-20220418201319001"></p>
+<p>这是因为添加的内容中有注释，注释使用 # 表示的，但在 ini 文件中的注释并不是这个符号，所以将注释删除或使用正确的注释方式即可。</p>
+<p>再次尝试，然后就是另一种报错<img src="image-20220418202450082.png" alt="image-20220418202450082"></p>
+<p>寄了，今天没解决，可能是因为 frp 没有下载在一级文件夹下</p>
+<p>绝了，又寄了一天报错不一样了，不再是 i/o timeout 了，直接 connection refuse了</p>
+<p><img src="image-20220420123733079.png" alt="image-20220420123733079"></p>
+<p>试了一下，只有把此处</p>
+<p><img src="image-20220420143208011.png" alt="image-20220420143208011"></p>
+<p>改成0.0.0.0 才可以用，但是官方文档上又建议不要改成 0.0.0.0，后面又直接尝试把 server_port 改成7400，好像也可以。最后按照这个<a target="_blank" rel="noopener" href="https://www.igiftidea.com/article/14206750654.html">方法</a>修改了 ufw ，但是最后貌似还是没有开启 7897这个端口，但是好像是连上了</p>
+<p>最后还是寄了，点界面没反应</p>
+<p><img src="image-20220420164837789.png" alt="image-20220420164837789"></p>
+<h2 id="Ubuntu-搭建">Ubuntu 搭建</h2>
+<h3 id="教程一-v2">教程一</h3>
+<p>采用的是赵师傅的官方文档搭建，过程大差不差，结果一模一样</p>
+<h4 id="报错">报错</h4>
+<ul>
+<li>修改好 frp 文件后报错</li>
+</ul>
+<p><img src="image-20220423180750138.png" alt="image-20220423180750138"></p>
+<p>原因是因为 docker-compose 版本过低</p>
+<ul>
+<li>
+<p>按照网上方法卸载掉 docker-compose 时报错</p>
+<p><img src="image-20220423181017838.png" alt="image-20220423181017838"></p>
+<p>原因是并不是用 pip 安装的 docker-compose，需要使用<code>sudo apt remove</code>来卸载</p>
+</li>
+<li>
+<p>使用 pip 安装 docker-compose 之后，执行 docker-compose 命令报错</p>
+</li>
+</ul>
+<p><img src="image-20220423192430219.png" alt="image-20220423192430219"></p>
+<p>​	原因是因为没有添加到 path 中去</p>
+<p>目前的操作：使用 pip 下载了docker-compose 然后将 docker-compose 移动到了 /usr/bin/ 文件夹中去了</p>
+<p><img src="image-20220423192633401.png" alt="image-20220423192633401"></p>
+<ul>
+<li>
+<p>再次在 CTFd 目录下进行 <code>docker-compose up -d  </code>出错</p>
+<p><img src="image-20220423192859153.png" alt="image-20220423192859153"></p>
+</li>
+<li>
+<p>尝试把 docker-compose 里的内容用我的代替了一下，继续尝试部署</p>
+<p><img src="image-20220423195719629.png" alt="image-20220423195719629"></p>
+<p>依旧是报错，感觉是 python3 的版本问题，看了一下也不知道怎么去升级 python3 这个版本，而且老俞的机子很奇怪，执行 <code>apt-get update 和 upgrade</code> 居然一个要更新的软件包都没有，估计是弄了权限设置，最后还是寄了</p>
+</li>
+<li>
+<p>彻底玩完了，执行了一下 sudo rm /usr/bin/docker-compose 结果现在 bash 连 docker 也找不到了。</p>
+<p><img src="image-20220424095100135.png" alt="image-20220424095100135"></p>
+</li>
+</ul>
+<p><img src="image-20220424100324842.png" alt="image-20220424100324842"></p>
+<p>然后又重新下载了一下 docker-compose <code>sudo apt-get install docker-compose</code>，docker又可以用了，好奇怪</p>
+<ul>
+<li>
+<p>现在的毛病是直接使用<code>docker-compose up -d</code>能够识别，但是使用<code>sudo docker-compose up -d</code>就无法识别了，但是主要的问题是这个命令就是需要 sudo 的身份来执行</p>
+<p><img src="image-20220424155512856.png" alt="image-20220424155512856"></p>
+</li>
+</ul>
+<h4 id="结局">结局</h4>
+<p><img src="image-20220518154342613.png" alt="image-20220518154342613"></p>
+<h3 id="教程二-v2">教程二</h3>
+<p>是万师傅给的一个公众号里面的搭建教程，个人觉得相比于教程一来说条理更清晰些，比赵师傅的官方文档更详细些。</p>
+<h4 id="报错-v2">报错</h4>
+<p>错太多了，人错麻了，报错截图也没截</p>
+<h4 id="结局-v2">结局</h4>
+<p>最终结果是寄了，拿这个方案搭建过2回。</p>
+<p>第一次倒在了离成功最近的地方：拉了 ctf 的容器，配置好了题目，但是死活访问不了。</p>
+<p>第二次是创建好的 frpc 容器一直在反复重启中，查看了日志是因为所设置的端口拒绝连接，和在 kali 里的那个报错基本上感觉是差不多。</p>
+<p>折腾不动了。</p>
+<h2 id="感想">感想</h2>
+<p>搭建 ctfd 真的是很难，和计算机的环境，各种软件的安装版本，所下载的 ctfd 的版本都有密切的关系，这些不同的因素，不同的组合就会产生各种奇奇怪怪的报错。</p>
+<p>对于报错的处理就是在网上疯狂寻找各种解决方案，但是有的解决方案对别人有用但是对你就不一定有效果，就只能自己慢慢试，慢慢琢磨。</p>
+<p>搭建 ctfd 所涉及到的东西也有很多，docker、docker swarm、docker compose、docker network、frp…  想着，可能我懂一些原理或许对于报错的解决能有自己的处理方式，但是这个涉及到的东西太多了，对于我这个小白来说太难了😭</p>
+<p><strong>遗憾和坑</strong>：</p>
+<ul>
+<li>
+<p>以为自己有足够的耐心去搭建，然后能够成功，最后算是跪给 ctfd 了，每次一耗就是一天半天的，心也是真的累，人都快要搭吐了，感觉这辈子都不想再尝试搭着玩意了。</p>
+</li>
+<li>
+<p>其实对于搭建中的 frp 和 Nginx 还是挺好奇的，没弄明白这两玩意在 ctfd 和 docker 里面的工作机制<img src="e2484dfd81c19e55c1b939cf0782d3d1.png" alt="img"></p>
+<p>挖个坑以后再填吧，最近一段时间是不想再看到这玩意了，搭出内伤了。</p>
+</li>
+</ul>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/18/Bye-CTFd/">https://ghdemi.github.io/2022/05/18/Bye-CTFd/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-18</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Practice/" class="post-tags__link button"># Practice</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/05/14/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6%E6%BC%8F%E6%B4%9E%E5%92%8C%E6%9D%83%E9%99%90%E6%8F%90%E5%8D%87/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            访问控制漏洞和权限提升
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
