@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>初探Re | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="基础">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="什么是 re 逆向只是个开始，而不是结束 Reverse Engineering：逆向工程，是一种技术过程，即对一专案标产品进行逆向分析及研究，从而演绎并得出该产品的处理流程、组织结构、功能效能规格等设计要素，以制作出功能相近，但又不完全一样的产品。逆向工程源于商业及军事领域中的硬体分析。其主要目的是，在无法轻易获得必要的生产资讯下，直接从成品的分析，推导产品的设计原理。 简单来说就是通过一个可执">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探Re">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/21/%E5%88%9D%E6%8E%A2Re/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="什么是 re 逆向只是个开始，而不是结束 Reverse Engineering：逆向工程，是一种技术过程，即对一专案标产品进行逆向分析及研究，从而演绎并得出该产品的处理流程、组织结构、功能效能规格等设计要素，以制作出功能相近，但又不完全一样的产品。逆向工程源于商业及军事领域中的硬体分析。其主要目的是，在无法轻易获得必要的生产资讯下，直接从成品的分析，推导产品的设计原理。 简单来说就是通过一个可执">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/andreas-bergmann-hMDUkIYvJpQ-unsplash.jpg">
+<meta property="article:published_time" content="2022-05-21T12:25:47.000Z">
+<meta property="article:modified_time" content="2022-05-22T02:07:37.468Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/andreas-bergmann-hMDUkIYvJpQ-unsplash.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        初探Re
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-21</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-re"><span class="toc-text">什么是 re</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU%E6%9E%B6%E6%9E%84"><span class="toc-text">CPU架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF"><span class="toc-text">总线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="toc-text">编译过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">存储器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="toc-text">汇编语言基础指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug-%E8%AF%AD%E6%B3%95"><span class="toc-text">Debug 语法</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-re"><span class="toc-text">什么是 re</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CPU%E6%9E%B6%E6%9E%84"><span class="toc-text">CPU架构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF"><span class="toc-text">总线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="toc-text">编译过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">寄存器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-text">存储器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="toc-text">汇编语言基础指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Debug-%E8%AF%AD%E6%B3%95"><span class="toc-text">Debug 语法</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/andreas-bergmann-hMDUkIYvJpQ-unsplash.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <h2 id="什么是-re">什么是 re</h2>
+<p><strong>逆向只是个开始，而不是结束</strong></p>
+<p>Reverse Engineering：逆向工程，是一种技术过程，即对一专案标产品进行逆向分析及研究，从而演绎并得出该产品的处理流程、组织结构、功能效能规格等设计要素，以制作出功能相近，但又不完全一样的产品。逆向工程源于商业及军事领域中的硬体分析。其主要目的是，在无法轻易获得必要的生产资讯下，直接从成品的分析，推导产品的设计原理。</p>
+<p>简单来说就是通过一个可执行文件反向推导出它的代码是怎么写的。</p>
+<h2 id="基础知识">基础知识</h2>
+<h3 id="CPU架构"><a target="_blank" rel="noopener" href="https://www.liuvv.com/p/690c18bd.html">CPU架构</a></h3>
+<p><strong>什么是 CPU 架构</strong>：CPU厂商给属于同一系列的CPU产品定的一个规范，主要目的是为了区分不同类型CPU的重要标示。</p>
+<p><strong>常见的 CPU 架构</strong>：X86、ARM、MIPS、IA64。</p>
+<p>从基本的逻辑角度分类可以被分为 ”复杂指令集“ 与 ”精简指令集“ 系统，分别对应的是 ”CISC(Complex instruction set computer)“ 和 ”RISC(Reduced instruction set computer)“。</p>
+<p>Intel和ARM处理器的第一个区别是，前者使用复杂指令集（CISC)，而后者使用精简指令集（RISC）。</p>
+<p><strong>指令集决定了 CPU 的架构</strong>，复杂指令集对应 CPU 比较复杂，这就意味着你可以用简单的逻辑语言让计算机实现你所想达到的功能；而精简指令集就恰好相反，它对应的 CPU 相对更简单，所以你需要用复杂的逻辑语言才能让计算机实现你所想达到的功能。</p>
+<p>而使它们之间产生巨大区别的原因在于它们的设计者所考虑问题方式的不同</p>
+<blockquote>
+<p>比如说我们要命令一个人吃饭，那么我们应该怎么命令呢？我们可以直接对他下达“吃饭”的命令，也可以命令他“先拿勺子，然后舀起一勺饭，然后张嘴，然后送到嘴里，最后咽下去”。</p>
+<p>复杂指令集的设计者就认为，如果我首先给接受命令的人以足够的训练，让他掌握各种复杂技能（即在硬件中实现对应的复杂功能），那么以后就可以用非常简单的命令让他去做很复杂的事情——比如只要说一句“吃饭”，他就会吃饭。</p>
+<p>精简指令集的设计者认为，我们可以把事情分为许多非常基本的步骤，让接受命令的人懂得这些基本步骤，然后通过较为复杂的指令也能完成相同的工作，无非就是下达指令的人稍微累一点。</p>
+</blockquote>
+<h3 id="总线">总线</h3>
+<p><strong>总线</strong>：是是指计算机组件间规范化的交换数据（data）的方式，即以一种通用的方式为各组件提供数据传送和控制逻辑。</p>
+<p>简单来说，总线是计算机硬件设备之间用来通信的</p>
+<p>总线是单向的  例如：不能同时进行读取和写入的操作</p>
+<p><strong>总线分类</strong>：</p>
+<ul>
+<li>数据总线（Data Bus）：在CPU与RAM之间来回传送需要处理或是需要储存的数据。总线是宽度决定了 CPU 与其它器件进行数据传送时一次数据的传送量</li>
+<li>地址总线（Address Bus）：用来指定在RAM（Random Access Memory）之中储存的数据的地址。总线宽度决定了 CPU 的寻址能力</li>
+<li>控制总线（Control Bus）：将微处理器控制单元（Control Unit）的信号，传送到周边设备，一般常见的为USB Bus和1394 Bus。总线宽度决定了 CPU 对系统中其它器件的控制能力。</li>
+</ul>
+<h3 id="编译过程">编译过程</h3>
+<ul>
+<li>
+<p>预编译（Preprocessing）又称为预处理，做代码文本的替换工作，处理#开头的指令，比如拷贝#include包含的文件代码，#define宏定义的替换，条件编译等，为下一步的编译做好预备工作。</p>
+</li>
+<li>
+<p>编译（Compilation）将程序语言转换成汇编语言的过程</p>
+</li>
+<li>
+<p>汇编（Assembly）将汇编语言转换成计算机能够看懂的机器语言</p>
+</li>
+<li>
+<p>链接（Linking）静态链接方式：在程序执行之前完成所有的组装工作，生成一个可执行的目标文件（EXE文件）。</p>
+<p>动态链接方式：在程序已经为了执行被装入内存之后完成链接工作，并且在内存中一般只保留该编译单元的一份拷贝。</p>
+</li>
+</ul>
+<h2 id="寄存器">寄存器</h2>
+<p>CPU 只负责计算，而寄存器就是 CPU 中可以存储数据的器件，用来暂时存放参与运算的数据和运算结果以及一些CPU运行需要的信息。</p>
+<p>寄存器有许多分类(以下为 x86)</p>
+<ul>
+<li>通用寄存器</li>
+<li>标志寄存器</li>
+<li>指令寄存器</li>
+<li>段寄存器</li>
+<li>控制寄存器</li>
+<li>调试寄存器</li>
+<li>描述符寄存器</li>
+<li>任务寄存器</li>
+<li>MSR寄存器</li>
+</ul>
+<p>不同种类的寄存器，有不同的功能作用，它们也有自己的代号，例如：ax、bx</p>
+<h2 id="存储器">存储器</h2>
+<p>CPU 可以直接使用的信息在存储器中存放，CPU 想要进行数据的读写必须和外部器件进行三类信息的交互</p>
+<ul>
+<li>存储单元的地址(地址信息)</li>
+<li>器件的选择，读或写命令(控制信息)</li>
+<li>读或写的数据(数据信息)</li>
+</ul>
+<p>在存储器中指令和数据是没有区别的，它们都是二进制信息，存储器依靠传输二进制信息所使用的总线类型来进行判断是指令还是数据。</p>
+<p>一个存储单元可以存储8个 bit</p>
+<h2 id="汇编语言基础指令">汇编语言基础指令</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">汇编指令示例</th>
+<th style="text-align:left">实际作用</th>
+<th style="text-align:left">等价代码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">mov rax,rbx</td>
+<td style="text-align:left">用于赋值</td>
+<td style="text-align:left">rax=rbx</td>
+</tr>
+<tr>
+<td style="text-align:left">add/sub rax,rbx</td>
+<td style="text-align:left">用于加/减法</td>
+<td style="text-align:left">rax+=rbx/rax-=rbx</td>
+</tr>
+<tr>
+<td style="text-align:left">and/xor/or rax,rbx</td>
+<td style="text-align:left">用于与/异或/或</td>
+<td style="text-align:left">rax&amp;=rbx/rax^=rbx/rax|=rbx</td>
+</tr>
+<tr>
+<td style="text-align:left">push rax</td>
+<td style="text-align:left">压栈</td>
+<td style="text-align:left">rsp-=8;*rsp=rax</td>
+</tr>
+<tr>
+<td style="text-align:left">pop rax</td>
+<td style="text-align:left">出栈</td>
+<td style="text-align:left">rax=*rsp;rsp+=8</td>
+</tr>
+<tr>
+<td style="text-align:left">call rax</td>
+<td style="text-align:left">调用函数</td>
+<td style="text-align:left">push rip;jmp rax;</td>
+</tr>
+<tr>
+<td style="text-align:left">ret</td>
+<td style="text-align:left">从函数返回</td>
+<td style="text-align:left">pop rip;</td>
+</tr>
+<tr>
+<td style="text-align:left">cmp rax,rbx</td>
+<td style="text-align:left">比较两个数</td>
+<td style="text-align:left">rax-rbx,不保留结果,只修改flags寄存器</td>
+</tr>
+<tr>
+<td style="text-align:left">test rax,rbx</td>
+<td style="text-align:left">比较两个数</td>
+<td style="text-align:left">rax&amp;rbx,不保留结果,只修改flags寄存器</td>
+</tr>
+</tbody>
+</table>
+<p><strong>各种跳转指令</strong>，跳转指令不同于 mov 指令，他可以用于修改段寄存器 cs、ip 的值，从而修改 CPU 在内存中所读取的内容的地址</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">汇编指令示例</th>
+<th style="text-align:left">英文</th>
+<th style="text-align:left">实际作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">jmp</td>
+<td style="text-align:left">jump</td>
+<td style="text-align:left">跳转</td>
+</tr>
+<tr>
+<td style="text-align:left">jz</td>
+<td style="text-align:left">jump if zero</td>
+<td style="text-align:left">为0时跳转</td>
+</tr>
+<tr>
+<td style="text-align:left">jnz</td>
+<td style="text-align:left">jump if not zero</td>
+<td style="text-align:left">不为0时跳转</td>
+</tr>
+<tr>
+<td style="text-align:left">jg</td>
+<td style="text-align:left">jump if greater</td>
+<td style="text-align:left">有符号数大于跳转</td>
+</tr>
+<tr>
+<td style="text-align:left">jl</td>
+<td style="text-align:left">jump if less</td>
+<td style="text-align:left">有符号数小于跳转</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Debug-语法">Debug 语法</h2>
+<p>以前版本的 Windows 里面自带有 debug，但是 win10 之后的更高版本取消了，我们可以通过配置 debug 文件，下载 DOSbox 来体验 debug，并通过 debug 来初体验一下汇编语言。</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ECJTUACM-873284962/p/8870076.html">Windows 10 使用 debug</a></p>
+<p>通过命令<code>mount &lt;磁盘&gt; &lt;debug 安装路径&gt;</code>挂载磁盘</p>
+<p>输入所挂载的磁盘后即可使用 debug</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518202744854.png" alt="image-20220518202744854"></p>
+<p><strong>常见的 debug 命令</strong>     在 debug 中不区分大小写</p>
+<ul>
+<li>
+<p>R：查看、改变 CPU 寄存器的内容</p>
+<p>格式  -r   或  -r  [][][寄存器名称] [原始值] [修改值]</p>
+<p>查看寄存器</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518203959285.png" alt="image-20220518203959285"></p>
+<p>修改寄存器</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518204207510.png" alt="image-20220518204207510"></p>
+</li>
+<li>
+<p>D：查看内存中的内容</p>
+<p>格式 -d 或 -d [起始地址] [结束地址/长度]</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518205504247.png" alt="image-20220518205504247"></p>
+</li>
+<li>
+<p>E：改写内存中的内容</p>
+<p>格式 -e [起始地址] [二进制命令]</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518210104676.png" alt="image-20220518210104676"></p>
+</li>
+<li>
+<p>U：将机器指令翻译成汇编指令</p>
+<p>格式 -u [起始地址] [结束地址/长度]</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518210635445.png" alt="image-20220518210635445"></p>
+</li>
+<li>
+<p>T：执行一条机器指令</p>
+<p>格式 -t 或 -t [地址] [指令条数]</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518210757795.png" alt="image-20220518210757795"></p>
+</li>
+<li>
+<p>A：以汇编指令的格式向内存中存入一条机器指令</p>
+<p>格式  -a  [地址]  [存放的汇编指令]</p>
+<p><img src="%E5%88%9D%E6%8E%A2Re/image-20220518203137056.png" alt="image-20220518203137056"></p>
+</li>
+</ul>
+<p>在编译、链接，生成可执行文件后，运行没有出错。而在debug时，出现“extended error 2”错误。<img src="%E5%88%9D%E6%8E%A2Re/image-20220521100614550.png" alt="image-20220521100614550"></p>
+<p>解决方案：添加后缀名即可<img src="%E5%88%9D%E6%8E%A2Re/image-20220521100701561.png" alt="image-20220521100701561"></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/21/%E5%88%9D%E6%8E%A2Re/">https://ghdemi.github.io/2022/05/21/%E5%88%9D%E6%8E%A2Re/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-22</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E5%9F%BA%E7%A1%80/" class="post-tags__link button"># 基础</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/05/18/Bye-CTFd/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Bye CTFd
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
