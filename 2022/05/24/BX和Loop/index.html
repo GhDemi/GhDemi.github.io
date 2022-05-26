@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>BX和Loop | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="X86汇编">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="bx 寄存器和 loop 循环的学习小结🛰️">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BX和Loop">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/24/BX%E5%92%8CLoop/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="bx 寄存器和 loop 循环的学习小结🛰️">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-6o3qx7.png">
+<meta property="article:published_time" content="2022-05-24T08:28:05.000Z">
+<meta property="article:modified_time" content="2022-05-26T01:18:29.075Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="X86汇编">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-6o3qx7.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        BX和Loop
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-24</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%B8%B8%E9%87%8F"><span class="toc-text">符号和常量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0%E6%80%A7%E7%AC%A6%E5%8F%B7"><span class="toc-text">描述性符号&quot;( )&quot;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#idata-%E5%B8%B8%E9%87%8F"><span class="toc-text">idata 常量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BX"><span class="toc-text">[BX]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-bx"><span class="toc-text">什么是[bx]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%BF%90%E4%BD%9C"><span class="toc-text">如何运作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Loop"><span class="toc-text">Loop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Loop"><span class="toc-text">什么是 Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%BF%90%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">格式以及运作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E8%80%85%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8"><span class="toc-text">两者的联合使用</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E5%92%8C%E5%B8%B8%E9%87%8F"><span class="toc-text">符号和常量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0%E6%80%A7%E7%AC%A6%E5%8F%B7"><span class="toc-text">描述性符号&quot;( )&quot;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#idata-%E5%B8%B8%E9%87%8F"><span class="toc-text">idata 常量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BX"><span class="toc-text">[BX]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-bx"><span class="toc-text">什么是[bx]</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%BF%90%E4%BD%9C"><span class="toc-text">如何运作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Loop"><span class="toc-text">Loop</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Loop"><span class="toc-text">什么是 Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%BC%8F%E4%BB%A5%E5%8F%8A%E8%BF%90%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="toc-text">格式以及运作原理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E8%80%85%E7%9A%84%E8%81%94%E5%90%88%E4%BD%BF%E7%94%A8"><span class="toc-text">两者的联合使用</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-6o3qx7.png');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>bx 寄存器和 loop 循环的学习小结🛰️</p>
+<span id="more"></span>
+<h2 id="符号和常量">符号和常量</h2>
+<h3 id="描述性符号">描述性符号&quot;( )&quot;</h3>
+<p>使用&quot;( )&quot;来表示一个寄存器或一个单元中的内容</p>
+<p>“( )”中的元素有3种类型</p>
+<ul>
+<li>寄存器名</li>
+<li>段寄存器名</li>
+<li>内存单元的一个物理地址(一个20位的数据)</li>
+</ul>
+<p>例如：(ax)、(20002h)、((ds)*16+(bx))</p>
+<h3 id="idata-常量">idata 常量</h3>
+<p>就是表示一个常量，没啥好解释的。</p>
+<p>例如:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov ax,[idata] 就代表 mov ax，[1]、mov ax，[2] 等</span><br><span class="line">mox bx,idata 就代表 mov bx，1、mox bx,2 等</span><br></pre></td></tr></table></figure>
+<h2 id="BX">[BX]</h2>
+<h3 id="什么是-bx">什么是[bx]</h3>
+<p>bx是一个通用寄存器的代号，当 bx 变成 [bx] 时，bx 的值就不单单代表着数值，它还表示着偏移地址。</p>
+<h3 id="如何运作">如何运作</h3>
+<p>举个例子</p>
+<ul>
+<li>mov ax，[bx]</li>
+</ul>
+<p>功能：bx中所存放的数据作为一个偏移地址，然后再结合 ds 中段地址的数据计算出物理地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">物理地址=(ds)*16+bx</span><br></pre></td></tr></table></figure>
+<p>然后将该物理地址中的数据送入 ax 中。</p>
+<h2 id="Loop">Loop</h2>
+<h3 id="什么是-Loop">什么是 Loop</h3>
+<p>loop 中文意思是：循环。</p>
+<p>作用也就很明显了，它就相当于我们最常接触的 while 和 for，循环的一个关键是循环的次数，而在汇编语言中 loop 所循环的次数是由 cx 所决定的。</p>
+<h3 id="格式以及运作原理">格式以及运作原理</h3>
+<p>格式如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">	...</span><br><span class="line">  s:xxx</span><br><span class="line">    xxx</span><br><span class="line">    loop s</span><br><span class="line">    xxx</span><br><span class="line">    ...</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<ul>
+<li>标号 s 要放在 loop 指令之前</li>
+<li>循环执行的程序段放在标号和 loop 指令之间</li>
+</ul>
+<p><strong>运作原理：</strong></p>
+<p>当 CPU 执行 loop命令时会执行一下两个步骤：</p>
+<ol>
+<li>(cx)=(cx)-1</li>
+<li>判断 cx 的值是否为0，如果不为0，则跳转至 s 处继续执行代码；如果为零，那就继续执行下一条指令</li>
+</ol>
+<h2 id="两者的联合使用">两者的联合使用</h2>
+<p>当我们需要对连续性变化的内存地址进行重复性的操作时，如果我们不适用循环，那我们的源码会变得十分冗长，且有很多的重复性语句。</p>
+<p>例如：计算 ffff:0~ffff:b 单元内数据的和，结果储存在 dx 中</p>
+<p>首先我们最应该考虑的是数据是否会溢出，数据类型是不是匹配等问题。很显然，溢出的问题是不存在的，但是将 ffff:0 中的数据直接放入 bx 中是不可取的，因为前者的数据是8位，而后者的数据是16位。</p>
+<p>通过如下步骤解决问题</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mov al,ds:[0] //将目标数据放入低位的 ax 寄存器中</span><br><span class="line">mov ah,0 //将 ax 寄存器的高位置为0，此时(ax)=(ffff:0)且数据长度为16位</span><br></pre></td></tr></table></figure>
+<p>不利用循环的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">	mov ax,0ffffh //汇编语言中不允许字母为开头的常量，所以我们添加0</span><br><span class="line">	mov ds,ax //设置(ds)=ffffh</span><br><span class="line">	mov dx,0 //初始化累加器</span><br><span class="line">	</span><br><span class="line">	mov al,ds:[0]</span><br><span class="line">	mov ah,0  //获取目标内存中的数据且长度为16位</span><br><span class="line">	add dx,ax //进行数据累加</span><br><span class="line">	</span><br><span class="line">	mov al,ds:[1]</span><br><span class="line">	mov ah,0  </span><br><span class="line">	add dx,ax</span><br><span class="line">	</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	</span><br><span class="line">	mov al,ds:[0bh]</span><br><span class="line">	mov ah,0  </span><br><span class="line">	add dx,ax</span><br><span class="line">	</span><br><span class="line">	mov ax,4c00h //程序返回</span><br><span class="line">	int 21h</span><br><span class="line"></span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>该程序中间的实现功能的主要部分大多都是相似的，变化的不过时偏移地址的值，因此我们在循环中改变偏移地址的值即可。</p>
+<p>使用循环的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line">code segment</span><br><span class="line"></span><br><span class="line">	mov ax,0ffffh //汇编语言中不允许字母为开头的常量，所以我们添加0</span><br><span class="line">	mov ds,ax //设置(ds)=ffffh</span><br><span class="line">	mov dx,0 //初始化累加器</span><br><span class="line">	</span><br><span class="line">	mov cx,12 //设置循环为12次</span><br><span class="line"> </span><br><span class="line"> s: mov al,[bx]</span><br><span class="line">	mov ah,0  </span><br><span class="line">	add dx,ax //将目标数据存入ax中并累加</span><br><span class="line">	inc bx //改变偏移地址</span><br><span class="line">	loop s</span><br><span class="line">	</span><br><span class="line">	mov ax,4c00h //程序返回</span><br><span class="line">	int 21h</span><br><span class="line">	</span><br><span class="line">code ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/24/BX%E5%92%8CLoop/">https://ghdemi.github.io/2022/05/24/BX%E5%92%8CLoop/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-26</p></div> 
+    <div class="post-entry__tags"><a href="/tags/X86%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X86汇编</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2022/05/24/%E5%A4%9A%E4%B8%AA%E6%AE%B5%E7%9A%84%E7%A8%8B%E5%BA%8F/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            多个段的程序
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/05/21/%E5%88%9D%E6%8E%A2Re/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            初探Re
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

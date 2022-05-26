@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>多个段的程序 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="X86汇编">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="有了多个段之后，程序会变得更加有条理、舒服🍺">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多个段的程序">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/24/%E5%A4%9A%E4%B8%AA%E6%AE%B5%E7%9A%84%E7%A8%8B%E5%BA%8F/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="有了多个段之后，程序会变得更加有条理、舒服🍺">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/simpledesktops2.png">
+<meta property="article:published_time" content="2022-05-24T08:28:39.000Z">
+<meta property="article:modified_time" content="2022-05-26T01:23:07.619Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="X86汇编">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/simpledesktops2.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        多个段的程序
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-24</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">产生的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F"><span class="toc-text">解决方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%A0%88"><span class="toc-text">代码段中使用栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="toc-text">栈的初体验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E6%AE%B5"><span class="toc-text">多个段</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">产生的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E5%BC%8F"><span class="toc-text">解决方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%A0%88"><span class="toc-text">代码段中使用栈</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E7%9A%84%E5%88%9D%E4%BD%93%E9%AA%8C"><span class="toc-text">栈的初体验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E6%AE%B5"><span class="toc-text">多个段</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/simpledesktops2.png');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>有了多个段之后，程序会变得更加有条理、舒服🍺</p>
+<span id="more"></span>
+<h2 id="产生的问题">产生的问题</h2>
+<p>将 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h 以下8个数据的和的结果放入寄存器 ax 中</p>
+<p>直接上代码进行分析</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line">codesg segment</span><br><span class="line"></span><br><span class="line">	dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h</span><br><span class="line"></span><br><span class="line">	mov bx,0</span><br><span class="line">	mov ax,0</span><br><span class="line"></span><br><span class="line">	mov cx,8</span><br><span class="line">              s:add ax,cs:[bx]</span><br><span class="line">	add bx,2</span><br><span class="line">	loop s</span><br><span class="line"></span><br><span class="line">	mov ax,4c00h</span><br><span class="line">	int 21h</span><br><span class="line"></span><br><span class="line">codesg ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>其中的 dw 含义是定义字型数据，即“define word”。在这里定义了8个字型数据，它们所占用的空间大小为16个字节。</p>
+<p>再对程序进行编译和链接并查看一下基本的情况<img src="image-20220521102904789.png" alt="image-20220521102904789"></p>
+<p>关注图中 -d 后的第一行，我们可以发现我们所想要写入的数据已经被连续地存放在了代码段的最开始处。</p>
+<p>关注图中 -r 中显示的所要执行的下一条命令，可以发现是<code>and ax,[bx+di]</code>并不是我们所想要的<code>mov bx,0</code>。</p>
+<p>产生这种情况的原因在于，计算机认为我们程序执行的开始是    076a:0000 处，但是在此处之后的16个字节已经被我们用来存放我们所定义的字型数据了，而<code>and ax,[bx+di]</code>就是我们所存放的数据变成汇编语言的结果。</p>
+<p>**所产生的问题就是：**当我们的程序包含有自定义的数据时，由于计算机自动将 cs:ip 中的内容当程序执行的第一句话，我们所定义的数据会被当成命令来执行。</p>
+<p>我们也可以推理出来，我们所希望计算机开始执行语句的地方是 076a:0010 处</p>
+<p><img src="image-20220521104517384.png" alt="image-20220521104517384"></p>
+<h2 id="解决方式">解决方式</h2>
+<p>修改代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line">codesg segment</span><br><span class="line"></span><br><span class="line">	dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h</span><br><span class="line"></span><br><span class="line">	start:	mov bx,0</span><br><span class="line">		mov ax,0</span><br><span class="line"></span><br><span class="line">		mov cx,8</span><br><span class="line">              	              s:add ax,cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s</span><br><span class="line"></span><br><span class="line"> 		mov ax,4c00h</span><br><span class="line">		int 21h</span><br><span class="line"></span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>我们通过标识符 start 来告诉计算机我们的代码段所要开始执行语句的位置</p>
+<p><img src="image-20220521112016184.png" alt="image-20220521112016184"></p>
+<p>start 标识符是我们可以进行自定义的，只要是符合规定的名称都可以，其次就是保证两处的标识符要保持一致</p>
+<p><img src="image-20220521112326335.png" alt="image-20220521112326335"></p>
+<p>**end 的作用：**end 不但通知计算机程序的结束之处，还告诉了编译器程序的入口之处。</p>
+<h2 id="代码段中使用栈">代码段中使用栈</h2>
+<h3 id="栈的初体验">栈的初体验</h3>
+<p>**什么是栈：**是一种数据结构，里面的数据会按照先进后出的原则进行存放使用。</p>
+<p><strong>问题体验：</strong></p>
+<p>将这些数据0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h按照逆序存放</p>
+<p>源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg</span><br><span class="line">codesg segment</span><br><span class="line"></span><br><span class="line">	dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h</span><br><span class="line">	dw 0,0,0,0,0,0,0,0 //定义栈段</span><br><span class="line"></span><br><span class="line">start:	mov ax,cs</span><br><span class="line">		mov ss,ax  //修改栈段</span><br><span class="line">		mov sp,20h  //修改栈偏移指针，将其指向栈底-1处</span><br><span class="line"></span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,8</span><br><span class="line">   s0:  push cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s0  //数据入栈</span><br><span class="line">		</span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,8</span><br><span class="line">   s1:  pop cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s1  //数据出栈</span><br><span class="line"></span><br><span class="line"> 		mov ax,4c00h</span><br><span class="line">		int 21h</span><br><span class="line"></span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>debug 后的初始状态</p>
+<p><img src="image-20220521120016998.png" alt="image-20220521120016998"></p>
+<p>执行完第一个 loop 后的状态</p>
+<p><img src="image-20220521120323872.png" alt="image-20220521120323872"></p>
+<p>执行完第二个 loop 后的状态</p>
+<p><img src="image-20220521120530973.png" alt="image-20220521120530973"></p>
+<p>**小结：**以上是我们通过在代码段中自定义数据段和栈段来实现我们的功能，但当我们的程序变得复杂是，将这些段都糊在一起会显得很杂乱且容易出错。</p>
+<h3 id="多个段">多个段</h3>
+<p>为了解决上面的问题，我们使用多个段。所谓的多个段就是：将数据、代码、栈放入不同的段中。</p>
+<p>使用多个段的程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg,ds:data,ss:stack</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">	dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">	dw 0,0,0,0,0,0,0,0</span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line"></span><br><span class="line">	start:	mov ax,stack</span><br><span class="line">		mov ss,ax</span><br><span class="line">		mov sp,10h</span><br><span class="line"></span><br><span class="line">		mov ax,data</span><br><span class="line">		mov ds,ax</span><br><span class="line"></span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,8</span><br><span class="line">              	          s0:  push cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s0</span><br><span class="line">		</span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,8</span><br><span class="line">              	          s1:  pop cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s1</span><br><span class="line"></span><br><span class="line"> 		mov ax,4c00h</span><br><span class="line">		int 21h</span><br><span class="line"></span><br><span class="line">codesg ends</span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>观察初始状态的寄存器情况</p>
+<p><img src="image-20220522141627231.png" alt="image-20220522141627231"></p>
+<p>一般来说寄存器中 DS 和 CS 的数值应当是相差 10h 的，但是这里它们相差了 12h，再观察图中的汇编语句我们可以知道我们所定义的 stack 段的段地址是 076b。</p>
+<p>查看内存中的情况</p>
+<p><img src="image-20220522142509794.png" alt="image-20220522142509794"></p>
+<p>我们所申请的数据段和栈段被安排了代码段之前，并且每一段的空间大小都为16个字节，这也就是为什么 DS 和 CS相差了12h的原因。</p>
+<p>对多个段的顺序进行改变</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg,ds:data,ss:stack</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line"></span><br><span class="line">	start:	mov ax,stack</span><br><span class="line">		mov ss,ax</span><br><span class="line">		mov sp,10h</span><br><span class="line"></span><br><span class="line">		mov ax,data</span><br><span class="line">		mov ds,ax</span><br><span class="line"></span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,8</span><br><span class="line">              	          s0:  push cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s0</span><br><span class="line">		</span><br><span class="line">		mov bx,0</span><br><span class="line">		mov cx,8</span><br><span class="line">              	          s1:  pop cs:[bx]</span><br><span class="line">		add bx,2</span><br><span class="line">		loop s1</span><br><span class="line"></span><br><span class="line"> 		mov ax,4c00h</span><br><span class="line">		int 21h</span><br><span class="line"></span><br><span class="line">codesg ends</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">	dw 0123h,0456h,0789h,0abch,0defh,0fedh,0cbah,0987h </span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">	dw 0,0,0,0,0,0,0,0</span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>当我们在程序中改变各个段的次序时，可以发现在内存中它们的位置也发生了改变</p>
+<p><img src="image-20220522143433185.png" alt="image-20220522143433185"></p>
+<p>寄存器中的 DS 和 CS 的数值相差为10h，而所申请的栈段的段地址变成了 076e，我们也可以大致推断出计算机运行我们程序的顺序是从上到下的</p>
+<p><img src="image-20220522144132555.png" alt="image-20220522144132555"></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/24/%E5%A4%9A%E4%B8%AA%E6%AE%B5%E7%9A%84%E7%A8%8B%E5%BA%8F/">https://ghdemi.github.io/2022/05/24/%E5%A4%9A%E4%B8%AA%E6%AE%B5%E7%9A%84%E7%A8%8B%E5%BA%8F/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-26</p></div> 
+    <div class="post-entry__tags"><a href="/tags/X86%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X86汇编</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2022/05/26/%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            灵活使用内存地址
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/05/24/BX%E5%92%8CLoop/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            BX和Loop
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

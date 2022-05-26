@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>灵活使用内存地址 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="X86汇编">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="开始整活🏯">
+<meta property="og:type" content="article">
+<meta property="og:title" content="灵活使用内存地址">
+<meta property="og:url" content="https://ghdemi.github.io/2022/05/26/%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="开始整活🏯">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-g76qpl.jpg">
+<meta property="article:published_time" content="2022-05-26T01:04:35.000Z">
+<meta property="article:modified_time" content="2022-05-26T01:22:17.971Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="X86汇编">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-g76qpl.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        灵活使用内存地址
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/05/" class="post-meta__date button">2022-05-26</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bx-idata"><span class="toc-text">[bx+idata]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bx-idata-%E4%B8%8E%E6%95%B0%E7%BB%84%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">[bx+idata]与数组的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SI%E5%92%8CDI"><span class="toc-text">SI和DI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9A%82%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-text">暂存数据</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#bx-idata"><span class="toc-text">[bx+idata]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#bx-idata-%E4%B8%8E%E6%95%B0%E7%BB%84%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">[bx+idata]与数组的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SI%E5%92%8CDI"><span class="toc-text">SI和DI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9A%82%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-text">暂存数据</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-g76qpl.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>开始整活🏯</p>
+<span id="more"></span>
+<h2 id="bx-idata">[bx+idata]</h2>
+<p>[bx] 可以用来指明一个内存单元，[bx+idata]也具有相同的功能且更为灵活。</p>
+<p>[bx+idata]表示：偏移地址=(bx)+idata</p>
+<p>例如：<code>mov ax,[bx+200]</code> 它的含义就是将一个内存单元的内容放入 ax 中，这个内存单元的长度为2个字节，偏移地址为 (bx)+200，段地址为 (ds)。将该命令用数学化的公式表达即为：<code>(ax)=((ds)*16+(bx)+200)</code>。</p>
+<p>指令<code>mov ax,[bx+200]</code>也可以用如下形式表示</p>
+<ul>
+<li>mov ax,[200+bx]</li>
+<li>mov ax,200[bx]</li>
+<li>mov ax,[bx].200</li>
+</ul>
+<h3 id="bx-idata-与数组的关系">[bx+idata]与数组的关系</h3>
+<p>问题：将 datasg 中定义的字符串转为大写，第二个字符串转为小写</p>
+<p>源码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg,ds:datasg</span><br><span class="line"></span><br><span class="line">datasg segment</span><br><span class="line">	db &#x27;BaSiC&#x27;</span><br><span class="line">	db &#x27;MinIX&#x27;</span><br><span class="line">datasg ends</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line">	start:mov ax,datasg</span><br><span class="line">	      mov ds,ax</span><br><span class="line">	      mov bx,0</span><br><span class="line">    </span><br><span class="line">          mov cx,5</span><br><span class="line">        s:mov al,[bx]</span><br><span class="line">          and al,11011111b  //通过 and 将小写改为大写</span><br><span class="line">          mov [bx],al</span><br><span class="line">          inc bx</span><br><span class="line">          loop s</span><br><span class="line">          </span><br><span class="line">          mov bx,5</span><br><span class="line">          mov cx,5</span><br><span class="line">       s0:mov al,[bx]</span><br><span class="line">          or al,00100000b  //通过 or 将大写改为小写</span><br><span class="line">          mov [bx],al</span><br><span class="line">          inc bx</span><br><span class="line">          loop s0</span><br><span class="line">          </span><br><span class="line">          mov ax,4c00h</span><br><span class="line">	      int 21h</span><br><span class="line">codesg ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>初始时的寄存器和内存状态，我们可以观察到我们所写入的数据以及后面的指令</p>
+<p><img src="%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/image-20220522163137604.png" alt="image-20220522163137604"></p>
+<p>结束后内存的状态</p>
+<p><img src="%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/image-20220522163556577.png" alt="image-20220522163556577"></p>
+<p>而以上的方法并没有将 [bx+idata] 利用起来，我们依旧是通过两个循环实现我们的目的。</p>
+<p>我们可以将这两个等长的字符串看成是2个数组，在一个循环中对2个数组同时进行处理。这两个数组的不同之处就是数组起始地址的偏移地址不一样，而每次处理时对于这两个数组的偏移地址地址都是相同的，而数组起始地址的偏移地址我们可以通过 [dx+idata] 的方式来改变。</p>
+<p>使用 [dx+idata] 的源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg,ds:datasg</span><br><span class="line"></span><br><span class="line">datasg segment</span><br><span class="line">	db &#x27;BaSiC&#x27;</span><br><span class="line">	db &#x27;MinIX&#x27;</span><br><span class="line">datasg ends</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line">	start:mov ax,datasg</span><br><span class="line">	      mov ds,ax</span><br><span class="line">	      mov bx,0</span><br><span class="line">    </span><br><span class="line">          mov cx,5</span><br><span class="line">        s:mov al,0[bx]  //0为第一个字符串起始地址的偏移地址</span><br><span class="line">          and al,11011111b  </span><br><span class="line">          mov 0[bx],al</span><br><span class="line">          </span><br><span class="line">          mov al,5[bx] //5为第二个字符串起始地址的偏移地址</span><br><span class="line">          or al,00100000b</span><br><span class="line">          mov 5[bx],al</span><br><span class="line">          </span><br><span class="line">          inc bx</span><br><span class="line">          loop s</span><br><span class="line">          </span><br><span class="line">          mov ax,4c00h</span><br><span class="line">	      int 21h</span><br><span class="line">codesg ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>汇编语言和C语言相呼应的地方</p>
+<ul>
+<li>汇编语言：0[bx]，5[bx]</li>
+<li>C语言：a[i]，b[i]</li>
+</ul>
+<h2 id="SI和DI">SI和DI</h2>
+<p>它们是寄存器中和 bx 功能相近的寄存器，它们之间的区别就是：si 和 di 不能分成两个8位寄存器来使用。</p>
+<ul>
+<li>[bx+si]  偏移地址=(bx)+(si)</li>
+<li>[bx+si+idata]  偏移地址=(bx)+(si)+idata</li>
+<li>[bx+200+si]=[200+bx+si]=200[bx][si]=[bx].200[si]=[bx][si].200</li>
+</ul>
+<h2 id="暂存数据">暂存数据</h2>
+<p>当我们程序变得复杂庞大时，需要对一些数据进行暂存，而寄存器数量有限，我们只能通过内存来帮助我们存储这些临时数据，但是如果只是通过简单地获取内存中的一个单元地址来存储我们的数据的方法是不可取的，因为我们必须要记住我们将数据放入了哪个内存单元中，这样程序会很容易混乱。</p>
+<p>解决办法就是利用<strong>栈</strong>。</p>
+<p>一般来说，在需要缓存数据的时候，我们都应该使用栈来操作。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/05/26/%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/">https://ghdemi.github.io/2022/05/26/%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-05-26</p></div> 
+    <div class="post-entry__tags"><a href="/tags/X86%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X86汇编</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/05/24/%E5%A4%9A%E4%B8%AA%E6%AE%B5%E7%9A%84%E7%A8%8B%E5%BA%8F/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            多个段的程序
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
