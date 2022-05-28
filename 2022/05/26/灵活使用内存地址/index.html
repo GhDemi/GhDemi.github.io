@@ -52,7 +52,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-g76qpl.jpg">
 <meta property="article:published_time" content="2022-05-26T01:04:35.000Z">
-<meta property="article:modified_time" content="2022-05-26T01:22:17.971Z">
+<meta property="article:modified_time" content="2022-05-28T08:26:53.111Z">
 <meta property="article:author" content="GhDemi">
 <meta property="article:tag" content="X86汇编">
 <meta name="twitter:card" content="summary_large_image">
@@ -212,9 +212,9 @@
 <p>源码：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">assume cs:codesg,ds:datasg</span><br><span class="line"></span><br><span class="line">datasg segment</span><br><span class="line">	db &#x27;BaSiC&#x27;</span><br><span class="line">	db &#x27;MinIX&#x27;</span><br><span class="line">datasg ends</span><br><span class="line"></span><br><span class="line">codesg segment</span><br><span class="line">	start:mov ax,datasg</span><br><span class="line">	      mov ds,ax</span><br><span class="line">	      mov bx,0</span><br><span class="line">    </span><br><span class="line">          mov cx,5</span><br><span class="line">        s:mov al,[bx]</span><br><span class="line">          and al,11011111b  //通过 and 将小写改为大写</span><br><span class="line">          mov [bx],al</span><br><span class="line">          inc bx</span><br><span class="line">          loop s</span><br><span class="line">          </span><br><span class="line">          mov bx,5</span><br><span class="line">          mov cx,5</span><br><span class="line">       s0:mov al,[bx]</span><br><span class="line">          or al,00100000b  //通过 or 将大写改为小写</span><br><span class="line">          mov [bx],al</span><br><span class="line">          inc bx</span><br><span class="line">          loop s0</span><br><span class="line">          </span><br><span class="line">          mov ax,4c00h</span><br><span class="line">	      int 21h</span><br><span class="line">codesg ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
 <p>初始时的寄存器和内存状态，我们可以观察到我们所写入的数据以及后面的指令</p>
-<p><img src="%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/image-20220522163137604.png" alt="image-20220522163137604"></p>
+<p><img src="image-20220522163137604.png" alt="image-20220522163137604"></p>
 <p>结束后内存的状态</p>
-<p><img src="%E7%81%B5%E6%B4%BB%E4%BD%BF%E7%94%A8%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80/image-20220522163556577.png" alt="image-20220522163556577"></p>
+<p><img src="image-20220522163556577.png" alt="image-20220522163556577"></p>
 <p>而以上的方法并没有将 [bx+idata] 利用起来，我们依旧是通过两个循环实现我们的目的。</p>
 <p>我们可以将这两个等长的字符串看成是2个数组，在一个循环中对2个数组同时进行处理。这两个数组的不同之处就是数组起始地址的偏移地址不一样，而每次处理时对于这两个数组的偏移地址地址都是相同的，而数组起始地址的偏移地址我们可以通过 [dx+idata] 的方式来改变。</p>
 <p>使用 [dx+idata] 的源码</p>
@@ -256,13 +256,27 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2022-05-26</p></div> 
+    <div class="post-footer__meta"><p>更新于 2022-05-28</p></div> 
     <div class="post-entry__tags"><a href="/tags/X86%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X86汇编</a></div> 
 </article>
 
 
     <div class="nav">
         <div class="nav__prev">
+            
+                <a href="/2022/05/28/%E6%95%B0%E6%8D%AE%E7%9A%84%E5%A4%84%E7%90%86/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            数据的处理
+                        </div>
+                    </div>
+                </a>
             
         </div>
         <div class="nav__next">
