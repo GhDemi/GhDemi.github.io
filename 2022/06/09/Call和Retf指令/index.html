@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Call和Retf指令 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="X86汇编">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="X86汇编系列到此应该结束🍻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Call和Retf指令">
+<meta property="og:url" content="https://ghdemi.github.io/2022/06/09/Call%E5%92%8CRetf%E6%8C%87%E4%BB%A4/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="X86汇编系列到此应该结束🍻">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220609162515.jpg">
+<meta property="article:published_time" content="2022-06-09T08:21:32.000Z">
+<meta property="article:modified_time" content="2022-06-09T08:31:26.216Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="X86汇编">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220609162515.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Call和Retf指令
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/06/" class="post-meta__date button">2022-06-09</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%AE%80%E4%BB%8B"><span class="toc-text">指令简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ret-%E5%92%8C-retf-%E6%8C%87%E4%BB%A4"><span class="toc-text">ret 和 retf 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call-%E6%8C%87%E4%BB%A4"><span class="toc-text">Call 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8D%E7%A7%BB%E8%BD%AC%E7%A7%BB%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">位移转移的 call 指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E7%A7%BB%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">目的地址转移的 call 指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E5%9C%B0%E5%9D%80%E4%BD%8D%E4%BA%8E%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">转移地址位于寄存器中的 call 指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E5%9C%B0%E5%9D%80%E4%BD%8D%E4%BA%8E%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">转移地址位于内存中的 call 指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mul-%E6%8C%87%E4%BB%A4"><span class="toc-text">mul 指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#call-%E5%92%8C-ret-%E7%9A%84%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8"><span class="toc-text">call 和 ret 的配合使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92"><span class="toc-text">批量参数的传递</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E7%AE%80%E4%BB%8B"><span class="toc-text">指令简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ret-%E5%92%8C-retf-%E6%8C%87%E4%BB%A4"><span class="toc-text">ret 和 retf 指令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Call-%E6%8C%87%E4%BB%A4"><span class="toc-text">Call 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%8D%E7%A7%BB%E8%BD%AC%E7%A7%BB%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">位移转移的 call 指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E7%A7%BB%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">目的地址转移的 call 指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E5%9C%B0%E5%9D%80%E4%BD%8D%E4%BA%8E%E5%AF%84%E5%AD%98%E5%99%A8%E4%B8%AD%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">转移地址位于寄存器中的 call 指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E5%9C%B0%E5%9D%80%E4%BD%8D%E4%BA%8E%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84-call-%E6%8C%87%E4%BB%A4"><span class="toc-text">转移地址位于内存中的 call 指令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mul-%E6%8C%87%E4%BB%A4"><span class="toc-text">mul 指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#call-%E5%92%8C-ret-%E7%9A%84%E9%85%8D%E5%90%88%E4%BD%BF%E7%94%A8"><span class="toc-text">call 和 ret 的配合使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%8F%82%E6%95%B0%E7%9A%84%E4%BC%A0%E9%80%92"><span class="toc-text">批量参数的传递</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/微信图片_20220609162515.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>X86汇编系列到此应该结束🍻</p>
+<span id="more"></span>
+<h2 id="指令简介">指令简介</h2>
+<h3 id="ret-和-retf-指令">ret 和 retf 指令</h3>
+<ul>
+<li>ret 指令使用栈中的数据修改 ip 的内容，从而实现近转移</li>
+<li>retf 指令使用栈中的数据修改 cs 和 ip 的内容，从而实现远转移。</li>
+</ul>
+<p>CPU 执行 ret 指令时所进行的操作：</p>
+<ol>
+<li>(ip)=((ss)*16+(sp))</li>
+<li>(sp)=(sp)+2</li>
+</ol>
+<p>CPU 执行 retf 指令所进行的操作：</p>
+<ol>
+<li>(ip)=((ss)*16+(sp))</li>
+<li>(sp)=(sp)+2</li>
+<li>(cs)=((ss)*16+(sp))</li>
+<li>(sp)=(sp)+2</li>
+</ol>
+<p>以汇编语言去解释 ret 指令</p>
+<p>pop ip</p>
+<p>以汇编语言去解释 retf 指令</p>
+<p>pop ip</p>
+<p>pop cs</p>
+<p>举个例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code</span><br><span class="line"></span><br><span class="line">stack segment</span><br><span class="line">	db 16 dup(0)</span><br><span class="line">stack ends</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">		mov ax,4c00h</span><br><span class="line">		int 21h</span><br><span class="line">	</span><br><span class="line">  start:mov ax,stack</span><br><span class="line">  		mov ss,ax</span><br><span class="line">  		mov sp,16  //将 sp 指向栈底-1的位置</span><br><span class="line">  		mov ax,0</span><br><span class="line">  		push ax</span><br><span class="line">  		mov bx,0</span><br><span class="line">  		ret</span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">end start</span><br></pre></td></tr></table></figure>
+<p>执行完 ret 指令之后，(ip)=0，cs:ip 指向代码段第一条命令。</p>
+<h3 id="Call-指令">Call 指令</h3>
+<p>CPU 执行 call 指令时所执行的操作：</p>
+<ol>
+<li>将当前的 ip 或 cs 和 ip 压入栈中</li>
+<li>转移</li>
+</ol>
+<p>call 指令不实现短转移，用汇编语言解释就是 jmp short 8位位移，因为短转移的转移位移是8位位移。</p>
+<h4 id="位移转移的-call-指令">位移转移的 call 指令</h4>
+<p><strong>格式：</strong> call 标号(将当前的 ip 压栈后，转移到标号处执行指令)</p>
+<p>CPU 执行这种格式的 call 指令时的操作：</p>
+<ol>
+<li>(sp)=(sp)-2</li>
+<li>((ss)*16+(sp))=(ip)</li>
+<li>(ip)=(ip)+16位位移</li>
+</ol>
+<p>用汇编语言解释就是：</p>
+<p>push ip</p>
+<p>jmp near ptr 标号</p>
+<h4 id="目的地址转移的-call-指令">目的地址转移的 call 指令</h4>
+<p><strong>格式：</strong> call far ptr 标号(将当前的 cs 和 ip 压入栈后，转移到标号处执行操作)</p>
+<p>CPU执行这种格式的 call 指令时的操作：</p>
+<ol>
+<li>
+<p>(sp)=(sp)-2</p>
+<p>((ss)*16+(sp))=(cs)</p>
+</li>
+<li>
+<p>(sp)=(sp)-2</p>
+<p>((ss)*16+(sp))=(ip)</p>
+</li>
+<li>
+<p>(cs)=标号所在的段地址</p>
+<p>(ip)=标号中的偏移地址</p>
+</li>
+</ol>
+<p>用汇编语言解释就是：</p>
+<p>push cs</p>
+<p>push ip</p>
+<p>jmp far ptr 标号</p>
+<h4 id="转移地址位于寄存器中的-call-指令">转移地址位于寄存器中的 call 指令</h4>
+<p><strong>格式：</strong> call 16位寄存器(将ip 压入栈后，转移到 cs:16位寄存器处 执行)</p>
+<p>CPU执行这种格式的 call 指令时的操作：</p>
+<ol>
+<li>(sp)=(sp)-2</li>
+<li>((ss)*16+(sp))=(ip)</li>
+<li>(ip)=(16位寄存器)</li>
+</ol>
+<p>用汇编语言解释就是：</p>
+<p>push ip</p>
+<p>jmp 16位reg</p>
+<h4 id="转移地址位于内存中的-call-指令">转移地址位于内存中的 call 指令</h4>
+<p>格式：</p>
+<ul>
+<li>call word ptr 内存单元地址</li>
+<li>call dword ptr 内存单元地址</li>
+</ul>
+<p>和前面的都类似，word 涉及到的内存单元大小是1个字，只改变 ip 的值；dword 涉及到的内存单元大小是2个字，同时改变 cs 和 ip 的值。</p>
+<p>用汇编语言解释“call word ptr 内存单元地址” 指令</p>
+<p>push ip</p>
+<p>jmp word ptr 内存单元地址</p>
+<p>用汇编语言解释“call dword ptr 内存单元地址” 指令</p>
+<p>push cs</p>
+<p>push ip</p>
+<p>jmp dword ptr 内存单元地址</p>
+<h3 id="mul-指令">mul 指令</h3>
+<p>乘法指令，要求如下：</p>
+<ul>
+<li>两个相乘的数要么为8位，要么为16位。
+<ul>
+<li>8位：一个默认放在 al 中，另一个放在8位 reg 或内存字节单元中</li>
+<li>16位：一个默认放在 ax 中，另一个放在16位 reg 或内存单元字节中</li>
+</ul>
+</li>
+<li>相乘后的结果
+<ul>
+<li>8位：结果默认放在 ax 中</li>
+<li>16位：默认高位放在 dx 中，低位放在 ax 中</li>
+</ul>
+</li>
+</ul>
+<p>格式如下：</p>
+<ul>
+<li>mul reg</li>
+<li>mul 内存单元</li>
+</ul>
+<p><img src="image-20220527111056621.png" alt="image-20220527111056621"></p>
+<p><img src="image-20220527111105425.png" alt="image-20220527111105425"></p>
+<p><img src="image-20220527111119085.png" alt="image-20220527111119085"></p>
+<h2 id="call-和-ret-的配合使用">call 和 ret 的配合使用</h2>
+<p><img src="image-20220527111503765.png" alt="image-20220527111503765"></p>
+<h2 id="批量参数的传递">批量参数的传递</h2>
+<p>之前的参数我们都是使用寄存器来存放，当我们的参数变多，寄存器不够用时我们就需要将批量的数据存放在内存中，然后将内存空间的首地址放在寄存器中，然后再将数据传输给需要的子程序。对于有批量数据的返回结果我们也是使用相同的方法。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/06/09/Call%E5%92%8CRetf%E6%8C%87%E4%BB%A4/">https://ghdemi.github.io/2022/06/09/Call%E5%92%8CRetf%E6%8C%87%E4%BB%A4/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-06-09</p></div> 
+    <div class="post-entry__tags"><a href="/tags/X86%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X86汇编</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/06/02/%E8%BD%AC%E7%A7%BB%E6%8C%87%E4%BB%A4/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            转移指令
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

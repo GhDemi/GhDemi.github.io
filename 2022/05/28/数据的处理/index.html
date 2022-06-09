@@ -52,7 +52,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/20220528162055.png">
 <meta property="article:published_time" content="2022-05-28T08:18:47.000Z">
-<meta property="article:modified_time" content="2022-05-28T08:23:52.259Z">
+<meta property="article:modified_time" content="2022-06-05T03:50:18.280Z">
 <meta property="article:author" content="GhDemi">
 <meta property="article:tag" content="X86汇编">
 <meta name="twitter:card" content="summary_large_image">
@@ -174,7 +174,7 @@
 
     <aside class="post-side">
         <div class="post-side__toc">
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B0%E7%90%86"><span class="toc-text">基础知识数理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E5%9D%80"><span class="toc-text">寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="toc-text">处理数据的长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div-%E6%8C%87%E4%BB%A4"><span class="toc-text">div 指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dd-%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">dd 伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-text">dup</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86"><span class="toc-text">基础知识梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E5%9D%80"><span class="toc-text">寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="toc-text">处理数据的长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div-%E6%8C%87%E4%BB%A4"><span class="toc-text">div 指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dd-%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">dd 伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-text">dup</span></a></li></ol>
         </div>
     </aside>
     <a class="btn-toc button" id="btn-toc" tabindex="0">
@@ -184,7 +184,7 @@
     </a>
     <div class="toc-menus" id="toc-menus">
         <div class="toc-title">文章目录</div>
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%95%B0%E7%90%86"><span class="toc-text">基础知识数理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E5%9D%80"><span class="toc-text">寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="toc-text">处理数据的长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div-%E6%8C%87%E4%BB%A4"><span class="toc-text">div 指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dd-%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">dd 伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-text">dup</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%A2%B3%E7%90%86"><span class="toc-text">基础知识梳理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%BB%E5%9D%80"><span class="toc-text">寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E7%9A%84%E9%95%BF%E5%BA%A6"><span class="toc-text">处理数据的长度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#div-%E6%8C%87%E4%BB%A4"><span class="toc-text">div 指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dd-%E4%BC%AA%E6%8C%87%E4%BB%A4"><span class="toc-text">dd 伪指令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dup"><span class="toc-text">dup</span></a></li></ol>
     </div>
 
 
@@ -197,7 +197,7 @@
     <div class="post__content">
         <p>Be patient💱</p>
 <span id="more"></span>
-<h2 id="基础知识数理">基础知识数理</h2>
+<h2 id="基础知识梳理">基础知识梳理</h2>
 <p>计算机对数据进行处理、运算的过程中有两个基本的问题：</p>
 <ul>
 <li>所要处理的数据放在是什么地方</li>
@@ -238,7 +238,7 @@
 <li>
 <p>立即数</p>
 <p>在机器指令中直接给出的数据</p>
-<img src="../../../CyberSecurity/node/Reverse/Point/image-20220523114245664.png" alt="image-20220523114245664"  />
+<p><img src="image-20220523114245664.png" alt="image-20220523114245664"></p>
 </li>
 <li>
 <p>寄存器</p>
@@ -366,7 +366,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2022-05-28</p></div> 
+    <div class="post-footer__meta"><p>更新于 2022-06-05</p></div> 
     <div class="post-entry__tags"><a href="/tags/X86%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X86汇编</a></div> 
 </article>
 
