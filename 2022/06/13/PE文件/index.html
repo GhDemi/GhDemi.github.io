@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>PE文件 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="基础">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="PPPPPE 文件中一些基础的东西，较简单，无深入">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE文件">
+<meta property="og:url" content="https://ghdemi.github.io/2022/06/13/PE%E6%96%87%E4%BB%B6/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="PPPPPE 文件中一些基础的东西，较简单，无深入">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-45ey59.jpg">
+<meta property="article:published_time" content="2022-06-13T12:12:30.000Z">
+<meta property="article:modified_time" content="2022-06-13T12:33:57.476Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-45ey59.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        PE文件
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/06/" class="post-meta__date button">2022-06-13</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">PE文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84%E4%BD%93%E8%AF%A6%E8%A7%A3"><span class="toc-text">PE头部结构体详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dos%E5%A4%B4"><span class="toc-text">Dos头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PE%E5%A4%B4"><span class="toc-text">PE头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%82%E5%8C%BA"><span class="toc-text">节区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%85%B3%E7%BB%93%E6%9E%84%E4%BD%93%E8%AF%A6%E8%A7%A3"><span class="toc-text">数据目录相关结构体详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAGE-IMPORT-DESCRIPTOR"><span class="toc-text">_IMAGE_IMPORT_DESCRIPTOR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAGE-THUNK-DATA"><span class="toc-text">_IMAGE_THUNK_DATA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAGE-IMPORT-BY-NAME"><span class="toc-text">_IMAGE_IMPORT_BY_NAME</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">三者之间的关系</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">PE文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PE%E5%A4%B4%E9%83%A8%E7%BB%93%E6%9E%84%E4%BD%93%E8%AF%A6%E8%A7%A3"><span class="toc-text">PE头部结构体详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Dos%E5%A4%B4"><span class="toc-text">Dos头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PE%E5%A4%B4"><span class="toc-text">PE头</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8A%82%E5%8C%BA"><span class="toc-text">节区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%9B%AE%E5%BD%95%E7%9B%B8%E5%85%B3%E7%BB%93%E6%9E%84%E4%BD%93%E8%AF%A6%E8%A7%A3"><span class="toc-text">数据目录相关结构体详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAGE-IMPORT-DESCRIPTOR"><span class="toc-text">_IMAGE_IMPORT_DESCRIPTOR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAGE-THUNK-DATA"><span class="toc-text">_IMAGE_THUNK_DATA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IMAGE-IMPORT-BY-NAME"><span class="toc-text">_IMAGE_IMPORT_BY_NAME</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">三者之间的关系</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-45ey59.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>PPPPPE 文件中一些基础的东西，较简单，无深入</p>
+<span id="more"></span>
+<h2 id="基本概念">基本概念</h2>
+<p><strong>什么是 PE文件</strong></p>
+<ul>
+<li>Wiki：可移植性可执行文件（英语：Portable Executable，缩写为PE）是一种用于可执行文件、目标文件和动态链接库的文件格式，主要使用在32位和64位的Windows操作系统上。“可移植的”是指该文件格式的通用性，可用于许多种不同的操作系统和体系结构中。PE文件格式封装了Windows操作系统加载可执行程序代码时所必需的一些信息。这些信息包括动态链接库、API导入和导出表、资源管理数据和线程局部存储数据。在Windows NT操作系统中，PE文件格式主要用于EXE文件、DLL文件、.sys（驱动程序）和其他文件类型。</li>
+<li>自己的理解：PE 文件是由操作系统或者内核去加载并且按照一定规则去运行的一个协议，这个协议告诉操作系统自己是 PE 文件，自己该如何运行以及有什么安全规则的设置</li>
+</ul>
+<p><strong>文件(file) and 映像(image)</strong></p>
+<ul>
+<li>
+<p>文件：存储在磁盘上的形式</p>
+</li>
+<li>
+<p>映像：文件被拷贝到内存中时存在的形式</p>
+</li>
+</ul>
+<p><strong>PE结构的三种地址</strong></p>
+<ul>
+<li>VA：虚拟地址</li>
+<li>RVA：相对虚拟地址</li>
+<li>FOA：文件偏移地址</li>
+</ul>
+<p>RVA=VA - 基址</p>
+<p>目标点RVA - 目标点所在节区起始的RVA地址 =目标点FOA - 目标点所在节区起始的FOA地址</p>
+<h2 id="PE文件结构">PE文件结构</h2>
+<p>总共可以分成三部分：</p>
+<ul>
+<li>文件头(包括DOS头和PE头)</li>
+<li>节区</li>
+<li>各种属性表</li>
+</ul>
+<p><img src="20191105010119908.jpg" alt="PE文件结构详解--（完整版）_擒贼先擒王的博客-CSDN博客_pe"></p>
+<h2 id="PE头部结构体详解">PE头部结构体详解</h2>
+<p>pe文件中的各种属性都是由结构体来进行描述的</p>
+<h3 id="Dos头">Dos头</h3>
+<p>里面一般有两个结构体变量</p>
+<ul>
+<li>DosHeader</li>
+<li>DosStub</li>
+</ul>
+<p>比较重要的是 DosHeader，以上两个变量分别由以下结构体所定义</p>
+<p><strong>typedef struct _IMAGE_DOS_HEADER</strong>——&gt;<strong>DosHeader</strong></p>
+<p><img src="image-20220601173038262.png" alt="image-20220601173038262"></p>
+<ul>
+<li>e_magic：值为MZ，算是一个标志位</li>
+<li>e_lfanew：值为 PE 头的文件偏移</li>
+</ul>
+<p><strong>struct IMAGE_DOS_STUB DosStub</strong>——&gt;<strong>DosStub</strong></p>
+<p>又叫 dos 存根，大部分 Windows 程序都会包含 dos 存根</p>
+<p>作用在dos模式下输出 “This program cannot be run in DOS mode”</p>
+<h3 id="PE头">PE头</h3>
+<p>里面只包含了一个结构体变量</p>
+<ul>
+<li>NtHeader</li>
+</ul>
+<p>该变量由以下结构体所定义。</p>
+<p><strong>typedef struct _IMAGE_NT_HEADERS</strong>——&gt;<strong>NtHeader</strong></p>
+<p><img src="image-20220601180845756.png" alt="image-20220601180845756"></p>
+<ul>
+<li>
+<p>Signature：标志位，值为 0x00004550 对应的 ascll 码值为 “PE”</p>
+</li>
+<li>
+<p>FileHeader：是一个结构体变量，定义它的结构体内容如下：</p>
+<p><img src="image-20220601180438364.png" alt="image-20220601180438364"></p>
+<ul>
+<li>
+<p>Machine：程序运行所需架构，从该处可以推断程序为32 bit / 64 bit。</p>
+</li>
+<li>
+<p>TimeDateStamp：记录程序链接的时间，Unix时间戳。</p>
+</li>
+<li>
+<p>NumberOfSections：记录程序有多少个节区头 (section headers)，节区头的数量等于节区数量。</p>
+</li>
+<li>
+<p>SizeOfOptionalHeader：指出 OptionalHeader的大小，由于32位和64位的大小不同，有所出入，因此需要特别指明。</p>
+</li>
+<li>
+<p>characteristic：其实它也是个结构体变量，只是这个结构体的大小只占了1个 word，这个结构体所包含的内容是对这个文件信息的描述。以下为结构体的定义内容：</p>
+<p><img src="image-20220601213405696.png" alt="image-20220601213405696"></p>
+<p>如果文件具有该属性就将对应位的值置为1。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>OptionalHeader：还是一个结构体变量，而且这个结构体非常非常的 big，32位和64位有差别，有许多重要的属性</p>
+<p>32位所定义的结构体</p>
+<p><img src="image-20220601205627177.png" alt="image-20220601205627177"></p>
+<p>64位所定义的结构体</p>
+<p><img src="image-20220601205707965.png" alt="image-20220601205707965"></p>
+<ul>
+<li>
+<p>Magic：决定二进制文件是 PE32 还是 PE32+</p>
+<ul>
+<li>PE32    32bit    0x10C</li>
+<li>PE32+  64bit    0x20B</li>
+</ul>
+</li>
+<li>
+<p>AddressOfEntryPoint：程序入口点的RVA。程序入口点就是这个 PE 文件被拷贝到内存中成为映像后最先被执行的代码地方。</p>
+</li>
+<li>
+<p>SizeOfImage：二进制文件载入内存中时所需的空间大小。</p>
+</li>
+<li>
+<p>SectionAlignment：内存中 section 进行对齐的最小单位。对齐是为了加快寻址的速度，有点时间换空间的意思</p>
+</li>
+<li>
+<p>FileAlignment：文件中每个 chunk 的最小对齐单位。</p>
+</li>
+<li>
+<p>ImageBase：二进制文件被在载入到内存中的基址。基址+相对虚拟地址(可以和上面的 SectionAlignment 联系起来)=绝对虚拟地址，举个例子</p>
+<p><img src="image-20220601212451894.png" alt="image-20220601212451894"></p>
+<p>这里还会涉及到<strong>基址重定位</strong>的问题，埋坑明日填。</p>
+</li>
+<li>
+<p>DLLCharacteristics：结构体变量，确定一些关键安全选项，例如：ASLR，non-executable memory(DEP)。不仅仅描述 dll文件。结构体定义如下，和前面 FileHeader.Characteristics 类似</p>
+<p><img src="image-20220601213306995.png" alt="image-20220601213306995"></p>
+</li>
+<li>
+<p>DataDirectory：结构体变量，结构体定义如下</p>
+<p><img src="image-20220601214701605.png" alt="image-20220601214701605"></p>
+<p>注意点：这里的VirtualAddress实际为RVA，并不是VA。</p>
+<ul>
+<li>
+<p>Size：结构体变量，结构如下，和前面两个类似</p>
+<p><img src="image-20220601214831093.png" alt="image-20220601214831093"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="节区">节区</h3>
+<p>Secsions，总的可以分成两个部分</p>
+<ul>
+<li>Section Header[ ]</li>
+<li>Section itself</li>
+</ul>
+<p>需要重点关注的是 section header。</p>
+<p><strong>struct IMAGE_SECTION_HEADER</strong> ——&gt;<strong>Section Header[ ]</strong></p>
+<p>section header 就是描述下面 section itself(节区自己本身) 的一个字段，是一个结构体数组变量，数组的大小对应节区的数量。</p>
+<p>结构体定义如下：</p>
+<p><img src="image-20220602112707711.png" alt="image-20220602112707711"></p>
+<ul>
+<li>
+<p>Name[8]：一个存放 ascll 字符的 byte 数组，不一定以 ‘\0’ 结尾。</p>
+</li>
+<li>
+<p>Misc.VritualSize：变成映像后所占的大小</p>
+</li>
+<li>
+<p>VirtualAddress：相对于 OptionalHeader.ImageBase 的 rva，就是相对于基址的偏移地址</p>
+</li>
+<li>
+<p>SizeOfRawData：在文件中的大小</p>
+</li>
+<li>
+<p>PointerToRawData：节区数据在文件中的 offset，数据在文件中的偏移</p>
+</li>
+<li>
+<p>Characteristics：节区属性，是一个结构体变量，与 FileHeader.Characteristics 类似，由以下结构体所定义</p>
+<p><img src="image-20220602120211856.png" alt="image-20220602120211856"></p>
+</li>
+</ul>
+<p>其中 Misc.VritualSize 和 SizeOfRawData 这两者的大小是不确定的，原因如图，我也不是很懂</p>
+<p><img src="image-20220602115910270.png" alt="image-20220602115910270"></p>
+<p>至此，PE文件 头部结构体也就了解的差不多了。</p>
+<h2 id="数据目录相关结构体详解">数据目录相关结构体详解</h2>
+<p>在 pe 文件中除了 pe 头部描述 pe 文件格式的结构体之外，还有一些和 pe 文件相关的结构体不在 pe 文件的头部，而是分散在各个节数据当中。各个节数据的位置在 由 IMAGE_OPTIONAL_HEADER 结构体所定义的 OptionalHeader(可选头部) 中的 DataDirectory(数据目录) 结构体数组中指出。</p>
+<p>数据目录包含了 导出表、导入表、重定位表等重要的结构供 pe 文件装载时使用，以下介绍的是数据目录中导出表里较为重要的结构体。</p>
+<h3 id="IMAGE-IMPORT-DESCRIPTOR">_IMAGE_IMPORT_DESCRIPTOR</h3>
+<p>结构体定义如下：</p>
+<p><img src="image-20220602155734436.png" alt="image-20220602155734436"></p>
+<ul>
+<li><strong>OriginalFirstThunk：</strong> INT的RVA/导入函数名称(序号)的RVA。它本质上其实是一个指针指向 INT 的相对虚拟内存地址，INT是一个元素为 IMAGE_THUNK_DATA 结构体的数组。</li>
+<li><strong>Name：</strong> 模块名称字符串的 RVA。</li>
+<li><strong>FirstThunk：</strong> IAT的RVA/导入地址表的RVA。</li>
+</ul>
+<p><strong>INT 和 IAT 的联系和区别</strong></p>
+<p><img src="image-20220602161901924.png" alt="image-20220602161901924"></p>
+<h3 id="IMAGE-THUNK-DATA">_IMAGE_THUNK_DATA</h3>
+<p>结构体定义如下(以32位为例)：</p>
+<p><img src="image-20220602162320183.png" alt="image-20220602162320183"></p>
+<ul>
+<li><strong>Function：</strong> 指向导入函数的函数地址</li>
+<li><strong>AddressOfData：</strong> 指向 IMAGE_IMPORT_BY_NAME 结构体定义的结构体数组的 RVA</li>
+</ul>
+<h3 id="IMAGE-IMPORT-BY-NAME">_IMAGE_IMPORT_BY_NAME</h3>
+<p>结构体定义如下：</p>
+<p><img src="image-20220602162928222.png" alt="image-20220602162928222"></p>
+<ul>
+<li><strong>Hint：</strong> 函数序号，即 ordinary 数组的 index。 //不是很懂，但不成大问题</li>
+<li><strong>Name：</strong> 导入函数的函数名称，以 ‘\0’ 为结尾。</li>
+</ul>
+<h3 id="三者之间的关系">三者之间的关系</h3>
+<p>如图所示</p>
+<p><img src="image-20220613202259769.png" alt="image-20220613202259769"></p>
+<p>简单来说就是结构体里面有变量用于存放其他结构体的指针，然后有调用的关系。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/06/13/PE%E6%96%87%E4%BB%B6/">https://ghdemi.github.io/2022/06/13/PE%E6%96%87%E4%BB%B6/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-06-13</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E5%9F%BA%E7%A1%80/" class="post-tags__link button"># 基础</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/06/09/Call%E5%92%8CRetf%E6%8C%87%E4%BB%A4/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Call和Retf指令
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
