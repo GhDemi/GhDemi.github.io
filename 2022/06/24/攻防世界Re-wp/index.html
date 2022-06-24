@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>攻防世界Re_wp | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Re">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="攻防世界Reverse——新手区不全，那种一拖进去就出来的也没啥必要写 期末考试终于结束了😪 教我们海量数据挖掘的老师真是个傻杯💩💩💩">
+<meta property="og:type" content="article">
+<meta property="og:title" content="攻防世界Re_wp">
+<meta property="og:url" content="https://ghdemi.github.io/2022/06/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CRe-wp/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="攻防世界Reverse——新手区不全，那种一拖进去就出来的也没啥必要写 期末考试终于结束了😪 教我们海量数据挖掘的老师真是个傻杯💩💩💩">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/orange.jpg">
+<meta property="article:published_time" content="2022-06-24T12:26:04.000Z">
+<meta property="article:modified_time" content="2022-06-24T13:12:37.503Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/orange.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        攻防世界Re_wp
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/06/" class="post-meta__date button">2022-06-24</a>
+        
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#simple-unpack"><span class="toc-text">simple-unpack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#logemein"><span class="toc-text">logemein</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#insanity"><span class="toc-text">insanity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getit"><span class="toc-text">getit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%80"><span class="toc-text">解法一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BA%8C"><span class="toc-text">解法二</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-trade"><span class="toc-text">python-trade</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#no-string-attached"><span class="toc-text">no-string-attached</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#maze"><span class="toc-text">maze</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A2%B3%E7%90%86"><span class="toc-text">梳理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%82%B9%E6%84%9F%E5%8F%97"><span class="toc-text">一点感受</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#simple-unpack"><span class="toc-text">simple-unpack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#logemein"><span class="toc-text">logemein</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#insanity"><span class="toc-text">insanity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#getit"><span class="toc-text">getit</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%B8%80"><span class="toc-text">解法一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%B3%95%E4%BA%8C"><span class="toc-text">解法二</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#python-trade"><span class="toc-text">python-trade</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#no-string-attached"><span class="toc-text">no-string-attached</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#maze"><span class="toc-text">maze</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A2%B3%E7%90%86"><span class="toc-text">梳理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%82%B9%E6%84%9F%E5%8F%97"><span class="toc-text">一点感受</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/orange.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <details ><summary>攻防世界Reverse——新手区</summary><div class="fold-content"><p>不全，那种一拖进去就出来的也没啥必要写</p>
+<p>期末考试终于结束了😪</p>
+<p>教我们海量数据挖掘的老师真是个傻杯💩💩💩</p>
+</div></details>
+<span id="more"></span>
+<h3 id="simple-unpack">simple-unpack</h3>
+<p>一个很基础的加壳和脱壳的题目，算是对壳的初步理解。</p>
+<ol>
+<li>
+<p>使用 exeinfo pe 查看情况</p>
+<p><img src="image-20220603150613438.png" alt="image-20220603150613438"></p>
+<p>说明加了 upx 的壳</p>
+</li>
+<li>
+<p>使用 upx 脱壳</p>
+<p>使用命令<code>upx -d 文件名</code>进行脱壳，我没在 window 里安装 upx，直接用的 kali 里的</p>
+<p><img src="image-20220603151801424.png" alt="image-20220603151801424"></p>
+</li>
+<li>
+<p>使用 ida 打开脱壳后的文件即得 flag</p>
+<p><img src="image-20220603152015012.png" alt="image-20220603152015012"></p>
+<p>flag{Upx_1s_n0t_a_d3liv3r_c0mp4ny}</p>
+</li>
+</ol>
+<h3 id="logemein">logemein</h3>
+<p>那 exeinfo pe 看了以下，gcc 类型的文件</p>
+<p><img src="image-20220603212507733.png" alt="image-20220603212507733"></p>
+<p>尝试在 kali 里面运行了以下，效果如图所示</p>
+<p><img src="image-20220603212553765.png" alt="image-20220603212553765"></p>
+<p>大概也是能猜出来，就是输入正确的字符串就能出 flag 或者输入的字符就是 flag。将文件放入 ida 中分析，找到主函数 main 进行分析</p>
+<p><img src="image-20220603212910276.png" alt="image-20220603212910276"></p>
+<p>也能分析出来个大概，将输入的字符串和处理过后的 v8 字符串进行比较，所谓的处理就是异或，全部正确后才会执行 sub_40070f 函数</p>
+<p><img src="image-20220603213055651.png" alt="image-20220603213055651"></p>
+<p>但是解题思路出现了问题，起先没有好好看这个判断的语句，一心只想着通过调试直接输出得到 flag，但这个 flag 其实是我们自己输入的…就挺搞笑的</p>
+<p>接下来根据所给的条件写 exp 即可,网上找的对于中间那一块的 v7 转换不是很懂，最终这一串表达式所达到的效果是：v7 要转换为16进制然后在转换为字符串，而且字符是小端序，所以把得到的字符翻转然后和v8 的每一位进行异或。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> BYTE unsigned char</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> i;</span><br><span class="line">    <span class="type">char</span> v8[<span class="number">18</span>] = <span class="string">&quot;:\&quot;AL_RT^L*.?+6/46&quot;</span>;</span><br><span class="line">    __int64 v7 = <span class="number">28537194573619560</span>;</span><br><span class="line">    <span class="type">int</span> v6 = <span class="number">7</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">char</span> s[<span class="number">18</span>] = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="built_in">strlen</span>(v8); ++i) &#123;</span><br><span class="line">        s[i] = (<span class="type">char</span>)(*((BYTE*)&amp;v7 + i % v6)^v8[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>, s);</span><br><span class="line"></span><br><span class="line">    <span class="built_in">system</span>(<span class="string">&quot;PAUSE&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>尝试用 vs code 调试看看东西，但是无果</p>
+<p><img src="image-20220604100705880.png" alt="image-20220604100705880"></p>
+<h3 id="insanity">insanity</h3>
+<p>啥啊，这…文件一拖进去，看一下字符串就出来了</p>
+<h3 id="getit">getit</h3>
+<p>这个是 linux 下的运行程序，自己也放到 kali 里面有跑过，知道 flag 在 /tmp/flag.txt，也有试过在文件夹里找过这个文件，但是找不到。</p>
+<p>原因是这个给目录是 linux 中的临时文件夹，程序运行完后这个文件就被清理了。</p>
+<h4 id="解法一">解法一</h4>
+<p>用ida看了以下，反编译结果如图</p>
+<p><img src="image-20220606205032610.png" alt="image-20220606205032610"></p>
+<p>大致就是建了个flag.txt文件，然后向里面写了flag，那第一个循环编写的应该就是向文件中编写的内容，但是有点看不明白向文件中写内容的时候这个 p[j] 的操作，好像干了什么但是不知道是啥，自己去试着写了 exp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> i,v3;</span><br><span class="line">    <span class="type">char</span> s1[]=<span class="string">&quot;c61b68366edeb7bdce3c6820314b7498&quot;</span>,s2[]=<span class="string">&quot;harifCTF&#123;????????????????????????????????&#125;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="built_in">strlen</span>(s1);i++)</span><br><span class="line">    &#123;</span><br><span class="line">       <span class="keyword">if</span> ( (i &amp; <span class="number">1</span>) != <span class="number">0</span> )</span><br><span class="line">        v3 = <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">else</span></span><br><span class="line">        v3 = <span class="number">-1</span>;</span><br><span class="line">        *(&amp;s2[<span class="number">0</span>] + i + <span class="number">10</span>)= s1[i] + v3;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout&lt;&lt;s2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>但是出来结果一看就错了</p>
+<p><img src="image-20220606211843026.png" alt="image-20220606211843026"></p>
+<p>原来没有意识到自己把 s2[] 给搞错了，原来这个是还要加上去的啊</p>
+<p><img src="image-20220606211719545.png" alt="image-20220606211719545"></p>
+<p>怪不得自己最后出来的结果错了，就差一点点。</p>
+<h4 id="解法二">解法二</h4>
+<p>我的汇编内容梳理如下所示</p>
+<p><img src="image-20220607201331482.png" alt="image-20220607201331482"></p>
+<p><img src="image-20220607201354756.png" alt="image-20220607201354756"></p>
+<p><img src="image-20220607201418009.png" alt="image-20220607201418009"></p>
+<p><img src="image-20220607201511358.png" alt="image-20220607201511358"></p>
+<p>如果进行跳转了的话那就会进行关闭文件的操作，所以<code>jnb loc_4008B5</code> 后面就是向文件中写内容，而语句<code>mov eax, [rbp+var_3C]</code> 应该就是获取字符串 t[ ] 的内容或者是地址，总之 flag 就位于这里。然后使用 ida 在 kali 里远程调试，断点就下在<code>mov eax, [rbp+var_3C]</code> 处，单步跳过后 dx 就指向了 t[ ] 处</p>
+<p><img src="image-20220607205311534.png" alt="image-20220607205311534"></p>
+<h3 id="python-trade">python-trade</h3>
+<p>第一次遇到 .pyc 类型的文件，pyc是编译 py 之后产生的二进制文件</p>
+<p>拖进 ida 里面也没有什么用，反编译不了哎，上网看了一下要下载专门反编译 pyc 的软件，叫做 uncompyle6，还有在线反编译的<a target="_blank" rel="noopener" href="https://tool.lu/pyc/">网站</a>。</p>
+<p>文件反编译的结果如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">message</span>):</span><br><span class="line">    s = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> message:</span><br><span class="line">        x = <span class="built_in">ord</span>(i) ^ <span class="number">32</span>   //将字符 i 转为 ascll 码表对应的数值然后和<span class="number">32</span>进行异或</span><br><span class="line">        x = x + <span class="number">16</span></span><br><span class="line">        s += <span class="built_in">chr</span>(x)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> base64.b64encode(s)</span><br><span class="line"></span><br><span class="line">correct = <span class="string">&#x27;XlNkVmtUI1MgXWBZXCFeKY+AaXNt&#x27;</span></span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"><span class="built_in">print</span> <span class="string">&#x27;Input flag:&#x27;</span></span><br><span class="line">flag = raw_input()</span><br><span class="line"><span class="keyword">if</span> encode(flag) == correct:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;correct&#x27;</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="built_in">print</span> <span class="string">&#x27;wrong&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>根据以上的程序逻辑进行解密的编写</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> base64</span><br><span class="line"></span><br><span class="line">correct = base64.b64decode(<span class="string">&#x27;XlNkVmtUI1MgXWBZXCFeKY+AaXNt&#x27;</span>)</span><br><span class="line">flag = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> correct:</span><br><span class="line">    x=i-<span class="number">16</span></span><br><span class="line">    x=x^<span class="number">32</span></span><br><span class="line">    flag+=<span class="built_in">chr</span>(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span> (flag)</span><br></pre></td></tr></table></figure>
+<p>这里有一个坑点，我的猜测是可能是因为 python 版本的不同，所以有点出入。这个语句<code>for i in correct</code> 在我的这个 python 版本中运行完该程序后 i 的值就直接是 ascll 码的值了，因此不需要再用 ord( ) 函数进行转换。</p>
+<p><img src="image-20220608162708792.png" alt="image-20220608162708792"></p>
+<h3 id="no-string-attached">no-string-attached</h3>
+<p>ida反编译一下，关注 authenticate( ) 函数</p>
+<p><img src="image-20220609142045442.png" alt="image-20220609142045442"></p>
+<p><img src="image-20220609142116173.png" alt="image-20220609142116173"></p>
+<p>初步判断就是 decrypt( ) 这个函数对传入的这两个奇怪的字符串及进行了一些操作然后再进行比较输出结果，跟进 decrypt( ) 函数看一下</p>
+<p><img src="image-20220609142349790.png" alt="image-20220609142349790"></p>
+<p>根据以上程序感觉是可以编写 exp 的，尝试了以下失败了😪</p>
+<p><img src="image-20220609142610030.png" alt="image-20220609142610030"></p>
+<p>而且报错也很明显，就是输进去的串它不认识呗，除了自己写 exp 解出来目前为止我知道的剩下来的办法就是调试了，但是我的 kali 是64位的，这个程序是32位的，刚刚一直在32位的ida里面调试怪不得一直都连不上去，吐了</p>
+<p>整个调试的过程可以说是非常的艰辛，最后把断点下在了此处</p>
+<p><img src="image-20220609153230140.png" alt="image-20220609153230140"></p>
+<p>理由是 decrypt 函数刚执行完成，返回的 dest 的值应该正好储存在某个寄存器中，进行调试后也确实是发现了一点东西，eax 中储存了一个堆的地址</p>
+<p><img src="image-20220609153156045.png" alt="image-20220609153156045"></p>
+<p>跟进去看了一下，以为这个是flag，但是错了</p>
+<p><img src="image-20220609153139314.png" alt="image-20220609153139314"></p>
+<p>mad，要对自己无语了，没看清楚这个地址的起始位置，把上面的1也当成了 flag 的一部分了，醉了</p>
+<p><img src="image-20220609154040238.png" alt="image-20220609154040238"></p>
+<p>最后得 flag：9447{you_are_an_international_mystery}</p>
+<h3 id="maze">maze</h3>
+<p>拖进 ida 反汇编，进入主要 main 函数，分析发现是在循环中对输进去的字符串进行了比较，然后进行一系列操作。</p>
+<p>具体的比较情况是，将输进去的字符串的从第6位开始及进行比较，分别有 ‘O’、‘o’、‘.’、‘0’ 这四种情况</p>
+<p><img src="image-20220613163501110.png" alt="image-20220613163501110">不同的比较情况会触发不同的情况，但是最后都会走到 loc_4007BB 处继续执行程序。<img src="image-20220613164412159.png" alt="image-20220613164412159"></p>
+<p>那么图中 call 的函数应该就是关键了，跟进去看一下<img src="image-20220613164651867.png" alt="image-20220613164651867"></p>
+<p>所对应的反汇编代码如图，就是将取出的值和 20h 以及 23h 比较，如果都不相等那函数就返回 0，程序就会说这是错的 flag。</p>
+<p><img src="image-20220613164723340.png" alt="image-20220613164723340"></p>
+<p>要取的东西就在字符串 asc_601060 中，如下图</p>
+<p><img src="image-20220613165537861.png" alt="image-20220613165537861"></p>
+<p>将它转换为 8*8 的方正，就如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">20 20 2A 2A 2A 2A 2A 2A </span><br><span class="line">2A 20 20 20 2A 20 20 2A</span><br><span class="line">2A 2A 2A 20 2A 20 2A 2A </span><br><span class="line">2A 2A 20 20 2A 20 2A 2A</span><br><span class="line">2A 20 20 2A 23 20 20 2A </span><br><span class="line">2A 2A 20 2A 2A 2A 20 2A</span><br><span class="line">2A 2A 20 20 20 20 20 2A </span><br><span class="line">2A 2A 2A 2A 2A 2A 2A 2A</span><br></pre></td></tr></table></figure>
+<p>现在就和题目的提示——走迷宫对应上了，我们要从最开始的20开始一直走到23才算到了迷宫的出口。</p>
+<p>取方正中的哪个字符就取决于我们输入的 flag 所触发的操作使传进去的参数 a2、a3 分别是什么，下图是 a2，a3 的传参，里面一个对应横坐标一个对应纵坐标<img src="image-20220613172238784.png" alt="image-20220613172238784"></p>
+<p>前面对 flag 的判断操作就是改变横纵坐标用的，那这四个应该就对应着上下左右<img src="image-20220613175000292.png" alt="image-20220613175000292"></p>
+<h4 id="梳理">梳理</h4>
+<p>我们需要按照 8*8 的方正从 20 走到 23，通过我们的 flag 来决定是上下左右中的哪个方向。</p>
+<p>通过 sub_400690 函数可以知道传参时所对应的横纵坐标</p>
+<p><img src="image-20220613182059571.png" alt="image-20220613182059571"></p>
+<p><img src="image-20220613181651109.png" alt="image-20220613181651109"></p>
+<p>也知道了 r14 和 r15 的横纵坐标对应关系</p>
+<p><img src="image-20220613182429737.png" alt="image-20220613182429737"></p>
+<p>下图就是上下左右对应关系：</p>
+<ul>
+<li>. 代表上</li>
+<li>0 代表下</li>
+<li>O 代表左</li>
+<li>o 代表右</li>
+</ul>
+<p><img src="image-20220613183115341.png" alt="image-20220613183115341"></p>
+<p>我们迷宫的路线是：右下右右下下左下下下右右右右上上左左</p>
+<p>所以最后 flag：nctf{o0oo00O000oooo…OO}</p>
+<h4 id="一点感受">一点感受</h4>
+<p>这到题目不能过于依赖 f5 反编译然后去看代码，因为反编译后的代码结构远没有上图来的清晰。</p>
+<p>😞 还是自己太菜了。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/06/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CRe-wp/">https://ghdemi.github.io/2022/06/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CRe-wp/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-06-24</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Re/" class="post-tags__link button"># Re</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/06/13/PE%E6%96%87%E4%BB%B6/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            PE文件
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
