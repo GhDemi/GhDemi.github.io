@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>HSCTF | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Re">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="HSCTF9——eunectes-murinus↗️">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HSCTF">
+<meta property="og:url" content="https://ghdemi.github.io/2022/06/28/HSCTF/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="HSCTF9——eunectes-murinus↗️">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/lusuo.jpg">
+<meta property="article:published_time" content="2022-06-28T08:06:45.000Z">
+<meta property="article:modified_time" content="2022-06-28T08:40:41.222Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/lusuo.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        HSCTF
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/06/" class="post-meta__date button">2022-06-28</a>
+        
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis"><span class="toc-text">dis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z3%E2%80%93solver"><span class="toc-text">z3–solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-text">解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis"><span class="toc-text">dis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z3%E2%80%93solver"><span class="toc-text">z3–solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-text">解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/lusuo.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>HSCTF9——eunectes-murinus↗️</p>
+<span id="more"></span>
+<p>过程可以说是相当艰辛了，在网上找的 wp 跟着做也能出各种问题，也是相当的菜了</p>
+<p><strong>ps：以下名为 chall 的文件均指 eunectes-murinus 文件，只是我重命名了一下</strong></p>
+<h3 id="反编译">反编译</h3>
+<p>使用在线的 python 反编译工具编译之后明显发现存在问题</p>
+<p><img src="image-20220627175714869.png" alt="image-20220627175714869"></p>
+<p>但是依稀看出来点意思：将我们输入的58个值赋给这58个变量，然后这些变量中的值都需要满足下面的方程组才行。</p>
+<p>显然靠人力手算是不现实的，我们需要将这个程序中的所有三元一次方程整理出来交给计算机来实现，这里用到了 python 的两个库：<strong>dis</strong> 和 <strong>z3-solver</strong></p>
+<h3 id="dis">dis</h3>
+<p>dis 模块通过反汇编支持 CPython 的 bytecode 分析。通俗点来说就是将这个程序编译成了在正常 python 语言和机器码中间的一种语言状态，有点像我们同通过 ida 将一个可执行文件反编译成汇编语言的样子。</p>
+<p>使用以下语句能够将程序 chall 的字节码储存在 chall.fun 中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> dis</span><br><span class="line"><span class="keyword">import</span> chall</span><br><span class="line"></span><br><span class="line">dis.dis(chall.fun)</span><br></pre></td></tr></table></figure>
+<p>我是在 kail 里的 python3 进行操作的，输入了 <code>import chall</code> 之后会使 chall.pyc 这个程序跑起来，并且要求你输入 flag，我们必须要按照要求输入58个字符才能进行下一步操作</p>
+<p><img src="image-20220627203854354.png" alt="image-20220627203854354"></p>
+<p>这里我也不是很懂这个函数到底是怎么使用的，看了一下<a target="_blank" rel="noopener" href="https://docs.python.org/zh-cn/3/library/dis.html#">官方文档</a>也试了试其他语句，没摸明白，这里先挖个坑，之后填。</p>
+<p>接着通过文件读写，将字节码放入文本文件中</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">w=<span class="built_in">open</span>(<span class="string">&#x27;文件所在路径&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"><span class="comment">#我的是 w.open(&#x27;byte.txt&#x27;,&#x27;w&#x27;)</span></span><br><span class="line"></span><br><span class="line">w.write(chall.fun)</span><br></pre></td></tr></table></figure>
+<p>我们这么做的目的是通过格式<strong>整齐</strong>的反编译字节码获得我们所要解的58个三元一次方程组</p>
+<h3 id="z3–solver">z3–solver</h3>
+<p>Z3 是 Microsoft Research 的定理证明器，支持位向量、布尔值、数组、浮点数、字符串和其他数据类型。</p>
+<p>z3-solver 的安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install z3-solver</span><br></pre></td></tr></table></figure>
+<p>举一个解三元一次方程组的例子</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from z3 import *</span><br><span class="line">x,y,z=Ints(&#x27;x y z&#x27;)</span><br><span class="line">s=Solver()</span><br><span class="line">s.add(2*x+3*y+z==6)</span><br><span class="line">s.add(x-y+2*z==-1)</span><br><span class="line">s.add(x+2*y-z==5)</span><br><span class="line">print s.check()</span><br><span class="line">print s.model()</span><br></pre></td></tr></table></figure>
+<p>也不需要有多理解这个东西，掌握基本使用流程就差不多了</p>
+<h3 id="解题">解题</h3>
+<p>前置工作都差不多了，现在我们有 chall 的反编译字节码的文本文件，有了解方程的工具，接下来就要从反编译字节码文本文件中提取那58个三元一次方程组</p>
+<p>我们可以从反汇编字节码中找出和方程组的关系</p>
+<p><img src="image-20220627211108080.png" alt="image-20220627211108080"></p>
+<p>上图所对应的方程组如下</p>
+<p><img src="image-20220627211232744.png" alt="image-20220627211232744"></p>
+<p>可以发现方程组是符合一定的格式的，我们可以通过编写程序将方程提取并且写入文本文件中，其实原来直接的反汇编代码格式也挺整齐的，直接对反汇编代码进行操作应该也没什么问题。</p>
+<p>下面的代码除了将方程提取之外还直接加上了 z3-solver 的解题模板，意思就是通过下面程序所得到的文本文件修改一下后缀名就可以直接通过python运行解方程获得答案了。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">f= <span class="built_in">open</span>(<span class="string">&#x27;byte.txt&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">w= <span class="built_in">open</span>(<span class="string">&#x27;res.txt&#x27;</span>,<span class="string">&#x27;w&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">skip</span>(<span class="params">x</span>):</span><br><span class="line">   <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(x):</span><br><span class="line">      f.readline()</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">skip_to_blank</span>():</span><br><span class="line">   <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">      line=f.readline()</span><br><span class="line">      <span class="keyword">if</span> line==<span class="string">b&#x27;\n&#x27;</span>:</span><br><span class="line">         <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">skip(<span class="number">65</span>)</span><br><span class="line"></span><br><span class="line">w.write(<span class="string">&quot;from z3 import *\n&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">58</span>):</span><br><span class="line">    w.write(<span class="string">f&quot;x<span class="subst">&#123;x&#125;</span> = Int(&#x27;x<span class="subst">&#123;x&#125;</span>&#x27;)\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">w.write(<span class="string">&#x27;s=Solver()\n&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">58</span>):</span><br><span class="line">   w.write(<span class="string">f&quot;s.add(x<span class="subst">&#123;x&#125;</span>&gt;0,x<span class="subst">&#123;x&#125;</span>&lt;=255)\n&quot;</span>) </span><br><span class="line"><span class="comment"># 这个循环用来限制x的取值范围，加快解方程的速度，不然会很慢很慢，半天出不来答案</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    p1 = <span class="built_in">int</span>(f.readline()[<span class="number">40</span>:<span class="number">42</span>])</span><br><span class="line">    skip(<span class="number">2</span>)</span><br><span class="line">    p2 = <span class="built_in">int</span>(f.readline()[<span class="number">40</span>:<span class="number">42</span>])</span><br><span class="line">    skip(<span class="number">2</span>)</span><br><span class="line">    p3 = <span class="built_in">int</span>(f.readline()[<span class="number">40</span>:<span class="number">42</span>])</span><br><span class="line">    skip(<span class="number">2</span>+<span class="number">3</span>+<span class="number">1</span>)</span><br><span class="line">    v1 = <span class="built_in">int</span>(f.readline()[<span class="number">44</span>:-<span class="number">2</span>])</span><br><span class="line">    <span class="comment">#print(v1)</span></span><br><span class="line">    skip(<span class="number">2</span>)</span><br><span class="line">    v2 = <span class="built_in">int</span>(f.readline()[<span class="number">44</span>:-<span class="number">2</span>])</span><br><span class="line">    skip(<span class="number">3</span>)</span><br><span class="line">    v3 = <span class="built_in">int</span>(f.readline()[<span class="number">44</span>:-<span class="number">2</span>])</span><br><span class="line">    skip(<span class="number">2</span>)</span><br><span class="line">    a = <span class="built_in">int</span>(f.readline()[<span class="number">44</span>:-<span class="number">2</span>])</span><br><span class="line">    skip_to_blank()</span><br><span class="line">    w.write(<span class="string">f&quot;s.add(x<span class="subst">&#123;p1&#125;</span> * <span class="subst">&#123;v1&#125;</span> * (x<span class="subst">&#123;p2&#125;</span> - <span class="subst">&#123;v2&#125;</span>) * (x<span class="subst">&#123;p3&#125;</span> + <span class="subst">&#123;v3&#125;</span>) == <span class="subst">&#123;a&#125;</span>)\n&quot;</span>)</span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">9270480</span>:</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">w.write(<span class="string">f&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">print(s.check())</span></span><br><span class="line"><span class="string">m = s.model()</span></span><br><span class="line"><span class="string">flag = &quot;&quot;\n&#x27;&#x27;&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">58</span>):</span><br><span class="line">    w.write(<span class="string">f&#x27;flag += chr(m.eval(x<span class="subst">&#123;x&#125;</span>).as_long())\n&#x27;</span>)</span><br><span class="line">w.write(<span class="string">&#x27;print(flag)\n&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p>所获得的文本文件内容大致如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">x0 = Int(<span class="string">&#x27;x0&#x27;</span>)</span><br><span class="line">x1 = Int(<span class="string">&#x27;x1&#x27;</span>)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">x56 = Int(<span class="string">&#x27;x56&#x27;</span>)	</span><br><span class="line">x57 = Int(<span class="string">&#x27;x57&#x27;</span>)</span><br><span class="line"></span><br><span class="line">s=Solver()</span><br><span class="line"></span><br><span class="line">s.add(x0&gt;<span class="number">0</span>,x0&lt;=<span class="number">255</span>)</span><br><span class="line">s.add(x1&gt;<span class="number">0</span>,x1&lt;=<span class="number">255</span>)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">s.add(x56&gt;<span class="number">0</span>,x56&lt;=<span class="number">255</span>)</span><br><span class="line">s.add(x57&gt;<span class="number">0</span>,x57&lt;=<span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">s.add(x50 * <span class="number">8</span> * (x9 - <span class="number">4</span>) * (x24 + <span class="number">4</span>) == <span class="number">9711352</span>)</span><br><span class="line">s.add(x54 * <span class="number">7</span> * (x13 - <span class="number">3</span>) * (x35 + <span class="number">3</span>) == <span class="number">3764768</span>)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">s.add(x56 * <span class="number">4</span> * (x48 - <span class="number">5</span>) * (x10 + <span class="number">9</span>) == <span class="number">2099160</span>)</span><br><span class="line">s.add(x12 * <span class="number">8</span> * (x32 - <span class="number">3</span>) * (x18 + <span class="number">4</span>) == <span class="number">9270480</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(s.check())</span><br><span class="line">m = s.model()</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">flag += <span class="built_in">chr</span>(m.<span class="built_in">eval</span>(x0).as_long())</span><br><span class="line">flag += <span class="built_in">chr</span>(m.<span class="built_in">eval</span>(x1).as_long())</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
+<p>将文件后缀名修改成 .py 后使用python运行</p>
+<p><img src="image-20220627212741375.png" alt="image-20220627212741375"></p>
+<h3 id="踩坑">踩坑</h3>
+<p>因为没搞懂 dis.dis( ) 函数的运作所以一开始不知道怎么把反汇编字节码放入到文本文件中，运行 <code>dis.dis(chall.fun)</code> 后，反汇编字节码的结果直接显示在了终端上面，最开始的时候选择直接从虚拟机里面复制反汇编字节码的内容到本机的 txt 里面，结果格式发生变化，调整了好几遍提取方程的程序一直报错。</p>
+<p>后来自己摸出来原来 w.write(chall.fun) 可以直接写进去，而且复制粘贴在虚拟机中格式是没有问题的，从不停调整到发现格式有错误再到发现解决方案浪费了不少时间，也算是吸取了个教训吧。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/06/28/HSCTF/">https://ghdemi.github.io/2022/06/28/HSCTF/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-06-28</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Re/" class="post-tags__link button"># Re</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/06/24/%E6%94%BB%E9%98%B2%E4%B8%96%E7%95%8CRe-wp/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            攻防世界Re_wp
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
