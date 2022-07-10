@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>x64汇编和逆向0x01 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="X64汇编">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="x64汇编寄存器写和跳转">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x64汇编和逆向0x01">
+<meta property="og:url" content="https://ghdemi.github.io/2022/07/07/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x01/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="x64汇编寄存器写和跳转">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-x8r9wl.png">
+<meta property="article:published_time" content="2022-07-07T10:18:14.000Z">
+<meta property="article:modified_time" content="2022-07-10T03:46:04.753Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="X64汇编">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-x8r9wl.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        x64汇编和逆向0x01
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/07/" class="post-meta__date button">2022-07-07</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#x64%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E5%86%99%E6%93%8D%E4%BD%9C"><span class="toc-text">x64寄存器的写操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32%E4%BD%8D%E5%86%99%E6%93%8D%E4%BD%9C%E9%AB%9832%E4%BD%8D%E6%B8%85%E9%9B%B6"><span class="toc-text">32位写操作高32位清零</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A832%E4%BD%8D%E6%89%A9%E5%B1%95"><span class="toc-text">立即数优先使用32位扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#x64%E4%B8%AD%E7%9A%84-jmp-%E6%93%8D%E4%BD%9C"><span class="toc-text">x64中的 jmp 操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="toc-text">什么是偏移地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80%E8%B7%B3%E8%BD%AC"><span class="toc-text">偏移地址跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#EB-%E5%92%8C-E9-%E8%B7%B3%E8%BD%AC"><span class="toc-text">EB 和 E9 跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FF25-%E8%B7%B3%E8%BD%AC"><span class="toc-text">FF25 跳转</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bug"><span class="toc-text">bug</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84-hook-%E8%B7%B3%E8%BD%AC%E5%8F%8A%E8%BF%94%E5%9B%9E%E6%96%B9%E5%BC%8F"><span class="toc-text">常用的 hook 跳转及返回方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC"><span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E"><span class="toc-text">返回</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-text">前置知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#x64%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E5%86%99%E6%93%8D%E4%BD%9C"><span class="toc-text">x64寄存器的写操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#32%E4%BD%8D%E5%86%99%E6%93%8D%E4%BD%9C%E9%AB%9832%E4%BD%8D%E6%B8%85%E9%9B%B6"><span class="toc-text">32位写操作高32位清零</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%8B%E5%8D%B3%E6%95%B0%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A832%E4%BD%8D%E6%89%A9%E5%B1%95"><span class="toc-text">立即数优先使用32位扩展</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#x64%E4%B8%AD%E7%9A%84-jmp-%E6%93%8D%E4%BD%9C"><span class="toc-text">x64中的 jmp 操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80"><span class="toc-text">什么是偏移地址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E7%A7%BB%E5%9C%B0%E5%9D%80%E8%B7%B3%E8%BD%AC"><span class="toc-text">偏移地址跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#EB-%E5%92%8C-E9-%E8%B7%B3%E8%BD%AC"><span class="toc-text">EB 和 E9 跳转</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FF25-%E8%B7%B3%E8%BD%AC"><span class="toc-text">FF25 跳转</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bug"><span class="toc-text">bug</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84-hook-%E8%B7%B3%E8%BD%AC%E5%8F%8A%E8%BF%94%E5%9B%9E%E6%96%B9%E5%BC%8F"><span class="toc-text">常用的 hook 跳转及返回方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%B3%E8%BD%AC"><span class="toc-text">跳转</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E"><span class="toc-text">返回</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-x8r9wl.png');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>x64汇编寄存器写和跳转</p>
+<span id="more"></span>
+<h2 id="前置知识">前置知识</h2>
+<p>x64 汇编和 x32 汇编在大体上是大差不差的，但是有些细节点有所不同，这里的不同点主要是指硬编码的不同，硬编码就是比汇编语言更靠近 cpu 的东西，可以说是很接近 cpu 可以读懂的01比特流了。</p>
+<p><img src="image-20220628145214427.png" alt="image-20220628145214427"></p>
+<p>x64汇编所对应的通用寄存器和虚拟地址空间如图所示</p>
+<p><img src="image-20220628145625281.png" alt="image-20220628145625281"></p>
+<p>x64汇编所对应的寄存器大小为64位，这64位是可以拆出一个32位寄存器来使用的，而32位寄存器可以拆出一个16位寄存器来使用，16位寄存器可以拆成一个高8位和一个低8位来使用，如上图所示：rax、eax、ax、al 这些都是可以出现在 x64 汇编中的。</p>
+<p>在 x64 中，用户可以使用的内存空间是最上面那一段，从 00000000’00000000 到 00007ffff’ffffffff，地址虽然有64位，但是有效的长度只有48位，对于应用程序来说地址的高4位永远是0，如果是内核程序高4位则永远都是f。</p>
+<p><strong>增加的寄存器的位数用符号扩展的方式将用户区和内核区隔离开来。</strong></p>
+<h2 id="x64寄存器的写操作">x64寄存器的写操作</h2>
+<h3 id="32位写操作高32位清零">32位写操作高32位清零</h3>
+<p>只要对32位寄存器进行写操作，相应的64位寄存器的高32位清零，其中写操作也包含了运算结果自动的储存操作。</p>
+<p>对 eax 进行 mov 操作前后的状态，rax 的高8位从非0变成了0</p>
+<p><img src="image-20220628202951730.png" alt="image-20220628202951730"></p>
+<p><img src="image-20220628203415857.png" alt="image-20220628203415857"></p>
+<p>对 eax 进行运算操作后，前32位也会被清零</p>
+<p><img src="image-20220628210303496.png" alt="image-20220628210303496"></p>
+<p><img src="image-20220628210330254.png" alt="image-20220628210330254"></p>
+<p>但是如果仅仅对 ax 或者 al 进行操作并不会对高位产生影响</p>
+<p><img src="image-20220628204151383.png" alt="image-20220628204151383"></p>
+<p><img src="image-20220628204314178.png" alt="image-20220628204314178"></p>
+<p>对于这一点我们所要意识到的东西是：对于一些指令，尽管操作的对象不一样，但是实现的效果可能是一模一样的，<strong>因此在对程序编译操作的时候尽管你写的是64位，但是编译器依旧使用32位</strong>。</p>
+<p><img src="image-20220628211151277.png" alt="image-20220628211151277"></p>
+<p>上面的两个语句进行的操作都是对 rax 进行置0，但是他们的硬编码是不一样的</p>
+<h3 id="立即数优先使用32位扩展">立即数优先使用32位扩展</h3>
+<p>当我们想使用立即数对寄存器进行赋值时，如果所使用的立即数长度没有超过32位时会优先使用。</p>
+<p>我对这条指令进行修改，所要修改的汇编指令是 <code>mov rax,0x01</code></p>
+<p><img src="image-20220628205538371.png" alt="image-20220628205538371"></p>
+<p>由于优先扩展，这条指令会被自动变为 <code>mov eax,0x01</code></p>
+<p><img src="image-20220628205809581.png" alt="image-20220628205809581"></p>
+<p>以下是立即数的使用的 3 个语句，可以体会这之间的差别</p>
+<p><img src="image-20220628205954423.png" alt="image-20220628205954423"></p>
+<p>下面就是立即数使用32位优先扩展的程序例子，所要返回的是64位的数字，由于32位立即数的指令比较短，所以编译器优先使用32位。</p>
+<p><img src="image-20220629094857187.png" alt="image-20220629094857187"></p>
+<p><img src="image-20220629094942398.png" alt="image-20220629094942398"></p>
+<p>虽然在效果上面没有什么差别，<strong>但是由于硬编码的不同会导致内存地址存储和所想的有偏差</strong></p>
+<p><img src="image-20220629100259129.png" alt="image-20220629100259129"></p>
+<p>上面的两个汇编指令是一模一样的，但是它们的硬编码不同，这个不同就是我们所要注意的，尤其是当我们在对内存地址上面做文章的时候。</p>
+<p><strong>上述总结：</strong> 在32位编译器可用的情况下，编译器一般都会优先使用32位寄存器来代替使用，因为32位寄存器编译后的长度相对较短，对于 CPU 的运算更友好些。</p>
+<h2 id="x64中的-jmp-操作">x64中的 jmp 操作</h2>
+<p>其实这个和32位和16位的jmp指令比较类似，它们也都是优先偏移地址寻址，应该只是偏移地址的大小不太相同(还未求证)，在 x64 汇编中<strong>跳转范围</strong>在4个字节 <strong>-2GB~2GB</strong> 之间使用的都是偏移地址跳转。</p>
+<h3 id="什么是偏移地址">什么是偏移地址</h3>
+<p>所谓的偏移地址就是：将某一地址作为起始地址，目的地址到这个起始地址的偏差。</p>
+<p>举个简单的例子：</p>
+<p><img src="image-20220629105231199.png" alt="image-20220629105231199"></p>
+<p>如上图所示，很明确使用的是偏移地址跳转，在硬编码  <code>EB 07</code> 中我们是找不到目的地址这个数值的，而 07 的来源就是起始地址和目的地址的差值，起始地址是该指令下一条指令的地址。</p>
+<h3 id="偏移地址跳转">偏移地址跳转</h3>
+<p>下图中绿色为偏移地址复制，红色为绝对地址赋值，这里可以好好体会一下</p>
+<p><img src="image-20220629111324575.png" alt="image-20220629111324575"></p>
+<p>因为偏移地址跳转有大小的限制，也就是正负 2GB 的限制，因此我们在使用偏移地址跳转的时候需要注意地址的有效值</p>
+<h4 id="EB-和-E9-跳转">EB 和 E9 跳转</h4>
+<p><img src="image-20220629120145210.png" alt="image-20220629120145210"></p>
+<p>都是偏移地址大小为 4 的跳转</p>
+<ul>
+<li>EB 的起始地址是当前指令下一条指令的地址，EB是1字节跳</li>
+<li>E9 的起始地址是当前指令的地址，E9是4字节跳，跳转范围是正负2GB，在使用 E9 的时候一定要注意跳转地址的范围</li>
+</ul>
+<p>E9跳转在 hook 上面使用较多。</p>
+<h4 id="FF25-跳转">FF25 跳转</h4>
+<p>该跳转的意思是跳转到所指向的目的地址的内容里的地址。非常绕，也就是说偏移地址所指向的目的地址并不是所要跳转的目的地址，偏移目的地址里面的内容才是。</p>
+<p>举个例子就很明了了</p>
+<p><img src="image-20220629132354933.png" alt="image-20220629132354933"></p>
+<p>虽然这个跳转目的地址很显然是会报错的，但是没关系，懂意思就好</p>
+<p>FF25在导入导出表上面使用较多，在跳转地址范围超出正负 2GB 的时候也可以使用该指令，只需要在偏移目的地址的8个字节内写入想要跳转的目的地址即可。</p>
+<h3 id="bug">bug</h3>
+<p>在 ida 里面，这里有个小 bug，下图的汇编和上面偏移地址跳转示例相匹配</p>
+<p><img src="image-20220629113750207.png" alt="image-20220629113750207"></p>
+<p>由于是相对偏移地址寻址，而起始地址在 cs 段，因此在 ida 中对于偏移地址寻址它的默认段是 cs 段，但其实这个是不对的</p>
+<p><img src="image-20220629114114413.png" alt="image-20220629114114413"></p>
+<p>因为段地址的不同会导致硬编码的前置数字的不同，cs 段的前缀比 ds 段多了个 2E</p>
+<p>虽然段地址有标注错误，但是对于这个错误实际上是没有什么影响的，因为在 x64汇编中已经取消了段地址保护这个概念。这里不细说，在之后的内核中会提到。</p>
+<p><strong>上述总结：</strong> 内存优先使用相对偏移地址寻址，直接寻址较少</p>
+<h2 id="常用的-hook-跳转及返回方式">常用的 hook 跳转及返回方式</h2>
+<h3 id="跳转">跳转</h3>
+<p>最好使用寄存器进行跳转操作，这样比较安全</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mov rax, 目的地址</span><br><span class="line">push rax</span><br><span class="line">ret   </span><br><span class="line"></span><br><span class="line">mov rax, 目的地址</span><br><span class="line">jmp rax </span><br></pre></td></tr></table></figure>
+<p>上面的两种方式都可以，而且它们的硬编码所占的字节数大小都是一样的。</p>
+<h3 id="返回">返回</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sub rsp,8</span><br><span class="line">mov dword ptr ss:[rsp],返回地址低4字节</span><br><span class="line">mov dword ptr ss:[rsp+4],返回地址高4字节</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>下面的这个方式使用的硬编码多占的字节数更小一点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">push 返回地址低4字节</span><br><span class="line">mov dword ptr ss:[rsp+4]，返回地址高4字节</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
+<p>为什么不连着用两个 push 是因为，虽然 push 的数字没有占满8个字节，但是在 x64 汇编中 push 命令就会给 rsp 的数值增加8个字节的大小，这样的或就会使我们的返回地址被4个字节的0隔成了两段。</p>
+<h2 id="小结">小结</h2>
+<p>关注寄存器进行写操作后的高位是否受到影响。</p>
+<p>对于跳转指令，除了关注跳转的效果以及汇编效果之外，还需要关注跳转指令的字节码长度，有时虽然汇编指令一模一样的但是在字节码长度上有区别。</p>
+<p><strong>编译器总是偏向于字节码较短的编译方式，短指令优先</strong>，编译结果有时会和自己所写的有偏差。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/07/07/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x01/">https://ghdemi.github.io/2022/07/07/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x01/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-07-10</p></div> 
+    <div class="post-entry__tags"><a href="/tags/X64%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X64汇编</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/06/28/HSCTF/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            HSCTF
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

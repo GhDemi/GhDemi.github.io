@@ -174,7 +174,7 @@
 
     <aside class="post-side">
         <div class="post-side__toc">
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis"><span class="toc-text">dis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z3%E2%80%93solver"><span class="toc-text">z3–solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-text">解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis"><span class="toc-text">dis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z3%E2%80%93solver"><span class="toc-text">z3–solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-text">解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91-v2"><span class="toc-text">踩坑</span></a></li></ol>
         </div>
     </aside>
     <a class="btn-toc button" id="btn-toc" tabindex="0">
@@ -184,7 +184,7 @@
     </a>
     <div class="toc-menus" id="toc-menus">
         <div class="toc-title">文章目录</div>
-        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis"><span class="toc-text">dis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z3%E2%80%93solver"><span class="toc-text">z3–solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-text">解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91"><span class="toc-text">踩坑</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">反编译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dis"><span class="toc-text">dis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#z3%E2%80%93solver"><span class="toc-text">z3–solver</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%A2%98"><span class="toc-text">解题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B8%A9%E5%9D%91-v2"><span class="toc-text">踩坑</span></a></li></ol>
     </div>
 
 
@@ -234,7 +234,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> z3 <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">x0 = Int(<span class="string">&#x27;x0&#x27;</span>)</span><br><span class="line">x1 = Int(<span class="string">&#x27;x1&#x27;</span>)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">x56 = Int(<span class="string">&#x27;x56&#x27;</span>)	</span><br><span class="line">x57 = Int(<span class="string">&#x27;x57&#x27;</span>)</span><br><span class="line"></span><br><span class="line">s=Solver()</span><br><span class="line"></span><br><span class="line">s.add(x0&gt;<span class="number">0</span>,x0&lt;=<span class="number">255</span>)</span><br><span class="line">s.add(x1&gt;<span class="number">0</span>,x1&lt;=<span class="number">255</span>)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">s.add(x56&gt;<span class="number">0</span>,x56&lt;=<span class="number">255</span>)</span><br><span class="line">s.add(x57&gt;<span class="number">0</span>,x57&lt;=<span class="number">255</span>)</span><br><span class="line"></span><br><span class="line">s.add(x50 * <span class="number">8</span> * (x9 - <span class="number">4</span>) * (x24 + <span class="number">4</span>) == <span class="number">9711352</span>)</span><br><span class="line">s.add(x54 * <span class="number">7</span> * (x13 - <span class="number">3</span>) * (x35 + <span class="number">3</span>) == <span class="number">3764768</span>)</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">s.add(x56 * <span class="number">4</span> * (x48 - <span class="number">5</span>) * (x10 + <span class="number">9</span>) == <span class="number">2099160</span>)</span><br><span class="line">s.add(x12 * <span class="number">8</span> * (x32 - <span class="number">3</span>) * (x18 + <span class="number">4</span>) == <span class="number">9270480</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(s.check())</span><br><span class="line">m = s.model()</span><br><span class="line">flag = <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">flag += <span class="built_in">chr</span>(m.<span class="built_in">eval</span>(x0).as_long())</span><br><span class="line">flag += <span class="built_in">chr</span>(m.<span class="built_in">eval</span>(x1).as_long())</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line">	.</span><br><span class="line"><span class="built_in">print</span>(flag)</span><br></pre></td></tr></table></figure>
 <p>将文件后缀名修改成 .py 后使用python运行</p>
 <p><img src="image-20220627212741375.png" alt="image-20220627212741375"></p>
-<h3 id="踩坑">踩坑</h3>
+<h3 id="踩坑-v2">踩坑</h3>
 <p>因为没搞懂 dis.dis( ) 函数的运作所以一开始不知道怎么把反汇编字节码放入到文本文件中，运行 <code>dis.dis(chall.fun)</code> 后，反汇编字节码的结果直接显示在了终端上面，最开始的时候选择直接从虚拟机里面复制反汇编字节码的内容到本机的 txt 里面，结果格式发生变化，调整了好几遍提取方程的程序一直报错。</p>
 <p>后来自己摸出来原来 w.write(chall.fun) 可以直接写进去，而且复制粘贴在虚拟机中格式是没有问题的，从不停调整到发现格式有错误再到发现解决方案浪费了不少时间，也算是吸取了个教训吧。</p>
 
@@ -265,6 +265,20 @@
 
     <div class="nav">
         <div class="nav__prev">
+            
+                <a href="/2022/07/07/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x01/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            x64汇编和逆向0x01
+                        </div>
+                    </div>
+                </a>
             
         </div>
         <div class="nav__next">
