@@ -52,7 +52,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-45ey59.jpg">
 <meta property="article:published_time" content="2022-06-13T12:12:30.000Z">
-<meta property="article:modified_time" content="2022-06-13T12:33:57.476Z">
+<meta property="article:modified_time" content="2022-07-20T01:58:00.998Z">
 <meta property="article:author" content="GhDemi">
 <meta property="article:tag" content="基础">
 <meta name="twitter:card" content="summary_large_image">
@@ -315,6 +315,7 @@
 <li>
 <p>DLLCharacteristics：结构体变量，确定一些关键安全选项，例如：ASLR，non-executable memory(DEP)。不仅仅描述 dll文件。结构体定义如下，和前面 FileHeader.Characteristics 类似</p>
 <p><img src="image-20220601213306995.png" alt="image-20220601213306995"></p>
+<p>其中的 <strong>IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE</strong> 决定了 DLL 在加载时是否可以重定位，如果不进行重定位的话，那么文件加载进内存中的基址和 OptionalHeader 中的 ImageBase 是一样的，32位中该值一般为 400000h。</p>
 </li>
 <li>
 <p>DataDirectory：结构体变量，结构体定义如下</p>
@@ -417,7 +418,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2022-06-13</p></div> 
+    <div class="post-footer__meta"><p>更新于 2022-07-20</p></div> 
     <div class="post-entry__tags"><a href="/tags/%E5%9F%BA%E7%A1%80/" class="post-tags__link button"># 基础</a></div> 
 </article>
 

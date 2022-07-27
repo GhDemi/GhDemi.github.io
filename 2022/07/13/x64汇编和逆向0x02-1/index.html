@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>x64汇编和逆向0x03 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="X64汇编">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="主要讲述 arm64 中的栈帧分析 不知道是编译器的原因还是什么其他原因，按照常理来说 x64 应该使用 rsp 寻址，但是为什么我的用的全是 rbp 寻址😐">
+<meta property="og:type" content="article">
+<meta property="og:title" content="x64汇编和逆向0x03">
+<meta property="og:url" content="https://ghdemi.github.io/2022/07/13/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x02-1/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="主要讲述 arm64 中的栈帧分析 不知道是编译器的原因还是什么其他原因，按照常理来说 x64 应该使用 rsp 寻址，但是为什么我的用的全是 rbp 寻址😐">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/x64汇编和逆向0x03.jpg">
+<meta property="article:published_time" content="2022-07-13T09:51:22.000Z">
+<meta property="article:modified_time" content="2022-07-13T10:31:47.107Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="X64汇编">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/x64汇编和逆向0x03.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        x64汇编和逆向0x03
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/07/" class="post-meta__date button">2022-07-13</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Reverse/" class="button">Reverse</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7"><span class="toc-text">栈帧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A0%88%E5%B8%A7%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-text">利用栈帧分析程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7%E7%A9%BA%E9%97%B4%E8%A7%84%E5%88%92"><span class="toc-text">栈帧空间规划</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E5%8F%B6%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D"><span class="toc-text">非叶函数的栈空间分配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD"><span class="toc-text">变量类型判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84"><span class="toc-text">栈帧空间结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida%E4%B8%AD%E7%9C%8B%E6%A0%88%E5%B8%A7%E7%A9%BA%E9%97%B4"><span class="toc-text">ida中看栈帧空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#other"><span class="toc-text">other</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7"><span class="toc-text">栈帧</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%A0%88%E5%B8%A7%E5%88%86%E6%9E%90%E7%A8%8B%E5%BA%8F"><span class="toc-text">利用栈帧分析程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7%E7%A9%BA%E9%97%B4%E8%A7%84%E5%88%92"><span class="toc-text">栈帧空间规划</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E5%8F%B6%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%E7%A9%BA%E9%97%B4%E5%88%86%E9%85%8D"><span class="toc-text">非叶函数的栈空间分配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%E5%88%A4%E6%96%AD"><span class="toc-text">变量类型判断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%88%E5%B8%A7%E7%A9%BA%E9%97%B4%E7%BB%93%E6%9E%84"><span class="toc-text">栈帧空间结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ida%E4%B8%AD%E7%9C%8B%E6%A0%88%E5%B8%A7%E7%A9%BA%E9%97%B4"><span class="toc-text">ida中看栈帧空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#other"><span class="toc-text">other</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/x64汇编和逆向0x03.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>主要讲述 arm64 中的栈帧分析</p>
+<p>不知道是编译器的原因还是什么其他原因，按照常理来说 x64 应该使用 rsp 寻址，但是为什么我的用的全是 rbp 寻址😐</p>
+<span id="more"></span>
+<h2 id="栈帧">栈帧</h2>
+<p>什么是栈帧？？？</p>
+<p>在 32 位中，进入函数之后一般会有一个 <code>push rbp</code> 的操作，在两个 rbp 之间的这个区段就叫做栈帧。所有的东西都是那 rbp 来进行偏移寻址</p>
+<p>64位和32位异曲同工，虽然不再使用 rbp 但是依旧可以进行栈帧定义。</p>
+<p>在64位中，栈上存放着函数的返回地址，那我们将栈帧定义成：在栈上保存的两个函数返回地址之间的区段就叫做栈帧。</p>
+<h2 id="利用栈帧分析程序">利用栈帧分析程序</h2>
+<p>这里利用栈帧分析局部变量和参数，可能是编译器的原因吧，我的 x64 用的都是 rbp 寻址</p>
+<p><img src="image-20220704161805496.png" alt="image-20220704161805496"></p>
+<p>没什么办法了，那就只能按照视频里面的例子来了</p>
+<p>先看一下大致的程序</p>
+<h3 id="栈帧空间规划">栈帧空间规划</h3>
+<p>在刚进入一个函数的时候 rsp 所指向的地方是栈中储存<strong>调用函数的返回地址</strong>的地方，在栈帧上我们将它标记为 r。</p>
+<p>随后进行了<code> push rdi</code> 和 <code>sub rsp，30h</code> 的操作，此时栈帧的结构如下，箭头表示 rsp 当前所在的位置，<strong>蓝色阴影区域就是当前函数的栈帧</strong></p>
+<p><img src="image-20220704172139705.png" alt="image-20220704172139705"></p>
+<h4 id="非叶函数的栈空间分配">非叶函数的栈空间分配</h4>
+<p>非叶函数：在函数实现过程中有调用其他函数的函数就是非叶函数</p>
+<p>叶函数：在函数的实现过程中不再调用其他函数，自己实现函数的功能。其他函数包括系统里面的自带的 API</p>
+<p><strong>在 x64 中，非叶函数至少分配 4 个参数的栈空间</strong></p>
+<p>在下图中，尽管在 main 函数中只调用了一个只有一个参数的 system( ) 函数，但是依旧为它分配了 4 个参数的栈空间</p>
+<p><img src="image-20220707143435827.png" alt="image-20220707143435827"></p>
+<h3 id="变量类型判断">变量类型判断</h3>
+<p>不知道自己的描述是不是准确，这里类型的判断是指：判断该变量是<strong>函数参数</strong>还是<strong>局部变量</strong></p>
+<p>在对 rsp 进行 sub 操作之前，进行了参数入栈操作，这里的参数是该函数所需的参数，对于本例来说就是 argc 和 argv</p>
+<p><img src="image-20220704174204599.png" alt="image-20220704174204599"></p>
+<p>在对栈帧的大致结构做了规划之后，接下来我们要找到 call ，并且观察所 call 的函数所需的参数。</p>
+<p>因为 x64 是一次性分配栈空间的，所以我们需要找出该函数中所有 call 中所需参数最多的那个，并且分配栈空间</p>
+<p><img src="image-20220704180237465.png" alt="image-20220704180237465"></p>
+<p>这个例子比较简单，print 函数是不定长参数，所以必须分配4字节的空间，所以参数空间就是 rsp 当前所指向的位置向下划分 4 个字节的空间。</p>
+<p>位于红色框区域内的就是参数，否则就是局部变量。</p>
+<h3 id="栈帧空间结构">栈帧空间结构</h3>
+<p>所以例子中的程序分析下来，栈帧的结构大致就是这样</p>
+<p><img src="image-20220704180842828.png" alt="image-20220704180842828"></p>
+<p>对栈帧空间进行整理的话就是就如图所示</p>
+<p><img src="image-20220704182731955.png" alt="image-20220704182731955"></p>
+<h2 id="ida中看栈帧空间">ida中看栈帧空间</h2>
+<p>这个和上面的不是相匹配的，是我自己的编译器编译出来的64位 exe 程序，里面用的是 rbp 相对寻址</p>
+<p>在 ida 中，栈帧空间的栈顶就是在该函数中 rsp 所在的位置</p>
+<p><img src="image-20220704192907117.png" alt="image-20220704192907117"></p>
+<p>结合这两个语句， rbp 所这样的位置正好是 0 处</p>
+<p><img src="image-20220704193041868.png" alt="image-20220704193041868"></p>
+<p>所以简单来说，ida 就是将栈帧中的0处当成基址，然后在此基础上进行便偏移寻址</p>
+<p><img src="image-20220704193223118.png" alt="image-20220704193223118"></p>
+<ul>
+<li>arg 表示整数，指向0处向下的位置</li>
+<li>var 表示复数，指向0处向上的位置</li>
+</ul>
+<h2 id="other">other</h2>
+<p>理的有点乱糟糟的，只是说了个大概意思，感觉重点就是要理解这个栈帧空间的主要结构，后续自己要多练练，先多看看自己写的程序，然后再看看别人写的，多练熟吧。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/07/13/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x02-1/">https://ghdemi.github.io/2022/07/13/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x02-1/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-07-13</p></div> 
+    <div class="post-entry__tags"><a href="/tags/X64%E6%B1%87%E7%BC%96/" class="post-tags__link button"># X64汇编</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/2022/07/27/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            Previous Post
+                        </div>
+                        <div class="nav__title">
+                            2022蓝帽杯初赛wp
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/07/10/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x02/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            x64汇编和逆向0x02
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>

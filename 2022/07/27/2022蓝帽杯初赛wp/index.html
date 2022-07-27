@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>2022蓝帽杯初赛wp | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Re">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="只是一个菜菜按照别人的 wp 照做一遍，复盘一遍📹">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022蓝帽杯初赛wp">
+<meta property="og:url" content="https://ghdemi.github.io/2022/07/27/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="只是一个菜菜按照别人的 wp 照做一遍，复盘一遍📹">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/2022蓝帽杯.jpg">
+<meta property="article:published_time" content="2022-07-27T09:13:43.000Z">
+<meta property="article:modified_time" content="2022-07-27T09:57:35.814Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/2022蓝帽杯.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        2022蓝帽杯初赛wp
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/07/" class="post-meta__date button">2022-07-27</a>
+        
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-text">misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#domainhacker"><span class="toc-text">domainhacker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#re"><span class="toc-text">re</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#loader"><span class="toc-text">loader</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dump"><span class="toc-text">dump</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E8%B0%83"><span class="toc-text">动调</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#misc"><span class="toc-text">misc</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#domainhacker"><span class="toc-text">domainhacker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#re"><span class="toc-text">re</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#loader"><span class="toc-text">loader</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dump"><span class="toc-text">dump</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E8%B0%83"><span class="toc-text">动调</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/2022蓝帽杯.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>只是一个菜菜按照别人的 wp 照做一遍，复盘一遍📹</p>
+<span id="more"></span>
+<h2 id="misc">misc</h2>
+<h3 id="domainhacker">domainhacker</h3>
+<p>第一次接触使用 wireshark 进行流量分析的题，当时做的时候看了网上几个例子，依样画葫芦，无果，大多数都是跟踪流然后进行内容分析，我也照做。但是该题突破口是导出对象的查看。</p>
+<p>有 wp 中写道这个是蚁剑混淆流量，我也不知道这个是怎么看出来的。</p>
+<p><strong>正题回归</strong></p>
+<p>首先在导出对象中发现 rar 文件</p>
+<p><img src="image-20220710204653340.png" alt="image-20220710204653340"></p>
+<p><img src="image-20220710204751737.png" alt="image-20220710204751737"></p>
+<p>上图中的 1.php 可能就是一句话木马吧，保存之后 1.rar 是一个加密压缩包，接下来的任务就是找密码了。</p>
+<p>对传输文件的流量进行分析，至于如何找这个流量，我也是第一次，所以也不是很清楚，应该就是一组组地进行 <strong>跟踪流</strong> 然后查看分析</p>
+<p><img src="image-20220710205346638.png" alt="image-20220710205346638"></p>
+<p>对这一组流的 http 内容进行解密混淆，找到个好玩的工具<a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">CyberChef</a></p>
+<p><img src="image-20220710210151249.png" alt="image-20220710210151249"></p>
+<p>对下方的东西进行 base64 解码</p>
+<p><img src="image-20220712124231859.png" alt="image-20220712124231859"></p>
+<p>-p是命令行的参数，后面跟的就是密码。解压后得到 1.txt 文件，但是下面这句话我不懂，尚未触及的领域</p>
+<blockquote>
+<p>文件是 mimikatz 运行结果，ntml 就是答案所要哈希</p>
+</blockquote>
+<p><img src="image-20220712125440806.png" alt="image-20220712125440806"></p>
+<h2 id="re">re</h2>
+<h3 id="loader">loader</h3>
+<p>真的是废了我很大的劲了，还是太菜了，面对反编译的不懂，不理解，找不到方向感到非常的无力</p>
+<p>开始加载进去的主程序很简单，通过函数 VirtualProtect(lpAddress，flNewProtect，dwSize，lpflOldProtect)  将数据段的一段区域赋予了可执行的权限</p>
+<p><img src="image-20220714140323006.png" alt="image-20220714140323006"></p>
+<p>通过下面的函数 sub_7FF695E01040(sub_7FF695E03040)  使得程序跳转至上面的数据段去运行。</p>
+<p>接下来对该程序有2种操作方式，一种是通过动调分析该数据段里的内容；一种是通过 dump 该数据段中的内容进行分析</p>
+<p><strong>关于该可执行数据段中的内容：</strong> q师傅说里面其实就是一段 shellcode ，( 以下个人瞎理解   也就是说其实就是一段可以被执行的裸的代码，感觉就是类似于程序里的函数之类的。</p>
+<p>但是在这段可执行的数据段里面将整个完整的程序封装进去，就和加壳一样，我也不知道这样可不可行</p>
+<h4 id="dump">dump</h4>
+<p>试了很久，还是没有试成功，刚开始的时候不知道 dump 的起始地址应该在哪里看，后来 q师傅 告诉我需要在动调时右侧的 modules 窗口看</p>
+<p><img src="image-20220714141817555.png" alt="image-20220714141817555"></p>
+<p>这里告诉了我们基址和文件的大小</p>
+<p>我使用的时 ida 里面的 script commond ，顺道给一下脚本</p>
+<p>IDC</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">auto</span> i,fp;</span><br><span class="line">    fp = fopen(<span class="string">&quot;D:\\IdaDump\\loader&quot;</span>,<span class="string">&quot;wb&quot;</span>);</span><br><span class="line">    <span class="keyword">auto</span> start = <span class="number">0x7FF695E00000</span>;</span><br><span class="line">    <span class="keyword">auto</span> size = <span class="number">0x3B000</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=start;i&lt;start+size;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        fputc(Byte(i),fp);</span><br><span class="line">    &#125;</span><br><span class="line">    fp.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Python</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> idaapi</span><br><span class="line">start_address = <span class="number">0x7FF695E00000</span></span><br><span class="line">data_length = <span class="number">0x3B000</span></span><br><span class="line">data = idaapi.dbg_read_memory(start_address , data_length)</span><br><span class="line">fp = <span class="built_in">open</span>(<span class="string">&#x27;D:\\IdaDump\\loader&#x27;</span>, <span class="string">&#x27;wb&#x27;</span>)</span><br><span class="line">fp.write(data)</span><br><span class="line">fp.close()</span><br></pre></td></tr></table></figure>
+<p>由于对这个数据段里内容的性质我并不是很清楚，不知道是不是一个完整的程序；当然也可能是我 dump 的不对。</p>
+<p>别人dump下来的东西可以变成 exe 文件直接运行，但是我的不可以，我查看了以下 dump 下来的内容的 pe文件头，大体上是相似的，也有pe文件头的一些标志，但是具体的东西解析不出来</p>
+<p><img src="image-20220714144958950.png" alt="image-20220714144958950"></p>
+<p>我估计和下面这一大块0有关系，正常的对应关系应该是这个样的</p>
+<p><img src="image-20220714150552817.png" alt="image-20220714150552817"></p>
+<p>很显然，我dump下来的东西 .text 段的偏移地址依旧是 0400h ，但是我的 0400h 处全都是0 。</p>
+<p>解决办法依旧是没有找到，wp 里面写的非常的简单，而且dump下来的东西可以变成 exe 运行，只是没有什么内容</p>
+<p><img src="image-20220714151047664.png" alt="image-20220714151047664"></p>
+<p>但是我的不可以，运行会报错，直接拖 ida 也不太行</p>
+<p>之后再说吧</p>
+<h4 id="动调">动调</h4>
+<p>官方给的 wp 是动调解决的，其实不管是动调也好，静态分析也罢，具体问题就是这些：</p>
+<ul>
+<li>我总是找不到这个程序里面的主要函数</li>
+<li>在调试的过程中 call 了一个函数后不知道是要步入细看还是直接步，总是会进一些没什么大用处的函数然后在里面反复横跳浪费时间</li>
+<li>单句汇编都能看懂，大片连起来之后就不会了，不会熟练利用 f5 伪代码和汇编结合起来看</li>
+</ul>
+<p>这次也是花了很久的时间去磨这道题了，真的是菜的自己有点受不了了。</p>
+<p><strong>回归正题</strong></p>
+<p>动调运行至可执行权限的数据段，并单步步入 rbx 所指向的地址</p>
+<p><img src="image-20220714154019435.png" alt="image-20220714154019435"></p>
+<p>进入之后，指令 call rax ，从寄存器里看可以知道这个个大跳转，f7步入</p>
+<p><img src="image-20220714154655700.png" alt="image-20220714154655700"></p>
+<p>接着对里面的 sub_7FF695E041C0 进行跟进</p>
+<p><img src="image-20220714155645665.png" alt="image-20220714155645665"></p>
+<p>在这个函数里面，我动调了很多次，才找到要步入的函数，关于这些内容的作用， wp 上说都是对内存的一些数据进行解密操作。</p>
+<p>这个我完全不懂是怎么看出来的😢</p>
+<p>对关键函数进行跟进</p>
+<p><img src="image-20220714155913682.png" alt="image-20220714155913682"></p>
+<p>这里面还有跟进，所要跟进的函数就只能通过动调再结合输出流，找到核心函数</p>
+<p>进入这个函数之后运行了一堆函数，然后该处有一个输出并读取我们字符串的操作</p>
+<p><img src="image-20220714162428746.png" alt="image-20220714162428746"></p>
+<p>接着又是我看不懂的一堆操作，运行到此处时，我们可以发现我们输入的字符串就出现了，并且和字符串 “flag” 以及字符 ‘{’ 进行了比较</p>
+<p><img src="image-20220714162748788.png" alt="image-20220714162748788"></p>
+<p>如果正确的话就进行进一步比较操作，在接下来的 do while 循环，将我们输入的字符串去掉头和尾 ‘flag{’ 和 ‘}’ 分成了2组，每组 18 个数字，前18位和后18位都用了下图中的方法取获取</p>
+<p><img src="image-20220714165117585.png" alt="image-20220714165117585"></p>
+<p>之后的函数  sub_7FF695E14380(__int64 a1, __int64 a2, _BYTE *a3)  的作用是，将 a1 中的大数字放入 a3 所指向的结构体空间中</p>
+<p>结构体如下，有字符长度以及数据</p>
+<p><img src="image-20220714165509158.png" alt="image-20220714165509158"></p>
+<p>下面总共运用了4次该函数，两次用于我们所输入的字符串中的两组数字，两次用于从内存中读取比较大小所要用的数字。</p>
+<p><img src="image-20220714215812447.png" alt="image-20220714215812447"></p>
+<p>接下来利用函数  sub_7FF695E150C0(const __m128i *a1, const __m128i *a2) 将我们所输入的前18位和内存中的两个数字 72057594037927936和1152921504606846976 进行比较</p>
+<p><img src="image-20220714220630926.png" alt="image-20220714220630926"></p>
+<p>接下来是一组我又没有看懂的操作，也是分了2个，分别针对我们输入的前18位和后18位</p>
+<p><img src="image-20220714224446686.png" alt="image-20220714224446686"></p>
+<p>看 wp 推断出来上述结果，其实上面的函数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sub_7FF695E142B0(const __m128i *a1, const __m128i *a2, __int64 a3)  //上述用于计算平方</span><br><span class="line">sub_7FF695E152A0(const __m128i *a1, unsigned int a2, __int64 a3)  //上述用于计算*11</span><br></pre></td></tr></table></figure>
+<p>可以归为同一个，它们的功能相同都是乘法函数，并且前两个参数是两个所要相乘的数字，第三个参数用于结果的储存</p>
+<p>我们将我们输入的36位数字，做一下对应</p>
+<ul>
+<li>前18位记作 x</li>
+<li>后18位记作 y</li>
+</ul>
+<p>那么对于 x 运算得到的第一部分结果是：x^2</p>
+<p>对于 y 运算得到的第二部分结果是：y^2*11</p>
+<p>接下来是函数 sub_7FF695E15400(__int64 *a1, __int64 *a2, __int64 a3)，对上面两部分的结果进行减法操作</p>
+<p><img src="image-20220714225615665.png" alt="image-20220714225615665"></p>
+<p>最后一个 if(sub_7FF695E15540(&amp;v34, &amp;v33)) 语句将相减结果和 9 进行比较，相等就成功了</p>
+<p><img src="image-20220714225903399.png" alt="image-20220714225903399"></p>
+<p>所以整理下来得到的是一个方程组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x^2 - 11*y^2 = 9</span><br><span class="line">72057594037927936&lt;x&lt;1152921504606846976</span><br></pre></td></tr></table></figure>
+<p>利用<a target="_blank" rel="noopener" href="https://www.wolframalpha.com/">计算工具</a>求得 x 和 y 不满18位的拿0补齐</p>
+<p><img src="image-20220714231421781.png" alt="image-20220714231421781"></p>
+<blockquote>
+<p>flag{118936021352508390035860559716724409}</p>
+</blockquote>
+<h4 id="小结">小结</h4>
+<p>主要涉及到了大数的计算，所以导致之前很简单的加减乘除都变得很复杂，需要有个函数对这些运算进行处理。因此每个函数看起来都很复杂。</p>
+<p>由于大数计算，再加上结构体，里面有很多数据整理的函数</p>
+<p>主要还是自己太菜了，一点点慢慢来吧。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/07/27/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/">https://ghdemi.github.io/2022/07/27/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-07-27</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Re/" class="post-tags__link button"># Re</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/07/13/x64%E6%B1%87%E7%BC%96%E5%92%8C%E9%80%86%E5%90%910x02-1/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            x64汇编和逆向0x03
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
