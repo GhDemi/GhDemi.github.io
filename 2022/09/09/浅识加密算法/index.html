@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>浅识加密算法 | 早点睡zZZ</title>
+
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Back! 旧识新发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅识加密算法">
+<meta property="og:url" content="https://ghdemi.github.io/2022/09/09/%E6%B5%85%E8%AF%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="Back! 旧识新发">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-e7jj6r.jpg">
+<meta property="article:published_time" content="2022-09-09T12:15:04.000Z">
+<meta property="article:modified_time" content="2022-09-09T12:25:31.051Z">
+<meta property="article:author" content="GhDemi">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-e7jj6r.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        浅识加密算法
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/09/" class="post-meta__date button">2022-09-09</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Base%E7%B3%BB%E5%88%97"><span class="toc-text">Base系列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%A7%82%E5%AF%9F%E5%85%B3%E9%94%AE%E7%89%B9%E5%BE%81"><span class="toc-text">静态观察关键特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="toc-text">利用插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-text">输入输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">对称加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RC4"><span class="toc-text">RC4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%89%B9%E5%BE%81"><span class="toc-text">静态特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%82%E5%AF%9F"><span class="toc-text">动态观察</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DES"><span class="toc-text">DES</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%86"><span class="toc-text">模式的区分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AES"><span class="toc-text">AES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tips"><span class="toc-text">Tips</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other"><span class="toc-text">Other</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Base%E7%B3%BB%E5%88%97"><span class="toc-text">Base系列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E8%A7%82%E5%AF%9F%E5%85%B3%E9%94%AE%E7%89%B9%E5%BE%81"><span class="toc-text">静态观察关键特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%8F%92%E4%BB%B6"><span class="toc-text">利用插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E9%87%8F"><span class="toc-text">常量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="toc-text">输入输出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">对称加密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RC4"><span class="toc-text">RC4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%89%B9%E5%BE%81"><span class="toc-text">静态特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E8%A7%82%E5%AF%9F"><span class="toc-text">动态观察</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DES"><span class="toc-text">DES</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%86"><span class="toc-text">模式的区分</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AES"><span class="toc-text">AES</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tips"><span class="toc-text">Tips</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%AF%B9%E7%A7%B0%E5%8A%A0%E5%AF%86"><span class="toc-text">非对称加密</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Other"><span class="toc-text">Other</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-e7jj6r.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>Back! 旧识新发</p>
+<span id="more"></span>
+<p>加密算法本身就是一个比较复杂的东西，里面也涉及到了许多的数学只是，但是由于现在的逆向题目通常与多种算法相结合，因此有必要对算法做出一定的了解。</p>
+<p>但是这里的了解重点不在于算法的实现原理，而是通过一些小技巧去判断到底是什么算法，然后套用现成的脚本对其进行解密就行，以下给出几个算法判断小技巧</p>
+<p><strong>算法判断五个小技巧</strong></p>
+<ul>
+<li>静态观察关键特征</li>
+<li>IDA Findcrypt 插件</li>
+<li>找常量(BOX、SBOX)</li>
+<li>动态调试观察传参</li>
+<li>动态调试观察返回结果</li>
+</ul>
+<h2 id="Base系列">Base系列</h2>
+<p>严格意义上来说，base 系列其实不能算是加密，它其实是一种编码方式，编码就是将信息按照一定的格式重新进行编排，那就意味着任何人拿到编码后的信息都是能马上转成编码前的信息。</p>
+<p>base 系列中最常见的就是 base64 编码，它是网络上最常见的用于传输 8bit 字节码的编码方式之一，base64 就是一种基于64个可视字符来表示二进制数据的方式。最常见于网页中包含图片数据时，采用 base64 编码可以将不可见的字节数据转变成字符串。</p>
+<p>举个例子</p>
+<p><img src="image-20220609204954677.png" alt="image-20220609204954677"></p>
+<p>上图就是一个 base64 算法的例子，将 ascll 码字符依照 ascll 码表得到对应的十进制数字，然后将十进制数字转化为二进制，因为一个 ascll 字符所占的大小是1个字节也就是8位，所以转化后的二进制是8位。转化完后对这些二进制进行重新的分割，将它从8个 bit 为一组变成6个 bit为一组，然后再对分割后的每一组进行高位补零的操作，再将得到的新的4组 8bit 二进制转化为10进制，对照 base64 的索引表获得新的4个符。</p>
+<p>看完这个例子大致上也能明白为什么取3个字符为一组，因为 3*8=4*6=24。</p>
+<p>用 C 语言算法实现 base64 的例子也有很多，可以网上好好看一看。</p>
+<p><strong>base64的特征</strong></p>
+<p>在 C 语言上，base64算法的特征体现在移位操作、编码表以及在编码表中取值上。</p>
+<p>下图时加密时的移位操作</p>
+<p><img src="image-20220610191213269.png" alt="image-20220610191213269"></p>
+<p>下图是编码表，当然在某些情况下，为了混淆，编码表可能会进行各种更改</p>
+<p><img src="image-20220610191116462.png" alt="image-20220610191116462"></p>
+<p>下图是在编码表中的取值操作</p>
+<p><img src="image-20220610191307783.png" alt="image-20220610191307783"></p>
+<h3 id="静态观察关键特征">静态观察关键特征</h3>
+<p>在 ida 中，反编译的代码特征主要也是这几点。</p>
+<p>下图是计算索引时的移位运算操作和依据索引在编码表中取值</p>
+<p><img src="image-20220610192922935.png" alt="image-20220610192922935"></p>
+<p>我们还可以在字符串中发现我们的编码表</p>
+<p><img src="image-20220610193026057.png" alt="image-20220610193026057"></p>
+<p>如果在反编译的代码中能够发现这些类似的东西，那基本上就可以确定就是base64编码了。</p>
+<h3 id="利用插件">利用插件</h3>
+<p>除了静态观察这些代码之外，还可以依靠 ida 的插件 Findcrypt，这个插件能够依据一些特定的字符来识别出算法中的一些东西，在 base64 中它能发现编码表</p>
+<p><img src="image-20220610194449826.png" alt="image-20220610194449826"></p>
+<p>插件的缺点就是：它只能识别标准的算法，一旦编码过程或者编码表被更改混淆，那就只能自己去找和发现了。</p>
+<h3 id="常量">常量</h3>
+<p>这里的常量就是这个编码表了。</p>
+<h3 id="输入输出">输入输出</h3>
+<p>base64的输入输出典型的地方就是你输入3个字符它会吐给你4个字符，以此类推。观察输入输出的字符个数也可以用作判断的一个依据。</p>
+<h2 id="对称加密">对称加密</h2>
+<p>简单来说就是拿一个密钥就能完成加密和解密这两个工作。</p>
+<h3 id="RC4">RC4</h3>
+<p>特点是算法简单，运算速度快</p>
+<ul>
+<li>一种流加密</li>
+<li>密钥长度可变，可变范围为1-256字节</li>
+<li>根据明文长度生成密钥流</li>
+<li>密钥流与明文异或生成密文</li>
+</ul>
+<p><strong>一些概念</strong></p>
+<ul>
+<li>状态向量 S，又叫 S 盒或者 SBOX，长度是 0-255</li>
+<li>临时向量 T，是密钥的一个拓展</li>
+</ul>
+<p><strong>加解密流程</strong></p>
+<p>初始化 S 和 T——&gt;初始排列 S——&gt;生成密钥流——&gt;生成密文或解密</p>
+<p><strong>步骤具体实现</strong>   C语言</p>
+<p>初始化 S、T</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">init_S</span><span class="params">()</span>  <span class="comment">// 初始化S</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++) </span><br><span class="line">    &#123;</span><br><span class="line">        S[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init_Key</span><span class="params">(<span class="type">int</span>* key)</span>  <span class="comment">//拓展密钥，初始化T[]</span></span></span><br><span class="line"><span class="function"></span>&#123;   </span><br><span class="line">    key[<span class="number">0</span>] = <span class="number">0x62</span>; key[<span class="number">1</span>] = <span class="number">0x61</span>; key[<span class="number">2</span>] = <span class="number">0x64</span>; key[<span class="number">3</span>] = <span class="number">0x5f</span>; key[<span class="number">4</span>] = <span class="number">0x77</span>; key[<span class="number">5</span>] = <span class="number">0x6f</span>; key[<span class="number">6</span>] = <span class="number">0x6d</span>; key[<span class="number">7</span>] = <span class="number">0x61</span>; key[<span class="number">8</span>] = <span class="number">0x6e</span>;   <span class="comment">//key = &quot;bad_woman&quot; ,这里的 key 写死了   </span></span><br><span class="line">    <span class="type">int</span> d, keylen = <span class="number">9</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++)  </span><br><span class="line">    &#123;   </span><br><span class="line">        T[i] = key[i % keylen];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>初始排列 S</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span>  <span class="title">permute_S</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 置换S;</span></span><br><span class="line">    <span class="type">int</span> temp;</span><br><span class="line">    <span class="type">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">256</span>; i++) </span><br><span class="line">    &#123;</span><br><span class="line">        j = (j + S[i] + T[i]) % <span class="number">256</span>;</span><br><span class="line">        temp = S[i];</span><br><span class="line">        S[i] = S[j];</span><br><span class="line">        S[j] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>生成密钥流</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">create_key_stream</span><span class="params">(BYTE* text, <span class="type">int</span> textLength)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> i, j;</span><br><span class="line">    <span class="type">int</span> temp, t, k;</span><br><span class="line">    <span class="type">int</span> index = <span class="number">0</span>;</span><br><span class="line">    i = j = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (textLength--)  <span class="comment">//生成密钥流</span></span><br><span class="line">    &#123;   </span><br><span class="line">        i = (i + <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">        j = (j + S[i]) % <span class="number">256</span>;</span><br><span class="line">        temp = S[i];</span><br><span class="line">        S[i] = S[j];</span><br><span class="line">        S[j] = temp;</span><br><span class="line">        t = (S[i] + S[j]) % <span class="number">256</span>;</span><br><span class="line">        KeyStream[index] = S[t];</span><br><span class="line">        index++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>加密、解密</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">Rc4EncryptText</span><span class="params">(BYTE* text)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> textLength = <span class="built_in">GetLength</span>(text);</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>, textLength);</span><br><span class="line">    <span class="type">int</span> Key[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">init_S</span>();</span><br><span class="line">    <span class="built_in">init_Key</span>(Key);</span><br><span class="line">    <span class="built_in">permute_S</span>();</span><br><span class="line">    <span class="built_in">create_key_stream</span>(text, textLength);</span><br><span class="line">    <span class="type">int</span> plain_word;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; textLength; i++) <span class="comment">//将密钥流和明文/密文进行异或获得密文/明文</span></span><br><span class="line">    &#123;</span><br><span class="line">        CryptoText[i] = <span class="built_in">char</span>(KeyStream[i] ^ text[i]); </span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>; i &lt; textLength; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>, CryptoText[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>观察具体实现的步骤，其实明文在 RC4 算法中就只出现了一次，从明文到密文或是密文到明文变化的过程就是使用密钥流与所需内容进行一次异或，也因为异或具有自反性，所以加密和解密基本上就是一样的。</p>
+<p><strong>因此，对于 RC4 算法特征的判断主要在于初始化向量 S 和 T 以及 加密仅为密钥流与明文进行异或。</strong></p>
+<p>反编译后的代码和 C 语言实现的代码还是有很高的相似度的，在图中也可以大致看出来对于 S 和 T 的初始化函数</p>
+<p><img src="image-20220611160002750.png" alt="image-20220611160002750"></p>
+<h4 id="静态特征">静态特征</h4>
+<p>0-255 S 向量初始化</p>
+<p><img src="image-20220611160236013.png" alt="image-20220611160236013"></p>
+<p>0-255 T 向量初始化</p>
+<p><img src="image-20220611160317399.png" alt="image-20220611160317399"></p>
+<p>仅对明文进行一次异或操作</p>
+<p><img src="image-20220611160432920.png" alt="image-20220611160432920"></p>
+<h4 id="动态观察">动态观察</h4>
+<p>主要关注2个点来判断是不是 RC4 算法</p>
+<ul>
+<li>T向量初始化后的结果。T向量初始化后的结果一般都是密钥循环填充整个T数组。</li>
+<li>密钥流与输入和密钥的对应关系。因为密钥流的生成和明文的输入基本上是没有什么关系，主要的关系就是密钥流的长度是由明文所决定的，因此在动态调试的时候，我们对明文进行更改，然后再观察密钥流的内容，如果密钥的内容没有什么大致的改变的话，那也可能是 RC4 算法。</li>
+</ul>
+<hr>
+<h3 id="DES">DES</h3>
+<p>数据加密标准，是一种使用密钥加密的块算法。块算法就是：密钥的长度固定，每次加密的长度相同。</p>
+<p>算法需要三个元素实现：Key、Data、Mode</p>
+<ul>
+<li><strong>key：</strong> 密钥，长度是64位，其中的56位参与运算，剩余8位用于校验。</li>
+<li><strong>Data：</strong> 是要被加密或解密的数据，大小为8个字节64位     //因为是块加密算法，所以数据被分割成了固定大小</li>
+<li><strong>Mode：</strong> DES模式，通常有 ECB 和 CBC 模式</li>
+</ul>
+<p>des 算法的流程大致如图所示，其实算法实现过程不用太关注，逆向的重点在于<strong>能够识别出这个算法</strong>。</p>
+<p><img src="17434358-2ca952e1d904d5f1.png" alt="img"></p>
+<p>我也只是大致了解了一下 des 算法，接下来大致说一下理解，首先梳理一下大致内容：</p>
+<ul>
+<li>Li 和 Ri 都是32位</li>
+<li>Ki 是48位</li>
+<li>$IP$ 和 $IP^{-1}$ 都是 64 位</li>
+</ul>
+<p><strong>函数f运作流程图</strong></p>
+<p><img src="17434358-f5f51d85e29a4ae9.png" alt="img"></p>
+<p>里面涉及到了很多东西：E盒、S盒、P盒。</p>
+<p><strong>子密钥的产生过程</strong></p>
+<p><img src="17434358-9f2a7ed21e7f1a38.png" alt="img"></p>
+<p>des 的算法比较复杂，里面也涉及到了更多的数学知识。虽然算法复杂，但是辨别它是不是一个 des 算法其实并不难，des 算法中涉及到了大量的数据置换，因此 des 算法中有很多常量，这些常量就是置换表。如果说ida解析出来的程序里面有大量这种置换表的话那基本上就可以判断是 des 算法了。</p>
+<h4 id="模式的区分">模式的区分</h4>
+<p>前面也有提到 des 加密有两种模式分别是 ecb 和 cbc 模式。</p>
+<p>这两中模式的区别就是 cbc 模式引入了 iv 向量，在对明文进行加密之前与iv向量多做了一次异或。</p>
+<h3 id="AES">AES</h3>
+<p>高级加密标准，属于块加密，它的出现主要是为了取代 DES 加密算法，因为随着计算机性能的提升 DES 加密算法不是很安全了，因此 AES 和 DES 之间是有相似之处的。</p>
+<p>AES 算法比 DES 算法更复杂一点</p>
+<p>AES 算法和 DES 算法的主要区别在于加密轮次和置换表</p>
+<ul>
+<li>加密轮次：des 是 16轮，aes 是9轮。</li>
+<li>置换表：des 的置换表数量很多但是每一个置换表的大小相较而言没有那么大，aes 的置换表不多但是每个置换表都比较大，因为 aes 的密钥长度和分块加密的长度都是远大于 des 的。</li>
+</ul>
+<p>S盒是 aes 加密的一个主要特征</p>
+<p><img src="image-20220909201334413.png" alt="image-20220909201334413"></p>
+<h3 id="Tips">Tips</h3>
+<p>DES 和 AES 都是块加密算法，它们每次加密的明文长度是固定的，当遇到明文长度不够的时候需要对内容进行填充操作，也就是 padding。</p>
+<p>padding方式：Zero padding、PKCS7 padding</p>
+<ul>
+<li>Zero padding：填充位用0来填充</li>
+<li>PKCS7 padding：填充位用缺少的位数来填充</li>
+</ul>
+<h2 id="非对称加密">非对称加密</h2>
+<p>非对称加密既有公钥又有私钥，它们两个是不同的，加密用公钥，解密用私钥，加解密所用的密钥不同。</p>
+<p><strong>都说非对称加密了，哪有这么容易解啊，走了走了</strong></p>
+<h2 id="Other">Other</h2>
+<p>又遇到了好多新加密，什么 tea xxtea chacha20 ，听了直想摇头</p>
+<p><img src="image-20220909202329477.png" alt="image-20220909202329477"></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/09/09/%E6%B5%85%E8%AF%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/">https://ghdemi.github.io/2022/09/09/%E6%B5%85%E8%AF%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-09-09</p></div> 
+    <div class="post-entry__tags"></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/07/27/2022%E8%93%9D%E5%B8%BD%E6%9D%AF%E5%88%9D%E8%B5%9Bwp/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            2022蓝帽杯初赛wp
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
