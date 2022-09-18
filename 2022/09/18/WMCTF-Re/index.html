@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>WMCTF_Re | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Re">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="题目越做越多（g🔫">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WMCTF_Re">
+<meta property="og:url" content="https://ghdemi.github.io/2022/09/18/WMCTF-Re/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="题目越做越多（g🔫">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-p28x9e.jpg">
+<meta property="article:published_time" content="2022-09-18T09:09:05.000Z">
+<meta property="article:modified_time" content="2022-09-18T09:19:46.570Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-p28x9e.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        WMCTF_Re
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/09/" class="post-meta__date button">2022-09-18</a>
+        
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BabyDriver"><span class="toc-text">BabyDriver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%B1%E5%8A%A8"><span class="toc-text">驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E6%9E%90"><span class="toc-text">浅析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A9%B1%E5%8A%A8%E6%B5%85%E6%9E%90"><span class="toc-text">驱动浅析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#seeee"><span class="toc-text">seeee</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E6%9E%90-v2"><span class="toc-text">浅析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-v2"><span class="toc-text">小结</span></a></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#BabyDriver"><span class="toc-text">BabyDriver</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%B1%E5%8A%A8"><span class="toc-text">驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E6%9E%90"><span class="toc-text">浅析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A9%B1%E5%8A%A8%E6%B5%85%E6%9E%90"><span class="toc-text">驱动浅析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#seeee"><span class="toc-text">seeee</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E6%9E%90-v2"><span class="toc-text">浅析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-v2"><span class="toc-text">小结</span></a></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/wallhaven-p28x9e.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>题目越做越多（g🔫</p>
+<span id="more"></span>
+<p><a target="_blank" rel="noopener" href="https://bbs.pediy.com/thread-274209.htm">安洵信息wp</a></p>
+<h2 id="BabyDriver">BabyDriver</h2>
+<p>一道驱动逆向题</p>
+<h3 id="驱动">驱动</h3>
+<p>本质上也是一个程序，它是用户层和内核层通信的桥梁。</p>
+<p>我们的操作都只能在3环用户层上，想要影响到0环内核的操作就需要通过驱动。</p>
+<h3 id="浅析">浅析</h3>
+<p>通过查找字符串&quot;flag&quot;，然后交叉引用到达关键函数 sub_140006810()</p>
+<p><img src="image-20220906201750943.png" alt="image-20220906201750943"></p>
+<p>重点是打头的 sub_140006380() 函数</p>
+<p><img src="image-20220906202555318.png" alt="image-20220906202555318"></p>
+<p>在 sub_1400036C0(FileName, v2) 函数中，将程序资源里名字叫 WMCTF 资源里的内容写进了 FileName 文件中。换句话说，驱动的代码一开始就在程序里面，保存在名字叫 WMCTF 的资源里</p>
+<p><img src="image-20220906203210297.png" alt="image-20220906203210297"></p>
+<p>相关驱动前置操作完成之后，函数 sub_140006750(v3, (unsigned int)v2) 将我们所输入的字符串进行了一个异或操作</p>
+<p><img src="image-20220906203630116.png" alt="image-20220906203630116"></p>
+<p>在函数 sub_1400062A0() 里，函数NtQueryInformationFile( ) 将加密后的字符串以及上图中的一些信息传给驱动，由驱动对我们所输入的字符串进行一些操作</p>
+<p><img src="image-20220906203903201.png" alt="image-20220906203903201"></p>
+<p>后续就是对字符串进行一些比较，输出正确或错误信息</p>
+<p><img src="image-20220906204031095.png" alt="image-20220906204031095"></p>
+<p>所以主要就是将驱动中的信息找出来。</p>
+<ul>
+<li>通过动调，在驱动释放之前将驱动取出来</li>
+<li>驱动的内容是通过资源写入的，使用工具获取程序资源</li>
+</ul>
+<h4 id="驱动浅析">驱动浅析</h4>
+<p>找到关键函数</p>
+<p><img src="image-20220906205050027.png" alt="image-20220906205050027"></p>
+<p>发现 AES 加密特征</p>
+<p><img src="image-20220906205122066.png" alt="image-20220906205122066"></p>
+<p>所以驱动的功能就是将我们输入并且异或后的字符串进行 AES 加密，也可以推断出传入驱动时的字符串是加密使用的key</p>
+<p><img src="image-20220906205542165.png" alt="image-20220906205542165"></p>
+<p>关键函数的后续操作就是将加密后的字符串和密文进行比较</p>
+<p><img src="image-20220906205825756.png" alt="image-20220906205825756"></p>
+<h3 id="小结">小结</h3>
+<p>第一次遇到驱动，也第一次了解。</p>
+<p>涉及到内核的一些内容，内核很复杂，可以干很多事情，这题让我对驱动有了点初步了解，里面有很多东西现在还没有办法深究。</p>
+<h2 id="seeee">seeee</h2>
+<p>main 很简单，就一个函数调用然后就 return</p>
+<p><img src="image-20220911094835051.png" alt="image-20220911094835051"></p>
+<p>刚开始的时候思路错误，只关注运行完哪个函数之后运行框里会出现错误的信息提示，再加上混淆严重所以基本上动调就没用过f5，纯纯汇编在那里傻看。</p>
+<p><img src="image-20220911095423989.png" alt="image-20220911095423989"></p>
+<p>把断点下在了这个位置，之后就一直跟</p>
+<p>结果就是：压根就没有进入到关键函数里面去，上面的那个函数可能已经是关键函数运行结束后用于收尾的函数。</p>
+<h3 id="浅析-v2">浅析</h3>
+<p>通过查找字符串和交叉引用找到关键函数 sub_7FF60F111410 ，f5 发现混淆严重基本上看不到有用的信息，故转动调</p>
+<p>在动调的过程中，运行到此处，如果走了绿色的那条分支那函数就很快结束了，并且返回 error</p>
+<p><img src="image-20220911100227088.png" alt="image-20220911100227088"></p>
+<p>关注这里上方所调用的函数，并通过动调发现，下方函数里的 sub_7FF60F11B4A0 用于获取我们的输入</p>
+<p><img src="image-20220911100619415.png" alt="image-20220911100619415"></p>
+<p><img src="image-20220911100916736.png" alt="image-20220911100916736"></p>
+<p>猜测需要两个输入的前置条件</p>
+<p><img src="image-20220911102108733.png" alt="image-20220911102108733"></p>
+<p>继续运行调试发现对我们的输入进行了一个复制，r14 储存我们所输入的第一个字符串的长度，memcpy 之后将长度和 18h 进行了一个比较</p>
+<p><img src="image-20220911102836742.png" alt="image-20220911102836742"></p>
+<p>在长度正确的情况下，就会进入下图中黄色框框中的分支，结合动调以及f5的分析，感觉是在对我们所输入的字符串进行某种排序</p>
+<p><img src="image-20220911104447759.png" alt="image-20220911104447759"></p>
+<p>先是将输入的字符串的这几位放入局部变量中</p>
+<p><img src="image-20220911105024663.png" alt="image-20220911105024663"></p>
+<p>接着又字符串中的几位进行了用于排序的相同的某种操作(猜的，不知道对不对，因为结构很类似)</p>
+<p><img src="image-20220911105707932.png" alt="image-20220911105707932"></p>
+<p>再运行之后会发现字符会被取出来和一段字符串逐一进行比较，错误的话就g了</p>
+<p><img src="image-20220911110749141.png" alt="image-20220911110749141"></p>
+<p>这里和我遇到的不太一样的地方在于，我们所输入的经过二叉树排序的字符串并不会被连续储存在一起。这就意味着我们是无法一次性能够得到二叉树的每个字母对应位置关系。</p>
+<p>通过动态调试发现，用于每次用于对比的字母会被取出并放入下图的寄存器所指向的位置当中</p>
+<p><img src="image-20220911150350927.png" alt="image-20220911150350927"></p>
+<p>所以我们可以通过修改下面的跳转条件，将每个字母对比的顺序记录下来</p>
+<p><img src="image-20220911150638025.png" alt="image-20220911150638025"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">例如：</span><br><span class="line">	输入  ABCDEFGHIJKLMNOPQRSTUVWX</span><br><span class="line">	输出  KVBJIQHGEPOFUWTNADCSLXRM</span><br></pre></td></tr></table></figure>
+<p>最后根据上面所找到的目标字符串还原出正确的输入</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输出  uy7sY6CTJnQpXVxUhOBFoEqA</span><br><span class="line">输入  h7BOJpTCYsuoAUQn6qFxXyVE</span><br></pre></td></tr></table></figure>
+<p>之后就是一个 chacha20 的流加密算法，可以通过插件 Findcrypt 直接找到它 (放图)</p>
+<p>也可以通过动调发现，像这种传进去的参数特别明显的就可以跟进去看一看</p>
+<p><img src="image-20220912094747072.png" alt="image-20220912094747072"></p>
+<p>进去之后可以发现对传进的字符串进行了10轮次的迭代</p>
+<p><img src="image-20220912095055984.png" alt="image-20220912095055984"></p>
+<p>以及迭代函数中明显的 chacha20 特征</p>
+<p><img src="image-20220912095154232.png" alt="image-20220912095154232"></p>
+<p>之后再运行发现我们所输入的第二串字符串和前面被加密后的输出传入了一个函数中，之后出来和 3fh 比较了一下我们所输入的字符串的长度</p>
+<p><img src="image-20220912110024082.png" alt="image-20220912110024082"></p>
+<p>再走下去就是字符串对比的一个操作了</p>
+<p><img src="image-20220912111915990.png" alt="image-20220912111915990"></p>
+<p>从 buf2 中 dump 出所要对比的目标数据，buf1 中 dump 出自己输入的经过异或后的数据，将异或后的数据和原始数据进行异或再和目标数据进行异或就可以得出正确输入</p>
+<p>Exp：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">a=[<span class="number">0x91</span>,<span class="number">0x2C</span>,<span class="number">0xBB</span>,<span class="number">0xB3</span>,<span class="number">0xC1</span>,<span class="number">0xEB</span>,<span class="number">0x9A</span>,<span class="number">0x16</span>,<span class="number">0x60</span>,<span class="number">0xAD</span>,<span class="number">0xC9</span>,<span class="number">0x5E</span>,<span class="number">0x6D</span>,<span class="number">0x4E</span>,<span class="number">0x15</span>,<span class="number">0xF2</span>,<span class="number">0x0</span>,<span class="number">0x1A</span>,<span class="number">0x58</span>,<span class="number">0xB2</span>,<span class="number">0x31</span>,<span class="number">0x7B</span>,<span class="number">0x74</span>,<span class="number">0x24</span>,<span class="number">0x7E</span>,<span class="number">0x74</span>,<span class="number">0x7A</span>,<span class="number">0xC</span>,<span class="number">0xBC</span>,<span class="number">0x50</span>,<span class="number">0xBB</span>,<span class="number">0xAC</span>,<span class="number">0x5E</span>,<span class="number">0x18</span>,<span class="number">0x25</span>,<span class="number">0xE1</span>,<span class="number">0x24</span>,<span class="number">0x74</span>,<span class="number">0xC3</span>,<span class="number">0x22</span>,<span class="number">0x5A</span>,<span class="number">0xE</span>,<span class="number">0x4F</span>,<span class="number">0x96</span>,<span class="number">0x58</span>,<span class="number">0x7F</span>,<span class="number">0x9F</span>,<span class="number">0xB3</span>,<span class="number">0xAF</span>,<span class="number">0xCA</span>,<span class="number">0xAF</span>,<span class="number">0x17</span>,<span class="number">0x7E</span>,<span class="number">0xAD</span>,<span class="number">0x2</span>,<span class="number">0x44</span>,<span class="number">0xAC</span>,<span class="number">0xFD</span>,<span class="number">0x2F</span>,<span class="number">0xAF</span>,<span class="number">0x63</span>,<span class="number">0x88</span>,<span class="number">0x1D</span>]</span><br><span class="line">b=<span class="string">&#x27;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+&#x27;</span></span><br><span class="line">c=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(b)):</span><br><span class="line">    c.append(a[i]^<span class="built_in">ord</span>(b[i]))</span><br><span class="line"></span><br><span class="line">sec=[<span class="number">0x80</span>,<span class="number">0x1F</span>,<span class="number">0x94</span>,<span class="number">0xB4</span>,<span class="number">0xEF</span>,<span class="number">0xD4</span>,<span class="number">0x9C</span>,<span class="number">0x36</span>,<span class="number">0x47</span>,<span class="number">0x85</span>,<span class="number">0xE7</span>,<span class="number">0x26</span>,<span class="number">0x64</span>,<span class="number">0x4B</span>,<span class="number">0x29</span>,<span class="number">0x95</span>,<span class="number">0x1E</span>,<span class="number">0xD</span>,<span class="number">0x39</span>,<span class="number">0xA9</span>,<span class="number">0x1E</span>,<span class="number">0x72</span>,<span class="number">0x7A</span>,<span class="number">0x1F</span>,<span class="number">0xB0</span>,<span class="number">0x48</span>,<span class="number">0x22</span>,<span class="number">0x1E</span>,<span class="number">0x8E</span>,<span class="number">0x40</span>,<span class="number">0xEB</span>,<span class="number">0xBF</span>,<span class="number">0x75</span>,<span class="number">0x17</span>,<span class="number">0x16</span>,<span class="number">0xD3</span>,<span class="number">0x39</span>,<span class="number">0x4F</span>,<span class="number">0xFD</span>,<span class="number">0xA</span>,<span class="number">0x58</span>,<span class="number">0x39</span>,<span class="number">0x4C</span>,<span class="number">0x9C</span>,<span class="number">0x13</span>,<span class="number">0x41</span>,<span class="number">0x8B</span>,<span class="number">0x93</span>,<span class="number">0xB2</span>,<span class="number">0x84</span>,<span class="number">0xE7</span>,<span class="number">0x2F</span>,<span class="number">0x3</span>,<span class="number">0xD4</span>,<span class="number">0x62</span>,<span class="number">0x44</span>,<span class="number">0xFC</span>,<span class="number">0x9D</span>,<span class="number">0x76</span>,<span class="number">0xEF</span>,<span class="number">0xF</span>,<span class="number">0xF8</span>,<span class="number">0x6</span>]</span><br><span class="line">d=<span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>,<span class="number">63</span>):</span><br><span class="line">    d+=<span class="built_in">chr</span>(c[i]^sec[i])</span><br><span class="line"><span class="built_in">print</span>(d)</span><br></pre></td></tr></table></figure>
+<h2 id="小结-v2">小结</h2>
+<p>很感谢 ret 师傅，我真的为了seeee这题缠了他好久</p>
+<ul>
+<li>
+<p>了解了驱动的大致过程：</p>
+<ul>
+<li>驱动的内容开始的时候就储存在程序中</li>
+<li>在磁盘的指定位置中将程序中驱动的内容写进去</li>
+<li>注册、加载驱动</li>
+<li>通过函数 (?猜的 与驱动进行通信</li>
+<li>释放驱动</li>
+</ul>
+</li>
+<li>
+<p>seeee这题混淆非常严重导致，f5 基本上看不出什么东西</p>
+<p><img src="image-20220912121926709.png" alt="image-20220912121926709"></p>
+<p>在上图红色方框位置按 tab 键，然后手动将 data 改为 code，再 f5 编译即可修补</p>
+</li>
+<li>
+<p>在 seeee 中意识到动调的时候多看cfg，f5也要多用，即使没有手动修补过，但是通过动调再多次f5也可以将逻辑理清</p>
+</li>
+<li>
+<p>在调试的时候可以尝试修改跳转</p>
+</li>
+<li>
+<p>chacha20 加密特征：</p>
+<ol>
+<li>
+<p>有一个10轮次的迭代</p>
+</li>
+<li>
+<p>在进行轮函数变换时左移的位数：16，12，8，7</p>
+<p><img src="image-20220912122552948.png" alt="image-20220912122552948"></p>
+</li>
+<li>
+<p>emmmmm，这个不知道是什么东西，但是 findcrypt 是靠这个找出来的</p>
+<p><img src="image-20220912122912201.png" alt="image-20220912122912201"></p>
+</li>
+</ol>
+</li>
+</ul>
+<p><strong>多多努力吧</strong>🙂</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/09/18/WMCTF-Re/">https://ghdemi.github.io/2022/09/18/WMCTF-Re/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-09-18</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Re/" class="post-tags__link button"># Re</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/09/09/%E6%B5%85%E8%AF%86%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            浅识加密算法
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
