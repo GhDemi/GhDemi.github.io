@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>2022ZJCTF | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Re">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="hhhh，我是懒惰虫😪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2022ZJCTF">
+<meta property="og:url" content="https://ghdemi.github.io/2022/10/07/2022ZJCTF/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="hhhh，我是懒惰虫😪">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/ZJCTF.png">
+<meta property="article:published_time" content="2022-10-07T12:09:44.000Z">
+<meta property="article:modified_time" content="2022-10-07T13:12:37.989Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/ZJCTF.png">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        2022ZJCTF
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/10/" class="post-meta__date button">2022-10-07</a>
+        
+    <span class="separate-dot"></span><a href="/categories/CTF/" class="button">CTF</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#EzMath2"><span class="toc-text">EzMath2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E8%B0%83%E5%97%AF%E8%B0%83"><span class="toc-text">动调嗯调</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E5%A3%B3-%E8%8A%B1%E6%8C%87%E4%BB%A4"><span class="toc-text">去壳 &amp; 花指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android"><span class="toc-text">Android</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F"><span class="toc-text">非预期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%A3"><span class="toc-text">正解</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#EzMath2"><span class="toc-text">EzMath2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A8%E8%B0%83%E5%97%AF%E8%B0%83"><span class="toc-text">动调嗯调</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%BB%E5%A3%B3-%E8%8A%B1%E6%8C%87%E4%BB%A4"><span class="toc-text">去壳 &amp; 花指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android"><span class="toc-text">Android</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E9%A2%84%E6%9C%9F"><span class="toc-text">非预期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%A3"><span class="toc-text">正解</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/ZJCTF.png');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>hhhh，我是懒惰虫😪</p>
+<span id="more"></span>
+<h2 id="EzMath2">EzMath2</h2>
+<h3 id="动调嗯调">动调嗯调</h3>
+<p>直接放入 x32dbg 里动调</p>
+<p>找到oep</p>
+<p><img src="image-20220924113702483.png" alt="image-20220924113702483"></p>
+<p>继续动调，进入main函数内部</p>
+<p><img src="image-20220924113848022.png" alt="image-20220924113848022"></p>
+<p>更改跳转，跳过反调试</p>
+<p><img src="image-20220924114033993.png" alt="image-20220924114033993"></p>
+<p>读取字符串之后进行比较</p>
+<p><img src="image-20220924114206681.png" alt="image-20220924114206681"></p>
+<p>在比较前将输入的字符串放入一个循环中，每轮依次读取2个字符进行加密</p>
+<p><img src="image-20220924122402648.png" alt="image-20220924122402648"></p>
+<p>对第一个字符和7异或后减1</p>
+<p><img src="image-20220924122543349.png" alt="image-20220924122543349"></p>
+<p>对第二个字符的加密，要利用循环爆破测试出值</p>
+<p><img src="image-20220924122054065.png" alt="image-20220924122054065"></p>
+<p>所要对比的值</p>
+<p><img src="image-20220924124307514.png" alt="image-20220924124307514"></p>
+<p>exp</p>
+<p><img src="image-20220924130522572.png" alt="image-20220924130522572"></p>
+<p>DASCTF{U_kn0w_M0du1e_rEv~}</p>
+<h3 id="去壳-花指令">去壳 &amp; 花指令</h3>
+<p>魔改的 UPX 壳，UPX 段名字改为了 FUN 所以使用 upx -d 无法直接脱壳，将文件放入 010Editor 中其名字修改为 UPX 即可脱壳</p>
+<p><img src="image-20220928204350702.png" alt="image-20220928204350702"></p>
+<p>至于是怎么看出来的嘛，q神说 shellcode 或者查壳工具都能看出来。</p>
+<p>将脱了壳的东西拖入 ida 中进行分析，对于函数 sub_4011B4 发现 f5 无法解析</p>
+<p><img src="image-20220928204529873.png" alt="image-20220928204529873"></p>
+<p>结合汇编语句发现，call 完 sub_4011B4 后在该函数中进行了一个 pop ebx 的操作，这个操作将 call 进来的地址进行了出栈，紧接着的这三个语句</p>
+<p><img src="image-20220928205719627.png" alt="image-20220928205719627"></p>
+<p>结合起来就相当于一个 jmp 目的地址就是 0x4011CE</p>
+<p><img src="image-20220928210440283.png" alt="image-20220928210440283"></p>
+<p>结合上面的 call 这一块其实堆栈是平衡的，因为上面的 call 和 pop 是一组，下面的 push 和 retn 是一组</p>
+<p><img src="image-20220928210854609.png" alt="image-20220928210854609"></p>
+<p>但问题就出在 call 上面，ida 将 call 了之后的东西当成了一个独立的函数也就是 sub_4011B4，单单对于这个函数而言由于多了个 pop ebx 导致栈空间的不平衡，所以 ida 对这个函数的分析就寄了</p>
+<p>那么解决方法也就出来了，问题的关键在于这个 pop ebx，而这个 call 和 pop 又是正好实现栈平衡的一组，那么将 call 改成 jmp 然后把无用的 pop ebx 给 nop 掉，将下图中的三句改为一个 jmp</p>
+<p><img src="image-20220929205209392.png" alt="image-20220929205209392"></p>
+<p>最后修改完成的结果，然后对函数体重新进行识别，具体是将 sub_4011b4 取消，修改一下 sub_401140 的 end 位置</p>
+<p><img src="image-20220929205158134.png" alt="image-20220929205158134"></p>
+<p>去完花指令的东西就可以被 ida 精准识别了</p>
+<p><img src="image-20220929205521698.png" alt="image-20220929205521698"></p>
+<h2 id="Android">Android</h2>
+<h3 id="非预期">非预期</h3>
+<p>flag 是以图片的形式呈现的，解压缩 apk 文件找出来就ok</p>
+<h3 id="正解">正解</h3>
+<p>将apk放入，jadx中</p>
+<p><img src="image-20220924101634431.png" alt="image-20220924101634431"></p>
+<p>读取用户名和密码</p>
+<p><img src="image-20220924101743596.png" alt="image-20220924101743596"></p>
+<p>将用户名 user 和 mname = “ccadwjlyah” 进行比较。将输入的密码放入 change() 中改变后和设定的 compare 数组进行比较</p>
+<p><img src="image-20220924102031695.png" alt="image-20220924102031695"></p>
+<p>根据 change() 和 compare 推出密码</p>
+<p><img src="image-20220924102314820.png" alt="image-20220924102314820"></p>
+<p>但这个密码是缺失的，因为compare中有一个值未知，不知道这个是干嘛的，也不知道怎么得到这个值</p>
+<p>后来查了一下这个值是 ItemTouchHelper 类里的一个常量，固定值是 200，那么解密解出来的东西应该就是对应的 1</p>
+<p><img src="image-20220924102410834.png" alt="image-20220924102410834"></p>
+<p>结合题目以及现有密码可以推测后面代表的应该是 android，猜测是</p>
+<p>f4n_4ndroid 或者 f4n_4ndro1d，最后输入 f4n_4ndro1d 成功</p>
+<p><img src="image-20220924102604233.png" alt="image-20220924102604233"></p>
+<p>DASCTF{1df456_34hjfk_y3o5c_99gh34_3ndro1d}</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/10/07/2022ZJCTF/">https://ghdemi.github.io/2022/10/07/2022ZJCTF/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-10-07</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Re/" class="post-tags__link button"># Re</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/09/27/IDA-%E5%88%9D%E4%BD%93%E9%AA%8C/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            IDA 初体验
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
