@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>VM虚拟机逆向 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="Knowledge">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="断断续续磨了两个礼拜，总算是差不多了🌊">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VM虚拟机逆向">
+<meta property="og:url" content="https://ghdemi.github.io/2022/10/26/VM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%80%86%E5%90%91/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="断断续续磨了两个礼拜，总算是差不多了🌊">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/VMRE.jpg">
+<meta property="article:published_time" content="2022-10-26T07:49:49.000Z">
+<meta property="article:modified_time" content="2022-10-26T08:01:53.154Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="Knowledge">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/VMRE.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        VM虚拟机逆向
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/10/" class="post-meta__date button">2022-10-26</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Re-Point/" class="button">Re_Point</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">什么是虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B3%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">壳的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E7%9A%84%E8%B5%B0%E5%90%91"><span class="toc-text">分支的走向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84-VM-%E5%B0%8F%E8%AF%95"><span class="toc-text">简单的 VM 小试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VM%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-text">VM函数分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%98%E5%8E%9F%E6%A0%B7%E4%BE%8B"><span class="toc-text">还原样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86-opcode"><span class="toc-text">处理 opcode</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E7%9A%84-VM"><span class="toc-text">复杂的 VM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE"><span class="toc-text">前置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#opcode-%E4%BB%A5%E5%8F%8A%E8%99%9A%E6%8B%9F%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-text">opcode 以及虚拟寄存器的识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VM-%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-text">VM 函数分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-text">exp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-v3"><span class="toc-text">小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E8%8E%B7"><span class="toc-text">收获</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">什么是虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A3%B3%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">壳的本质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E7%9A%84%E8%B5%B0%E5%90%91"><span class="toc-text">分支的走向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E7%9A%84-VM-%E5%B0%8F%E8%AF%95"><span class="toc-text">简单的 VM 小试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#VM%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-text">VM函数分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%98%E5%8E%9F%E6%A0%B7%E4%BE%8B"><span class="toc-text">还原样例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86-opcode"><span class="toc-text">处理 opcode</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%9D%82%E7%9A%84-VM"><span class="toc-text">复杂的 VM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BD%AE"><span class="toc-text">前置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#opcode-%E4%BB%A5%E5%8F%8A%E8%99%9A%E6%8B%9F%E5%AF%84%E5%AD%98%E5%99%A8%E7%9A%84%E8%AF%86%E5%88%AB"><span class="toc-text">opcode 以及虚拟寄存器的识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#VM-%E5%87%BD%E6%95%B0%E5%88%86%E6%9E%90"><span class="toc-text">VM 函数分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#exp"><span class="toc-text">exp</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-v3"><span class="toc-text">小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E8%8E%B7"><span class="toc-text">收获</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://cdn.jsdelivr.net/gh/GhDemi/Picture@main/BlogImg/VMRE.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>断断续续磨了两个礼拜，总算是差不多了🌊</p>
+<span id="more"></span>
+<h2 id="什么是虚拟机">什么是虚拟机</h2>
+<p>这个虚拟机当然和 VMware 和 VirtualBox 不一样，逆向中的虚拟机是一种保护代码的手段，让拖进 ida 之后的东西不那么好识别，重要代码用一定方式被拆分放入 switch 选择结构中，就好像被加了一层壳一样。</p>
+<h3 id="壳的本质">壳的本质</h3>
+<p>由于接触的 vm逆向也不多，目前为止碰到的都是将 cpu 所要执行的命令放置在 switch 语句中，通过选择语句来告诉决定接下来所要执行的指令，其实可以理解为代码块就是一个简易版 cpu，opcode 就是操作码，switch 中的语句就是简易cpu 所要执行的操作。</p>
+<p>也就是说程序所要执行的有意义的代码没有直接显露出来，我们需要通过分析将拆分了的代码重新拼接起来具有可读性才能知道程序到底执行了什么。</p>
+<p>这么说来还是非常非常的抽象，结合下面的这张图来具体分析分析</p>
+<p><img src="image-20221023173544071.png" alt="image-20221023173544071"></p>
+<p>大致流程如下：</p>
+<ul>
+<li>主程序运行指令设置进入 vm 函数前的准备工作，例如：虚拟寄存器的值、获取 opcode 等</li>
+<li>根据虚拟寄存器的值获取当前所用的 opcode</li>
+<li>根据 opcode 的值获得 switch 结构的选择结果并运行</li>
+<li>调整虚拟寄存器的值，改变所指向的 opcode</li>
+<li>循环上述过程直至结束</li>
+</ul>
+<p>主程序中包含了虚拟寄存器的调整指令、opcode读取指令、switch 选择语句以及选择结果也就是真正有意义的代码执行，东西比较多所以就导致了不好判断程序的主要操作，也就起到了保护作用。</p>
+<p><img src="image-20221024114254306.png" alt="image-20221024114254306"></p>
+<p>说到底，关键就是 switch 选择语句的选择结果，主程序走了 switch 分支中的哪一块就相当于执行了该分支里的指令，通过一次次的循环依次拼接所执行的指令就能够还原出程序的本质，套在程序外面的那一层壳也被我们起开了。</p>
+<h3 id="分支的走向">分支的走向</h3>
+<p>当前 opcode 所对应的值决定了 switch 结构到底走向哪一条分支，而当前 opcode 的值去取决于虚拟寄存器所指向的位置(也就是虚拟寄存器的值)，虚拟寄存器的值又被主程序更改决定。</p>
+<h2 id="简单的-VM-小试">简单的 VM 小试</h2>
+<p>主程序非常简单，也很清晰，很明显 vm_operad( ) 就是关键的 vm函数，前面对内存中的内容进行了拷贝并且作为参数传入了 vm函数，可以推测是 opcode 或者是 虚拟寄存器这些相关内容</p>
+<p><img src="image-20221024130635482.png" alt="image-20221024130635482"></p>
+<p>进入 vm函数之后，观察 cfg 样子，很明显的 switch 选择结构</p>
+<p><img src="image-20221024131053359.png" alt="image-20221024131053359"></p>
+<h3 id="VM函数分析">VM函数分析</h3>
+<p>个人认为 vm 函数分析的入口点在于识别出 opcode 以及虚拟寄存器</p>
+<p>当前 opcode 的值影响主程序的分支走向，因此 switch 选择的判断可以帮助我们快速确定 opcode</p>
+<p><img src="image-20221024131901517.png" alt="image-20221024131901517"></p>
+<p>上图中的 switch ( a1[v9] ) 就告诉我们 a1[v9]=当前 opcode 的值。再观察下面的 switch 语句，每一个分支中都对 v9 进行了改变，而 v9 又改变了 a1[v9] 的值，因此可以推测 v9 就是虚拟寄存器，也就是起到和 eip 相同的作用，下一个回合所读取的 opcode 的值正是 v9 所指向的位置。</p>
+<p>而 a1 也就是在 main 函数中对内存内容进行拷贝的 v4 就是循环 switch 结构所要用到的所有 opcode</p>
+<p><img src="image-20221024162158490.png" alt="image-20221024162158490"></p>
+<p>vm 函数的结束判断条件也是 opcode 的总个数</p>
+<p><img src="image-20221024162310714.png" alt="image-20221024162310714"></p>
+<p>现在我们已经知道了所有的 opcode、虚拟寄存器对应的变量和其初始值、vm函数中 switch 结构的各个分支、虚拟寄存器值的改变方式，这些就已经足够我们还原出程序原来的模样。</p>
+<h3 id="还原样例">还原样例</h3>
+<p>举个程序刚开始的例子，刚开始时 v9=0  a1[v9]=0Ah，走 case10 这个分支，执行了读取字符串并储存的一个操作</p>
+<p><img src="image-20221024165005304.png" alt="image-20221024165005304"></p>
+<p>接着 ++v9 进行下一次循环，此时 a1[v9]=4，走 case4 这个分支</p>
+<p><img src="image-20221024165229199.png" alt="image-20221024165229199"></p>
+<p>在 case4 这个分支中，将字符串中的一个字符和下一个 opcode 的值进行了一个异或，这个也说明了一件事：并不是所有的 opcode 都被用来决定程序所走的分支走向，部分 opcode 会在 switch 分支中被使用。由于这个分支中也有用到 opcode 再加上前面决定分支走向的一个 opcode，所以这次对于 v9 进行加 2 的操作，接着就是又开始新一轮的循环。</p>
+<p>这么分析下来对于 vm 已经有了一个大概的认识，也可以知道，其实对程序真正有意义的指令都在 case 和 break 之间，对于这题而言 opcode 的数量不算多，但一个个循环分析也确实很耗耐心和时间，我们可以利用 虚拟寄存器、opcode、switch 分支走向之间的关系编写程序，将每个循环所走的分支语句提取出来，得到程序本来的样子。</p>
+<h3 id="处理-opcode">处理 opcode</h3>
+<p>将所有的 opcode dump 下来，依靠关系将每一次所走的分支的语句显示出来</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> opcode[]=&#123;<span class="number">0x0A</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x04</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x10</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x08</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x03</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x05</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x04</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x20</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x05</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x03</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x03</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x0B</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x0C</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x04</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x04</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x05</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x03</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x03</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x21</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x0B</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x0B</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x04</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x09</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x03</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x20</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x51</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x04</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x24</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x0C</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x0B</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x05</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x02</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x25</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x36</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x04</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x41</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x20</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x05</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x05</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x03</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x25</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x01</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x04</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x09</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x03</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x20</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x02</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x41</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x08</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x0C</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x01</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x22</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x3F</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x34</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x32</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x72</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x33</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x18</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0xA7</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x31</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0xF1</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x28</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x84</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0xC1</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span> ,<span class="number">0xFF</span> ,<span class="number">0x07</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x1E</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>,</span><br><span class="line"><span class="number">0x07</span>, <span class="number">0x00</span>,<span class="number">0x00</span>,<span class="number">0x00</span>, <span class="number">0x7A</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span> ,<span class="number">0x00</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> v9 = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> v8 = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> v7 = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> v6 = <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> v5 = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">while</span> (v9&lt;<span class="number">114</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">switch</span> ( opcode[v9*<span class="number">4</span>])</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Str[%d] = v4\n&quot;</span>,v6+<span class="number">100</span>);</span><br><span class="line">        ++v9;</span><br><span class="line">        ++v6;</span><br><span class="line">        ++v8;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;v4 = %d + Str[%d]\n&quot;</span>,(DWORD)opcode[(v9+<span class="number">1</span>)*<span class="number">4</span>],v8);</span><br><span class="line">        v9 += <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;v4 = Str[%d] - LOBYTE(%d)\n&quot;</span>,v8,(DWORD)opcode[(v9+<span class="number">1</span>)*<span class="number">4</span>]);</span><br><span class="line">        v9 += <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;v4 = %d ^ Str[%d]\n&quot;</span>,(DWORD)opcode[(v9+<span class="number">1</span>)*<span class="number">4</span>],v8);;</span><br><span class="line">        v9 += <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;v4 = %d * Str[%d]\n&quot;</span>,(DWORD)opcode[(v9+<span class="number">1</span>)*<span class="number">4</span>],v8);;</span><br><span class="line">        v9 += <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">        ++v9;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;check  Str[%d] != %d \n&quot;</span>,v7 + <span class="number">100</span>,(DWORD)opcode[(v9+<span class="number">1</span>)*<span class="number">4</span>]);</span><br><span class="line">        ++v7;</span><br><span class="line">        v9 += <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">8</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;Str[%d] = v4\n&quot;</span>,v5);</span><br><span class="line">        ++v9;</span><br><span class="line">        ++v5;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">10</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;read(Str)\n&quot;</span>);</span><br><span class="line">        ++v9;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">11</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;v4 = Str[%d] - 1\n&quot;</span>,v8);</span><br><span class="line">        ++v9;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">case</span> <span class="number">12</span>:</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;v4 = Str[%d] + 1\n&quot;</span>,v8);</span><br><span class="line">        ++v9;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>得到结果</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">read(Str)</span><br><span class="line"></span><br><span class="line">v4 = 16 ^ Str[0]</span><br><span class="line">Str[0] = v4</span><br><span class="line">v4 = Str[0] - LOBYTE(5)</span><br><span class="line">Str[100] = v4</span><br><span class="line"></span><br><span class="line">v4 = 32 ^ Str[1]</span><br><span class="line">Str[1] = v4</span><br><span class="line">v4 = 3 * Str[1]</span><br><span class="line">Str[101] = v4</span><br><span class="line"></span><br><span class="line">v4 = Str[2] - LOBYTE(2)</span><br><span class="line">Str[2] = v4</span><br><span class="line">v4 = Str[2] - 1</span><br><span class="line">Str[102] = v4</span><br><span class="line"></span><br><span class="line">v4 = Str[3] + 1</span><br><span class="line">Str[3] = v4</span><br><span class="line">v4 = 4 ^ Str[3]</span><br><span class="line">Str[103] = v4</span><br><span class="line"></span><br><span class="line">v4 = 3 * Str[4]</span><br><span class="line">Str[4] = v4</span><br><span class="line">v4 = Str[4] - LOBYTE(33)</span><br><span class="line">Str[104] = v4</span><br><span class="line"></span><br><span class="line">v4 = Str[5] - 1</span><br><span class="line">Str[5] = v4</span><br><span class="line">v4 = Str[5] - 1</span><br><span class="line">Str[105] = v4</span><br><span class="line"></span><br><span class="line">v4 = 9 ^ Str[6]</span><br><span class="line">Str[6] = v4</span><br><span class="line">v4 = Str[6] - LOBYTE(32)</span><br><span class="line">Str[106] = v4</span><br><span class="line"></span><br><span class="line">v4 = 81 + Str[7]</span><br><span class="line">Str[7] = v4</span><br><span class="line">v4 = 36 ^ Str[7]</span><br><span class="line">Str[107] = v4</span><br><span class="line"></span><br><span class="line">v4 = Str[8] + 1</span><br><span class="line">Str[8] = v4</span><br><span class="line">v4 = Str[8] - 1</span><br><span class="line">Str[108] = v4</span><br><span class="line"></span><br><span class="line">v4 = 2 * Str[9]</span><br><span class="line">Str[9] = v4</span><br><span class="line">v4 = 37 + Str[9]</span><br><span class="line">Str[109] = v4</span><br><span class="line"></span><br><span class="line">v4 = 54 + Str[10]</span><br><span class="line">Str[10] = v4</span><br><span class="line">v4 = 65 ^ Str[10]</span><br><span class="line">Str[110] = v4</span><br><span class="line"></span><br><span class="line">v4 = 32 + Str[11]</span><br><span class="line">Str[11] = v4</span><br><span class="line">v4 = 1 * Str[11]</span><br><span class="line">Str[111] = v4</span><br><span class="line"></span><br><span class="line">v4 = 3 * Str[12]</span><br><span class="line">Str[12] = v4</span><br><span class="line">v4 = 37 + Str[12]</span><br><span class="line">Str[112] = v4</span><br><span class="line"></span><br><span class="line">v4 = 9 ^ Str[13]</span><br><span class="line">Str[13] = v4</span><br><span class="line">v4 = Str[13] - LOBYTE(32)</span><br><span class="line">Str[113] = v4</span><br><span class="line"></span><br><span class="line">v4 = 65 + Str[14]</span><br><span class="line">Str[14] = v4</span><br><span class="line">v4 = Str[14] + 1</span><br><span class="line">Str[114] = v4</span><br><span class="line"></span><br><span class="line">check  Str[100] != 34</span><br><span class="line">check  Str[101] != 63</span><br><span class="line">check  Str[102] != 52</span><br><span class="line">check  Str[103] != 50</span><br><span class="line">check  Str[104] != 114</span><br><span class="line">check  Str[105] != 51</span><br><span class="line">check  Str[106] != 24</span><br><span class="line">check  Str[107] != 167</span><br><span class="line">check  Str[108] != 49</span><br><span class="line">check  Str[109] != 241</span><br><span class="line">check  Str[110] != 40</span><br><span class="line">check  Str[111] != 132</span><br><span class="line">check  Str[112] != 193</span><br><span class="line">check  Str[113] != 30</span><br><span class="line">check  Str[114] != 122</span><br></pre></td></tr></table></figure>
+<p>通过处理 opcode，将每一次分支执行的内容整理出来逻辑就很清晰了，对输入的15个字符依次进行2次加减异或中的某一个操作，将操作后的字符串放置到距离原始字符串 100byte 的位置，最后和目标数值进行比较，要得到原始值操作反一下就可以了。</p>
+<h2 id="复杂的-VM">复杂的 VM</h2>
+<p>来自 2021 年 L3HCTF 的一道题目，double-joy（挂一下<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1545194-1-1.html">Q神解析</a></p>
+<h3 id="前置">前置</h3>
+<p>因为 main 函数中包含了很多杂七杂八的东西，导致刚开始接触到这一题的时候，找 vm 函数都找了好久（x，我找 vm 函数的方式是依靠 cfg 大致形态。这是由于 switch 选择结构，所以就导致 vm 函数的 cfg 非常的有特点。</p>
+<p>在 main 函数中，可以明确的是对输入字符串的读取</p>
+<p><img src="image-20221024202001867.png" alt="image-20221024202001867"></p>
+<p>通过动调可以发现该循环用于放置所输入的字符串，一般而言这都是程序关键函数开始前的主要工作，所以推测 vm 函数应该是在这些操作后面，紧接着就进入了 sub_1D90 函数，</p>
+<p><img src="image-20221024202132153.png" alt="image-20221024202132153"></p>
+<p>进入该函数，观察其 cfg，很明显的 vm 函数特征</p>
+<p><img src="image-20221024200340508.png" alt="image-20221024200340508"></p>
+<p>但是 switch 的结构依旧没有出来，f5 反编译也是失效，这是因为题目中加了一个 3Eh 常数干扰，导致 ida 无法正确识别</p>
+<p><img src="image-20221024202607830.png" alt="image-20221024202607830"></p>
+<p>将其 nop 掉，switch 结构就出来了</p>
+<p><img src="image-20221024202744725.png" alt="image-20221024202744725"></p>
+<h3 id="opcode-以及虚拟寄存器的识别">opcode 以及虚拟寄存器的识别</h3>
+<p>还是最先关注 switch(v4) 这个语句，v4 就是当前 opcode 的值，然后再去观察是什么改变导致了 v4 的改变</p>
+<p><img src="image-20221024213509540.png" alt="image-20221024213509540"></p>
+<p>决定 v4 的值总共有2个因素 v1 和 v3，再结合下面 switch 语句的各个分支中的情况，v1 基本上是没有进行值的改变的，而 v3 的值在每一次循环的和 switch 选择语句之间都会进行修改</p>
+<p><img src="image-20221024221142624.png" alt="image-20221024221142624"></p>
+<p>所以基本上就可以判断 v1 为 opcode 的基址，v3 则为所取 opcode 的偏移量，也就是虚拟寄存器中的 eip （其实 v3 是通过 v2 来赋值，v2 又来自于传入函数参数的结构体中的变量</p>
+<p>对于结构体的分析可以通过对 a1 的偏移量结合动调分析出来，在 switch 语句中对 a1 地址的使用有下面的 4 种情况</p>
+<p><img src="image-20221024221908261.png" alt="image-20221024221908261"></p>
+<p>结合每个变量的大小以及在结构体中的偏移量，可以大致知晓结构体中各个变量的分布关系，结合各个变量的使用关系，可以判断出变量的大致作用，下图中就是一个基址加相对偏移地址寻址的操作</p>
+<p><img src="image-20221024223652355.png" alt="image-20221024223652355"></p>
+<p>结合动调，可以分析出结构体中各个变量的意义，得到结构体如下</p>
+<p><img src="image-20221024224833110.png" alt="image-20221024224833110"></p>
+<p>再来看每个 switch 分支就更加清晰明了了</p>
+<p><img src="image-20221024225038134.png" alt="image-20221024225038134"></p>
+<h3 id="VM-函数分析">VM 函数分析</h3>
+<p>和上面简单的 vm 相比，上题中的每个 case 分支的作用都是很明了了，但是这题的18个 opcode 对应的操作就不是那么明显了</p>
+<p>VM 其实做的是一个 opcode 模拟 shellcode 的运行过程，opcode 进入VM译码执行对应的汇编操作，如果能把 shellcode dump 出来，通过静态分析工具建数据流和控制流，甚至生成伪代码，那相当于剥离 VM 了，程序的分析难度也大大降低了。而实现这个过程，需要手动的分析出 VM 里每条 opcode 对应的汇编，并 dump 出 opcode 将所有 opcode 译码成汇编输出并编译。</p>
+<p>熟悉 python 虚拟机的师傅对于这 18 个 opcode 应该挺明了的，虚拟机的操作和Python虚拟机很像，都是基于栈从栈顶做操作的，没有通用寄存器。</p>
+<p><img src="image-20221024230419649.png" alt="image-20221024230419649"></p>
+<p>说白了其实就是每一个 case 分支都对应着一段汇编，如果我们不对分支内容进行汇编转换那就无法使用静态分析工具对其进行分析，即使按照顺序将次执行的分支内容输出来，那也看不懂（楽</p>
+<p>接下来的重点就是写出 18 个 opcode 对应的汇编</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br></pre></td><td class="code"><pre><span class="line">ip = <span class="number">0</span></span><br><span class="line">asm = <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="keyword">while</span> ip &lt; <span class="built_in">len</span>(opcode):</span><br><span class="line">    asm += <span class="string">&quot;label_&#123;&#125;:\n&quot;</span>.<span class="built_in">format</span>(ip)     <span class="comment"># ip作为label</span></span><br><span class="line">    <span class="keyword">if</span> opcode[ip] == <span class="number">0</span>:     <span class="comment"># add</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;  \</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        add eax, ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">1</span>:     <span class="comment"># sub</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        sub eax, ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">2</span>:       <span class="comment"># imul</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        imul eax, ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">3</span>:       <span class="comment"># idiv</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        xor edx, edx;</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        idiv ebx;</span></span><br><span class="line"><span class="string">        push eax;    </span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">4</span>:       <span class="comment"># mod</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        idiv ebx;</span></span><br><span class="line"><span class="string">        push edx;    </span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">5</span>:       <span class="comment"># and</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        and eax, ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">6</span>:       <span class="comment"># or</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        or eax, ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">7</span>:       <span class="comment"># xor</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        xor eax, ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">8</span>:       <span class="comment"># stack[TOS1]=TOS</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        mov [ebp+4*ebx], eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">9</span>:       <span class="comment"># TOS=stack[TOS]</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        mov eax, [esp];</span></span><br><span class="line"><span class="string">        mov ebx, [ebp+4*eax];</span></span><br><span class="line"><span class="string">        mov [esp], ebx;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">10</span>:      <span class="comment"># TOS=!TOS</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        xor ebx,ebx;</span></span><br><span class="line"><span class="string">        mov eax, [esp];</span></span><br><span class="line"><span class="string">        test eax, eax;</span></span><br><span class="line"><span class="string">        sete bl;</span></span><br><span class="line"><span class="string">        mov [esp], ebx;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">11</span>:      <span class="comment"># TOS=TOS&lt;0</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        mov eax, [esp];</span></span><br><span class="line"><span class="string">        shr eax, 31;</span></span><br><span class="line"><span class="string">        mov [esp], eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">12</span>:      <span class="comment"># xchg TOS1, TOS</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        pop ebx;</span></span><br><span class="line"><span class="string">        push eax;</span></span><br><span class="line"><span class="string">        push ebx;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">13</span>:      <span class="comment"># pop</span></span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">14</span>:      <span class="comment"># push</span></span><br><span class="line">        val = struct.unpack(<span class="string">&quot;&lt;i&quot;</span>, <span class="built_in">bytes</span>(opcode)[ip+<span class="number">1</span>:ip+<span class="number">5</span>])[<span class="number">0</span>]</span><br><span class="line">        ip += <span class="number">5</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        push &#123;&#125;;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>.<span class="built_in">format</span>(val)</span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">15</span>:      <span class="comment"># jmp</span></span><br><span class="line">        val = struct.unpack(<span class="string">&quot;&lt;i&quot;</span>, <span class="built_in">bytes</span>(opcode)[ip+<span class="number">1</span>:ip+<span class="number">5</span>])[<span class="number">0</span>]</span><br><span class="line">        ip += <span class="number">5</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        jmp label_&#123;&#125;;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>.<span class="built_in">format</span>(ip+val)</span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">16</span>:      <span class="comment"># jnz  TOS</span></span><br><span class="line">        val = struct.unpack(<span class="string">&quot;&lt;i&quot;</span>, <span class="built_in">bytes</span>(opcode)[ip+<span class="number">1</span>:ip+<span class="number">5</span>])[<span class="number">0</span>]</span><br><span class="line">        <span class="comment"># if stack[sp] != 0:</span></span><br><span class="line">        <span class="comment">#     ip += 5 + val</span></span><br><span class="line">        <span class="comment"># else:</span></span><br><span class="line">        <span class="comment">#     ip += 5</span></span><br><span class="line">        ip += <span class="number">5</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        pop eax;</span></span><br><span class="line"><span class="string">        cmp eax, 0;</span></span><br><span class="line"><span class="string">        jnz label_&#123;&#125;;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>.<span class="built_in">format</span>(ip+val)</span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">17</span>:      <span class="comment"># sp += imm</span></span><br><span class="line">        val = struct.unpack(<span class="string">&quot;&lt;i&quot;</span>, <span class="built_in">bytes</span>(opcode)[ip+<span class="number">1</span>:ip+<span class="number">5</span>])[<span class="number">0</span>]</span><br><span class="line">        ip += <span class="number">5</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        sub esp, &#123;&#125;;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>.<span class="built_in">format</span>(val*<span class="number">4</span>)</span><br><span class="line">    <span class="keyword">elif</span> opcode[ip] == <span class="number">18</span>:      <span class="comment"># ret</span></span><br><span class="line">        val = struct.unpack(<span class="string">&quot;&lt;i&quot;</span>, <span class="built_in">bytes</span>(opcode)[ip+<span class="number">1</span>:ip+<span class="number">5</span>])[<span class="number">0</span>]</span><br><span class="line">        ip += <span class="number">5</span></span><br><span class="line">        asm += <span class="string">&quot;&quot;&quot;\</span></span><br><span class="line"><span class="string">        mov eax, &#123;&#125;;</span></span><br><span class="line"><span class="string">        retn;</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span>.<span class="built_in">format</span>(val)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;default&quot;</span>)</span><br><span class="line">        ip += <span class="number">1</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># time.sleep(0.1)</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(asm)</span><br><span class="line"></span><br><span class="line">fp = <span class="built_in">open</span>(<span class="string">&quot;shellcode.asm&quot;</span>, <span class="string">&#x27;w&#x27;</span>)</span><br><span class="line">fp.write(<span class="string">&quot;section .text\n&quot;</span>)</span><br><span class="line">fp.write(<span class="string">&quot;bits 32\n&quot;</span>)</span><br><span class="line">fp.write(asm)</span><br><span class="line">fp.close()              <span class="comment"># form Qforst师傅</span></span><br></pre></td></tr></table></figure>
+<p>可以观察到分支中涉及到跳转，其实这个跳转改变的是虚拟寄存器 eip 的值，也就是 opcode 的相对偏移量，q师傅对每条 opcode 都插入一个label，将跳转的目的地址直接换成 label，这样就免去了将 opcode 的跳转转换成汇编跳转的步骤，非常方便。</p>
+<p>可以发现 case 分支中包含了 retn，那就意味着如果不结合之前的汇编或者动调，我们是没有办法判断主程序到底跳转到哪里的，说白了，retn 语句被执行后是否还在继续执行 VM 函数都不好说（好吧，其实这题可以，因为 VM 函数就只有这一个 retn 出口。</p>
+<p>事实证明 retn 之后，我们跳出了 VM 函数，回到了 VM 函数上方，这也是这道题目难的地方：进出了 VM 函数很多次，并且应该只有动调才能发现传入 VM 函数的参数也就是 VM 结构体不是一直都不变的。VM 结构体的 opcode 地址，虚拟寄存器 eip 的值都会改变，这也就以为着 shellcode 不止一段，并且执行 shellcode 的入口还会不一样</p>
+<p><img src="image-20221025212126626.png" alt="image-20221025212126626"></p>
+<p>将两段 opcode 全部都 dump 出来，跑一下上面转化汇编的脚本就可以输出 asm 汇编文件，利用 nasm 编译成二进制文件</p>
+<ul>
+<li>nasm shellcode.asm</li>
+</ul>
+<p>将得到的二进制文件拖入 ida，p识别成函数，f5进行反汇编</p>
+<ul>
+<li>
+<p>shellcode1</p>
+<p><img src="image-20221025213143318.png" alt="image-20221025213143318"></p>
+</li>
+<li>
+<p>shellcode2</p>
+<p><img src="image-20221025213213698.png" alt="image-20221025213213698"></p>
+</li>
+</ul>
+<p>第一段 shellcode 是一个 xtea 加密，第二段 shellcode 是一个 tea 加密，q师傅还将栈上的各个位置含义修复了出来，更加清晰明了。</p>
+<p>由于 VM 走了很多次，且入口还会不同，在进入 VM 前下一个条件断点，将进入 VM 的相关信息都打印出来</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">stack_base = get_qword(cpu.rdi+8)</span><br><span class="line">stack = []</span><br><span class="line">for i in range(22):</span><br><span class="line">    stack.append(hex(get_wide_dword(stack_base+i*4)))</span><br><span class="line">print(&quot;EIP:%s \t&quot; % hex(get_wide_word(cpu.rdi+0x10)), stack)</span><br></pre></td></tr></table></figure>
+<p><img src="image-20221026143328804.png" alt="image-20221026143328804"></p>
+<p><img src="image-20221026144053629.png" alt="image-20221026144053629"></p>
+<p>可以进出 VM 函数总共 202 次，发现两段 opcode 是交替运行的，除了第一次和第二次 eip 的值为0，之后对于两段 opcode 的入口都是确定的。分析可以知道前面两次入口为0时做的是 XTEA 和 TEA 加密的初始化操作：key、sum、delta 的设置，一轮异或操作，for 循环内一次加密操作。之后由于 eip 的值的改变导致 opcode 入口改变，每次进入 VM 函数就只跑了 for 循环，而且每次只跑一轮（因为被 return 所控制了，通过外面参数的控制再跑。一共输入了40个字符，加密一整轮使用 2 个 DWORD 也就是 8 个字符，总共有 5 组，每组交替跑 20 轮 XTEA 和 20 轮 TEA，加上前面 2 次初始化正好是 202 次</p>
+<p><img src="image-20221026153352778.png" alt="image-20221026153352778"></p>
+<p>上图中前面红框里的内容是进入vm函数时所要加密的8个字节，后面的是上一轮加密时 round（就是a1[20] 的值</p>
+<p>最后两次进入 VM 函数没有进行加密操作，因为下图中 for 循环中的条件不再满足了</p>
+<p><img src="PO6CVWFT6C%7D4M4T$B5MM5CO.jpg" alt="img"></p>
+<h3 id="exp">exp</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> cipher[<span class="number">10</span>]=&#123;<span class="number">-1360987416</span>, <span class="number">-63028991</span>, <span class="number">377269650</span>, <span class="number">1374317758</span>, <span class="number">606732544</span>, <span class="number">22092315</span>, <span class="number">1364027028</span>, <span class="number">794804203</span>, <span class="number">1188258712</span>, <span class="number">2045699056</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">decrypt</span><span class="params">(<span class="type">int</span>* v)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> xtea_key[<span class="number">4</span>]=&#123;<span class="number">18764</span>,<span class="number">28534</span>,<span class="number">25888</span>,<span class="number">17237</span>&#125;;</span><br><span class="line">    <span class="type">int</span> tea_key[<span class="number">4</span>]=&#123;<span class="number">21332</span>,<span class="number">20301</span>,<span class="number">8308</span>,<span class="number">25953</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> xtea_sum=<span class="number">987654321</span>;</span><br><span class="line">    <span class="type">int</span> tea_sum=<span class="number">1592647341</span>;</span><br><span class="line">    <span class="type">int</span> xtea_delta=<span class="number">123456789</span>;</span><br><span class="line">    <span class="type">int</span> tea_delta=<span class="number">22334455</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i+=<span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> round=<span class="number">0</span>;round&lt;<span class="number">20</span>;round++)</span><br><span class="line">        &#123;</span><br><span class="line">            tea_sum+=tea_delta;</span><br><span class="line">            xtea_sum+=xtea_delta;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">8</span>;i&gt;=<span class="number">0</span>;i-=<span class="number">2</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> v1=v[i+<span class="number">1</span>]; </span><br><span class="line">        <span class="type">int</span> v0=v[i];</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> round_max=(i==<span class="number">0</span>)?<span class="number">19</span>:<span class="number">20</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;round_max;j++)</span><br><span class="line">        &#123;</span><br><span class="line">            v1-=(<span class="number">16</span>*v0+tea_key[<span class="number">2</span>])^(v0+tea_sum)^(v0/<span class="number">32</span>+tea_key[<span class="number">3</span>]);</span><br><span class="line">            v0-=(<span class="number">16</span>*v1+tea_key[<span class="number">0</span>])^(v1+tea_sum)^(v1/<span class="number">32</span>+tea_key[<span class="number">1</span>]);</span><br><span class="line">            tea_sum-=tea_delta;</span><br><span class="line">            v1-=(((<span class="number">16</span>*v0)^(v0/<span class="number">32</span>))+v0)^(xtea_sum+xtea_key[(xtea_sum/<span class="number">2048</span>)&amp;<span class="number">3</span>]);</span><br><span class="line">            xtea_sum-=xtea_delta;</span><br><span class="line">            v0-=(((<span class="number">16</span>*v1)^(v1/<span class="number">32</span>))+v1)^(xtea_sum+xtea_key[xtea_sum&amp;<span class="number">3</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        v[i+<span class="number">1</span>]=v1;v[i]=v0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    v[<span class="number">1</span>]-= (<span class="number">16</span>*v[<span class="number">0</span>]+tea_key[<span class="number">2</span>])^(v[<span class="number">0</span>]+tea_sum)^(v[<span class="number">0</span>]/<span class="number">32</span>+tea_key[<span class="number">3</span>]);</span><br><span class="line">    v[<span class="number">0</span>]-= (<span class="number">16</span>*v[<span class="number">1</span>]+tea_key[<span class="number">0</span>])^(v[<span class="number">1</span>]+tea_sum)^(v[<span class="number">1</span>]/<span class="number">32</span>+tea_key[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">        v[i]^=<span class="number">0x01010101</span>*(i+<span class="number">1</span>);</span><br><span class="line">    v[<span class="number">1</span>]-=(((v[<span class="number">0</span>]*<span class="number">16</span>)^(v[<span class="number">0</span>]/<span class="number">32</span>))+v[<span class="number">0</span>])^(xtea_sum+xtea_key[(xtea_sum/<span class="number">2048</span>)&amp;<span class="number">3</span>]);</span><br><span class="line">    xtea_sum-=xtea_delta;</span><br><span class="line">    v[<span class="number">0</span>]-=(((v[<span class="number">1</span>]*<span class="number">16</span>)^(v[<span class="number">1</span>]/<span class="number">32</span>))+v[<span class="number">1</span>])^(xtea_sum+xtea_key[xtea_sum&amp;<span class="number">3</span>]);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">10</span>;i++)</span><br><span class="line">        v[i]^=<span class="number">0x01010101</span>*(i+<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">decrypt</span>(cipher);</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;<span class="number">40</span>;i++)</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%c&quot;</span>,*((<span class="type">char</span>*)cipher+i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="小结-v3">小结</h2>
+<p>花了好一段时间，终于对 VM 逆向这一块进行了点了解，VM 逆向的关键就是 opcode ，虚拟寄存器，switch 分支的意义。并不是所有的 vm 逆向都是这种需要 dump 出 opcode 然后汇总分支执行的内容得到一段具有可读性的内容，形式上可以改变，但是本质上都是相同的。</p>
+<h3 id="收获">收获</h3>
+<ul>
+<li>更加熟悉了 ida 的一些操作：结构体的构建和使用，下条件断点</li>
+<li>动调和静态分析相互结合的重要性</li>
+</ul>
+<p>一步步走下去的感觉真的很踏实（一下子想不起来还有啥收获了，倒时候再补。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/10/26/VM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%80%86%E5%90%91/">https://ghdemi.github.io/2022/10/26/VM%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%80%86%E5%90%91/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2022-10-26</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Knowledge/" class="post-tags__link button"># Knowledge</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/10/07/2022ZJCTF/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            2022ZJCTF
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2022 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
