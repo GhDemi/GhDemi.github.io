@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+        <link rel="shortcut icon" href="/images/favicon.ico">
+    
+    
+        <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+    
+    
+        <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+    
+    
+        <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Android杂记 | 早点睡zZZ</title>
+
+
+    <meta name="keywords" content="基础">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="我直接小脑上传（x，书太老了，Android 知识更新快，不过学学基础还行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android杂记">
+<meta property="og:url" content="https://ghdemi.github.io/2022/12/27/Android%E6%9D%82%E8%AE%B0/index.html">
+<meta property="og:site_name" content="早点睡zZZ">
+<meta property="og:description" content="我直接小脑上传（x，书太老了，Android 知识更新快，不过学学基础还行">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/GhDemi/Picture/main/BlogImg/Android%E6%9D%82%E8%AE%B0.jpg">
+<meta property="article:published_time" content="2022-12-27T08:05:11.000Z">
+<meta property="article:modified_time" content="2023-04-02T02:39:38.427Z">
+<meta property="article:author" content="GhDemi">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/GhDemi/Picture/main/BlogImg/Android%E6%9D%82%E8%AE%B0.jpg">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+        <link rel="stylesheet" id="hl-default-theme" href="/css/highlight/default.css" media="none" >
+        
+            <link rel="stylesheet" id="hl-dark-theme" href="/css/highlight/dark.css" media="none">
+        
+    
+
+    
+    
+
+    
+    
+<link rel="stylesheet" href="/css/style/dark.css">
+
+    
+<script src="/js/darkmode.js"></script>
+
+
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 6.1.0"></head>
+
+    <body>
+        <div id="app">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Hi!</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/friends/" class="navbar-menu button">友链</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+    <a href="javaScript:void(0);" id="btn-toggle-dark">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+    </a>
+
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/friends/" class="dropdown-menu button">友链</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Android杂记
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2022/12/" class="post-meta__date button">2022-12-27</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Android/" class="button">Android</a>
+
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+    <aside class="post-side">
+        <div class="post-side__toc">
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0"><span class="toc-text">第二章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F"><span class="toc-text">编写第一个程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AE%B9%E7%BC%96%E5%86%99"><span class="toc-text">程序内容编写</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91-APK-%E6%96%87%E4%BB%B6"><span class="toc-text">反编译 APK 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94Dalvik%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">第三章——Dalvik虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dalvik-%E5%AD%97%E8%8A%82%E7%A0%81%E5%92%8C-smali-%E6%B1%87%E7%BC%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">dalvik 字节码和 smali 汇编的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dex%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90"><span class="toc-text">dex文件的生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dalvik%E6%8C%87%E4%BB%A4%E5%88%86%E6%9E%90"><span class="toc-text">Dalvik指令分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0%E2%80%94%E2%80%94Android%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="toc-text">第四章——Android可执行文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APK-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">APK 目录结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dex%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">dex文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dex-head"><span class="toc-text">dex head</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dex-map-list"><span class="toc-text">dex map list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#string-ids"><span class="toc-text">string_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type-ids"><span class="toc-text">type_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#proto-ids"><span class="toc-text">proto_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fieId-ids"><span class="toc-text">fieId_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#method-ids"><span class="toc-text">method_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#class-def"><span class="toc-text">class_def</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E2%80%94%E2%80%94%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90Android%E7%A8%8B%E5%BA%8F"><span class="toc-text">第五章——静态分析Android程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#smali%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB"><span class="toc-text">smali代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="toc-text">循环语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#switch-%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5"><span class="toc-text">switch 分支语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#try-catch-%E8%AF%AD%E5%8F%A5"><span class="toc-text">try&#x2F;catch 语句</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#idaPro-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-text">idaPro 静态分析</span></a></li></ol></li></ol>
+        </div>
+    </aside>
+    <a class="btn-toc button" id="btn-toc" tabindex="0">
+        <svg viewBox="0 0 1024 1024" width="32" height="32" xmlns="http://www.w3.org/2000/svg">
+            <path d="M128 256h64V192H128zM320 256h576V192H320zM128 544h64v-64H128zM320 544h576v-64H320zM128 832h64v-64H128zM320 832h576v-64H320z" fill="currentColor"></path>
+        </svg>
+    </a>
+    <div class="toc-menus" id="toc-menus">
+        <div class="toc-title">文章目录</div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0"><span class="toc-text">第二章</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%A8%8B%E5%BA%8F"><span class="toc-text">编写第一个程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AE%B9%E7%BC%96%E5%86%99"><span class="toc-text">程序内容编写</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91-APK-%E6%96%87%E4%BB%B6"><span class="toc-text">反编译 APK 文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0%E2%80%94%E2%80%94Dalvik%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">第三章——Dalvik虚拟机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dalvik-%E5%AD%97%E8%8A%82%E7%A0%81%E5%92%8C-smali-%E6%B1%87%E7%BC%96%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">dalvik 字节码和 smali 汇编的关系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dex%E6%96%87%E4%BB%B6%E7%9A%84%E7%94%9F%E6%88%90"><span class="toc-text">dex文件的生成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Dalvik%E6%8C%87%E4%BB%A4%E5%88%86%E6%9E%90"><span class="toc-text">Dalvik指令分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0%E2%80%94%E2%80%94Android%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="toc-text">第四章——Android可执行文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#APK-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">APK 目录结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dex%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">dex文件结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#dex-head"><span class="toc-text">dex head</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#dex-map-list"><span class="toc-text">dex map list</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#string-ids"><span class="toc-text">string_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#type-ids"><span class="toc-text">type_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#proto-ids"><span class="toc-text">proto_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fieId-ids"><span class="toc-text">fieId_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#method-ids"><span class="toc-text">method_ids</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#class-def"><span class="toc-text">class_def</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0%E2%80%94%E2%80%94%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90Android%E7%A8%8B%E5%BA%8F"><span class="toc-text">第五章——静态分析Android程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#smali%E4%BB%A3%E7%A0%81%E9%98%85%E8%AF%BB"><span class="toc-text">smali代码阅读</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="toc-text">循环语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#switch-%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5"><span class="toc-text">switch 分支语句</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#try-catch-%E8%AF%AD%E5%8F%A5"><span class="toc-text">try&#x2F;catch 语句</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#idaPro-%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90"><span class="toc-text">idaPro 静态分析</span></a></li></ol></li></ol>
+    </div>
+
+
+<article class="post post__with-toc content-card">
+    <div class="post__header">
+    
+        <div class="post-thumbnail" style="background-image: url('https://raw.githubusercontent.com/GhDemi/Picture/main/BlogImg/Android%E6%9D%82%E8%AE%B0.jpg');"></div>
+    
+</div>
+    <div class="post__content">
+        <p>我直接小脑上传（x，书太老了，Android 知识更新快，不过学学基础还行</p>
+<span id="more"></span>
+<p>刚开始接触 android 对于这个东西也没有什么头绪，在阅读书籍 《 Android软件安全与逆向分析》(丰生强著) 虽然书中已经给了学习步骤，但是脑子里依旧杂乱。故将得到的知识点写成杂记，待之后希望将可以将各个知识点串联起来</p>
+<h2 id="第二章">第二章</h2>
+<p>编写第一个安卓程序以及对该程序进行逆向</p>
+<p>————————</p>
+<h3 id="编写第一个程序">编写第一个程序</h3>
+<p>书中所介绍的开发环境是 Eclipse，但是由于本人比较懒逼，在安装 sdk 的时候已经安装了 Android studio 所以直接用的这玩意写的，写的是最简单的注册程序，程序涉及到界面、文本框、按钮，类似于 windows 的 MFC，但是 java 的类功能更加集成完全。</p>
+<p>注册程序的检查函数很显然是要写在 button 中的，但是我不是很懂 Android 程序中项目的结构，只是了解那些里面大致都是些什么东西，而且 Android studio 中的目录结构非常多很复杂，我也不明白在建立文件的时候的各种名称对应这什么内容（先埋坑，后研究</p>
+<p>Android studio目录如下</p>
+<p><img src="image-20221205205950866.png" alt="image-20221205205950866"></p>
+<p>我们所需要写的按钮响应函数就放在图中的红色方框内，并且这个结构目录很奇妙：可以选不同类型的目录结构</p>
+<p><img src="image-20221205211923232.png" alt="image-20221205211923232"></p>
+<p>所选的目录结构类型不一样，所展现的内容以及内容编排的方式都不一样，如下图</p>
+<p><img src="image-20221205212746221.png" alt="image-20221205212746221"></p>
+<p>和 Project 对应的 MainActivity 函数位于此处</p>
+<h4 id="程序内容编写">程序内容编写</h4>
+<p>界面的设计在下图红框中的文件中呈现，左边是代码，右边是设计效果(虽然有个 TextView 位置看着很奇怪，但是加载到模拟器里面是好的(x</p>
+<p><img src="image-20221205213245405.png" alt="image-20221205213245405"></p>
+<p>在 MainActivity 中的函数主要内容</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.firstandroid;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.EditText;</span><br><span class="line"><span class="keyword">import</span> android.widget.Toast;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> androidx.appcompat.app.AppCompatActivity;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.security.MessageDigest;</span><br><span class="line"><span class="keyword">import</span> java.security.NoSuchAlgorithmException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onCreate</span><span class="params">(Bundle savedInstanceState)</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        <span class="type">EditText</span> <span class="variable">editusername</span> <span class="operator">=</span>(EditText) findViewById(R.id.edit_name);</span><br><span class="line">        EditText editsn=(EditText) findViewById(R.id.edit_sn);</span><br><span class="line"></span><br><span class="line">        Button btn=(Button) findViewById(R.id.button);</span><br><span class="line">        btn.setOnClickListener( <span class="keyword">new</span> <span class="title class_">View</span>.OnClickListener()</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span>(!checkSN(editusername.getText().toString().trim(),editsn.getText().toString().trim()))</span><br><span class="line">                    &#123;</span><br><span class="line">                        Toast.makeText(MainActivity.<span class="built_in">this</span>,<span class="string">&quot;注册失败&quot;</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span></span><br><span class="line">                    &#123;</span><br><span class="line">                        Toast.makeText(MainActivity.<span class="built_in">this</span>,<span class="string">&quot;注册成功&quot;</span>,Toast.LENGTH_SHORT).show();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> String <span class="title function_">toHexString</span><span class="params">(<span class="type">byte</span>[] byteArray)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">StringBuilder</span> <span class="variable">hexString</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (byteArray == <span class="literal">null</span> || byteArray.length &lt;= <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; byteArray.length; i++) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">v</span> <span class="operator">=</span> byteArray[i] &amp; <span class="number">0xFF</span>;</span><br><span class="line">            <span class="type">String</span> <span class="variable">hv</span> <span class="operator">=</span> Integer.toHexString(v);</span><br><span class="line">            <span class="keyword">if</span> (hv.length() &lt; <span class="number">2</span>) &#123;</span><br><span class="line">                hexString.append(<span class="number">0</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            hexString.append(hv);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> hexString.toString().toLowerCase();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">boolean</span> <span class="title function_">checkSN</span><span class="params">(String username,String sn)</span> <span class="keyword">throws</span> NoSuchAlgorithmException &#123;</span><br><span class="line">        <span class="keyword">try</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(username==<span class="literal">null</span> || (username.length()==<span class="number">0</span>))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span>(sn==<span class="literal">null</span> || (sn.length()==<span class="number">0</span>))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">            <span class="type">MessageDigest</span> <span class="variable">digest</span> <span class="operator">=</span> MessageDigest.getInstance(<span class="string">&quot;MD5&quot;</span>);</span><br><span class="line">            digest.reset();</span><br><span class="line">            digest.update(username.getBytes());</span><br><span class="line">            <span class="type">byte</span>[] bytes=digest.digest();</span><br><span class="line">            String hexstr=toHexString(bytes);</span><br><span class="line"></span><br><span class="line">            StringBuilder sb=<span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> i=<span class="number">0</span>;i&lt;hexstr.length();i+=<span class="number">2</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                sb.append(hexstr.charAt(i));</span><br><span class="line">            &#125;</span><br><span class="line">            String userSN=sb.toString();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(!userSN.equalsIgnoreCase(sn))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (NoSuchAlgorithmException e)</span><br><span class="line">        &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>逻辑很简单，但是这里涉及到了一个回调函数的知识，可以发现在 MainActivity 函数中是没有明显调用 onClick 函数的，但是在程序运行过程中却被执行了，可以简单<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903489529708558">看看</a>了解一下回调。</p>
+<p><strong>简单说一说回调</strong></p>
+<p>setOnClickListener 函数源码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void setOnClickListener(@Nullable OnClickListener l) &#123;</span><br><span class="line">        if (!isClickable()) &#123;</span><br><span class="line">            setClickable(true);</span><br><span class="line">        &#125;</span><br><span class="line">        getListenerInfo().mOnClickListener = l;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>根据源码我们可以发现该函数所需要的参数的类型是 OnClickListener，在里面所执行的操作是将点击设置为可执行，并且将传入的参数赋值给了 getListenerInfo().mOnClickListener。可以推测出来 getListenerInfo() 的返回值类型应该是一个类，mOnClickListener 是类中的一个属性</p>
+<p>getListenerInfo() 以及 ListenerInfo 源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"> ListenerInfo <span class="title function_">getListenerInfo</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (mListenerInfo != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> mListenerInfo;</span><br><span class="line">        &#125;</span><br><span class="line">        mListenerInfo = <span class="keyword">new</span> <span class="title class_">ListenerInfo</span>();</span><br><span class="line">        <span class="keyword">return</span> mListenerInfo;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ListenerInfo 为 getListenerInfo() 函数的返回值类型</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">ListenerInfo</span> &#123;</span><br><span class="line">        <span class="keyword">protected</span> OnFocusChangeListener mOnFocusChangeListener;</span><br><span class="line">        <span class="keyword">private</span> ArrayList&lt;OnLayoutChangeListener&gt; mOnLayoutChangeListeners;</span><br><span class="line">        <span class="keyword">protected</span> OnScrollChangeListener mOnScrollChangeListener;</span><br><span class="line">        <span class="keyword">private</span> CopyOnWriteArrayList&lt;OnAttachStateChangeListener&gt; mOnAttachStateChangeListeners;</span><br><span class="line">        <span class="keyword">public</span> OnClickListener mOnClickListener;</span><br><span class="line">        <span class="keyword">protected</span> OnLongClickListener mOnLongClickListener;</span><br><span class="line">        <span class="keyword">protected</span> OnContextClickListener mOnContextClickListener;</span><br><span class="line">        <span class="keyword">protected</span> OnCreateContextMenuListener mOnCreateContextMenuListener;</span><br><span class="line">        <span class="keyword">private</span> OnKeyListener mOnKeyListener;</span><br><span class="line">        <span class="keyword">private</span> OnTouchListener mOnTouchListener;</span><br><span class="line">        <span class="keyword">private</span> OnHoverListener mOnHoverListener;</span><br><span class="line">        <span class="keyword">private</span> OnGenericMotionListener mOnGenericMotionListener;</span><br><span class="line">        <span class="keyword">private</span> OnDragListener mOnDragListener;</span><br><span class="line">        <span class="keyword">private</span> OnSystemUiVisibilityChangeListener mOnSystemUiVisibilityChangeListener;</span><br><span class="line">        OnApplyWindowInsetsListener mOnApplyWindowInsetsListener;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>也就是说，通过 setOnClickListener 这个函数，我们达到了如图的效果(猜测，很有可能不准确</p>
+<p><img src="image-20221206213330408.png" alt="image-20221206213330408"></p>
+<p>可是明明就只是调用了 setOnClickListener 函数照理来说代码应该就只有短短一行才是，但是我们所写的调用代码却非常长。这种情况的出现是所传入参数的类型所导致的</p>
+<p>OnClickListener 源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">OnClickListener</span> &#123;</span><br><span class="line">      <span class="comment">/**</span></span><br><span class="line"><span class="comment">       * Called when a view has been clicked.</span></span><br><span class="line"><span class="comment">       *</span></span><br><span class="line"><span class="comment">       * <span class="doctag">@param</span> v The view that was clicked.</span></span><br><span class="line"><span class="comment">       */</span></span><br><span class="line">      <span class="keyword">void</span> <span class="title function_">onClick</span><span class="params">(View v)</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>这是一个接口类，接口类建立一个对象就必须对里面的方法进行重写，在我们所编写程序中我们需要在重写的 onClick() 函数中进行注册码的校验工作，这也是为什么我们所写的函数长的原因。</p>
+<h3 id="反编译-APK-文件">反编译 APK 文件</h3>
+<p>直接使用 apktool 可以对文件进行编译或者反编译</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apktool d[ecode] [OPTS] &lt;file.apk&gt; [&lt;dir&gt;]	       // 反编译 apk 文件命令</span><br><span class="line">apktool b[uild] [OPTS] [&lt;app_path&gt;] [&lt;out_file&gt;]   // 编译 apk 文件命令</span><br></pre></td></tr></table></figure>
+<h2 id="第三章——Dalvik虚拟机">第三章——Dalvik虚拟机</h2>
+<p>Dalivik 虚拟机基于寄存器架构</p>
+<h3 id="dalvik-字节码和-smali-汇编的关系">dalvik 字节码和 smali 汇编的关系</h3>
+<p>虽然 Android 程序是由 java 所编写，但是 Android 操作系统它所运行的是 dalvik 虚拟机，dalvik 虚拟机运行的是由 Java 字节码转换而来的 dalvik 字节码。</p>
+<p>由于 dalvik 字节码生涩难懂，可读性很弱，因此研究人员们给出了 Dalvik 字节码的一种助记方式：smali 语法。我们可以借助一些工具：apktool、jeb等。将 dex 文件转换成 smali 文件进行阅读。</p>
+<p><img src="image-20221211202343275.png" alt="image-20221211202343275"></p>
+<h3 id="dex文件的生成">dex文件的生成</h3>
+<p>新建一个<code>Main.java</code>，使用命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javac Main.java</span><br></pre></td></tr></table></figure>
+<p>编译生成 Main.class 文件</p>
+<p>dx 工具是 AndroidSDK 中自带的一个东西，可以将 class 文件转换为 dex 文件，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9b3a43a5b7c2">教程</a>。通过下面的命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dx --dex --output=Main.dex Main.class</span><br></pre></td></tr></table></figure>
+<p>生成 dex 文件，在这里我们也可以看到 .class 文件和 .dex 文件之间的关系，.class 文件是在 java 虚拟机中的可执行文件，但是 Android 中不支持 java 虚拟机的运行，因此需要将 .class 文件进行转换得到 .dex 文件并使其能在 dalvik 虚拟机中运行</p>
+<p><strong>小坑点</strong></p>
+<p>我尝试在 eclipse 中建立项目，然后直接使用项目文件夹 /bin/项目名称/Main.class 文件去进行转换，但是会报错</p>
+<p><img src="image-20221207133704348.png" alt="image-20221207133704348"></p>
+<p>仔细看看使用 javac 编译生成的 Main.class 文件和 eclipse 生成的 Main.class 文件，其实是有差别的</p>
+<p><img src="image-20221207133837006.png" alt="image-20221207133837006"></p>
+<p>细节就不去深究（先埋个坑吧</p>
+<h3 id="Dalvik指令分析">Dalvik指令分析</h3>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/bingghost/p/5769321.html">如何解释dalvik字节码</a>、<a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903871500812296">dalvik指令集速查</a></p>
+<p>指令语法由<strong>指令的位描述</strong>和<strong>指令格式标识</strong>来决定。</p>
+<p>位描述约定：</p>
+<ul>
+<li>每16位的字采用空格分隔</li>
+<li>每个字母表示四位，每个字母按顺序从高字节开始，排列到低字节。每四位之间可能用 ‘|’ 来表示不同内容</li>
+<li>顺序采用 A~Z 的单个大写字母作为一个4位的操作码，op 表示一个8位的操作码</li>
+<li>'Ø’表示这字段所有位为0</li>
+</ul>
+<p>指令格式表示约定：</p>
+<ul>
+<li>大多由三个字符组成，前面两个是数字，最后一个是字母</li>
+<li>第一个数字表示指令由多少个16位的字组成。</li>
+<li>第二个数字是表示指令最多使用寄存器的个数。特殊标记 ‘r’ 使用一定范围内的寄存器</li>
+<li>第三个字母位类型码，表示指令用到的额外数据类型</li>
+</ul>
+<p>看了上面肯定依旧不明白到底要怎么看这个东西，太抽象了。</p>
+<p>直接来看看实例，我们将上面生成的 dex 文件直接拖入 ida 中，并且通过设置显示字节码</p>
+<p><img src="image-20221207160308857.png" alt="image-20221207160308857"></p>
+<p><strong>注意点</strong> ：由于 IDA 显示原因，实际上这些字节码在内存中的存储顺序是这样的</p>
+<p><img src="image-20221207160626158.png" alt="image-20221207160626158"></p>
+<p>对指令 1241 进行解析举例</p>
+<ol>
+<li>
+<p>字节码 12 为操作码(opcode)，查询获得对应的指令格式标识为 <code>11n</code></p>
+<p>11n 的意义可以根据指令格式标识约定知晓：</p>
+<ul>
+<li>第一个数字 1 表示指令由1个16位字组成</li>
+<li>第二个数字 1 表示指令最多使用1个寄存器</li>
+<li>n 表示一个 4 位立即数</li>
+</ul>
+</li>
+<li>
+<p>对应的位描述为 <code>const/4 vA, #+B</code></p>
+<p>更具位描述的约定知晓：</p>
+<ul>
+<li>字节码 41 中的第一位 4 为给定的字面值4，可以简单理解为一个占有4位字大小的数值4</li>
+<li>字节码 41 中的第二位 1 为寄存器下标</li>
+</ul>
+</li>
+</ol>
+<p>结合起来就是</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">12</th>
+<th style="text-align:center">4</th>
+<th style="text-align:center">1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">操作码</td>
+<td style="text-align:center">立即数</td>
+<td style="text-align:center">寄存器下标</td>
+</tr>
+<tr>
+<td style="text-align:center">const</td>
+<td style="text-align:center">4</td>
+<td style="text-align:center">v1</td>
+</tr>
+</tbody>
+</table>
+<p>我们可以发现在 ida 中我们是找不到指令格式标识的，这是因为 ida 已经根据字节码都分析好了，将每组指令和指令对应的字节码都进行了对应</p>
+<h2 id="第四章——Android可执行文件">第四章——Android可执行文件</h2>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/bingghost/p/5769283.html">Android程序生成步骤</a></p>
+<h3 id="APK-目录结构">APK 目录结构</h3>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bupt073114/article/details/42298337">介绍链接</a></p>
+<p>APK 文件的本质实际上是一个压缩包，使用 zip 格式解压软件对 apk 文件进行解压，会发现它由一些图片资源与其他文件组成，这些内容的名称和作用大致如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">assets目录</td>
+<td style="text-align:center">存放需要打包到 apk 中的静态文件</td>
+</tr>
+<tr>
+<td style="text-align:center">lib目录</td>
+<td style="text-align:center">程序依赖的 native 库</td>
+</tr>
+<tr>
+<td style="text-align:center">res目录</td>
+<td style="text-align:center">存放应用程序的资源</td>
+</tr>
+<tr>
+<td style="text-align:center">META-INF目录</td>
+<td style="text-align:center">存放应用程序签名和目录证书</td>
+</tr>
+<tr>
+<td style="text-align:center">AndroidManifest.xml</td>
+<td style="text-align:center">应用程序配置文件</td>
+</tr>
+<tr>
+<td style="text-align:center">classes.dex</td>
+<td style="text-align:center">dex 可执行文件</td>
+</tr>
+<tr>
+<td style="text-align:center">resources.arsc</td>
+<td style="text-align:center">资源配置文件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>META-INF 目录：存放签名信息，用来保证 apk 包的完整性和系统的安全</p>
+</li>
+<li>
+<p>assets 目录：用于存放需要打包到 apk 中的静态文件</p>
+<p>该目录支持任意深度的子目录，用户可以根据自己的需求任意部署文件夹架构。</p>
+<p>res 目录下的文件会在 .R 文件中生成对应的资源ID，访问的时候需要 AssetManager 类。</p>
+</li>
+<li>
+<p>lib 目录：存放应用程序依赖的 native 库文件，一般是用 C/C++ 编写，这里的 lib 库可能包含4种不同类型，根据 cpu 型号来分类</p>
+</li>
+<li>
+<p>res 目录：用于存放资源文件，存放在该文件夹下的所有文件都会映射到 Android 工程的 .R 文件中，生成对应的 ID，</p>
+</li>
+</ul>
+<h3 id="dex文件结构">dex文件结构</h3>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903847647772686">文章参考链接</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/lulululbj/android-reverse/blob/master/Parser/src/main/luyao/parser/dex/DexParser.java">Java 版本 dex 文件解析源码</a></p>
+<p>Dex 文件整体结构如下所示</p>
+<p><img src="image-20221208162504327.png" alt="image-20221208162504327"></p>
+<ul>
+<li>
+<p><strong>dex head</strong> 为 dex 文件头，指定了 dex 文件的一些属性，记录其它 6 个部分数据结构在 dex 文件中的物理偏移</p>
+</li>
+<li>
+<p><strong>string_ids</strong>  字符串的偏移量</p>
+</li>
+<li>
+<p><strong>type_ids</strong>  类型信息的偏移量</p>
+</li>
+<li>
+<p><strong>proto_ids</strong>  方法声明的偏移量</p>
+</li>
+<li>
+<p><strong>field_ids</strong>  字段信息的偏移量</p>
+</li>
+<li>
+<p><strong>method_ids</strong>  方法信息（所在类，方法声明以及方法名）的偏移量</p>
+</li>
+<li>
+<p><strong>class_def</strong>  类信息的偏移量</p>
+</li>
+<li>
+<p><strong>data</strong>  数据区</p>
+</li>
+<li>
+<p><strong>link_data</strong>  静态链接数据区</p>
+</li>
+</ul>
+<p>从 head 到 data 之间的结构体可以理解为 “索引结构区”，真实的数据存放在 data 数据区</p>
+<p>对应到文件中就长这个样子</p>
+<p><img src="image-20221208164012225.png" alt="image-20221208164012225"></p>
+<h4 id="dex-head">dex head</h4>
+<p>由结构体 DexHeader 定义，占用 0x70 个字节，声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">struct DexHeader &#123;</span><br><span class="line">    u1  magic[8];           // 魔数</span><br><span class="line">    u4  checksum;           // adler 校验值</span><br><span class="line">    u1  signature[kSHA1DigestLen]; // sha1 校验值</span><br><span class="line">    u4  fileSize;           // DEX 文件大小</span><br><span class="line">    u4  headerSize;         // DEX 文件头大小</span><br><span class="line">    u4  endianTag;          // 字节序</span><br><span class="line">    u4  linkSize;           // 链接段大小</span><br><span class="line">    u4  linkOff;            // 链接段的偏移量</span><br><span class="line">    u4  mapOff;             // DexMapList 偏移量</span><br><span class="line">    u4  stringIdsSize;      // DexStringId 个数</span><br><span class="line">    u4  stringIdsOff;       // DexStringId 偏移量</span><br><span class="line">    u4  typeIdsSize;        // DexTypeId 个数</span><br><span class="line">    u4  typeIdsOff;         // DexTypeId 偏移量</span><br><span class="line">    u4  protoIdsSize;       // DexProtoId 个数</span><br><span class="line">    u4  protoIdsOff;        // DexProtoId 偏移量</span><br><span class="line">    u4  fieldIdsSize;       // DexFieldId 个数</span><br><span class="line">    u4  fieldIdsOff;        // DexFieldId 偏移量</span><br><span class="line">    u4  methodIdsSize;      // DexMethodId 个数</span><br><span class="line">    u4  methodIdsOff;       // DexMethodId 偏移量</span><br><span class="line">    u4  classDefsSize;      // DexCLassDef 个数</span><br><span class="line">    u4  classDefsOff;       // DexClassDef 偏移量</span><br><span class="line">    u4  dataSize;           // 数据段大小</span><br><span class="line">    u4  dataOff;            // 数据段偏移量</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>u 表示无符号数，u1 u2 u4 u8 分别为 8 16 32 64 位无符号数</p>
+<ul>
+<li>
+<p>magic 字段标识了一个有效的 dex 文件，目前它的值固定为 <code>dex.035.</code></p>
+<p><img src="image-20221208170444024.png" alt="image-20221208170444024"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">64 65 78 0a 30 33 35 00</span><br><span class="line">对应内容为</span><br><span class="line">dex + 换行符 + DEX 版本 + NUl(空)</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<p>checksum 为 dex 文件的校验和，用于判断 dex 文件是否被损坏或篡改</p>
+</li>
+<li>
+<p>mapoff 字段指定了 DexMapList 结构的文件偏移</p>
+</li>
+</ul>
+<h4 id="dex-map-list">dex map list</h4>
+<p>由结构体 DexMapList 所定义</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct DexMapList</span><br><span class="line">&#123;</span><br><span class="line">	u4 size;			//DexMapItem 的个数</span><br><span class="line">	DexMapItem list[1];  //DexMapItem 结构数组</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="image-20221208182106591.png" alt="image-20221208182106591"></p>
+<p>结构体 DexMapItem 结构声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct DexMapItem</span><br><span class="line">&#123;</span><br><span class="line">	u2 type;	//kDexType开头的类型</span><br><span class="line">	u2 unused;  //未使用，用于字节对齐</span><br><span class="line">	u4 size;    //指定类型的个数</span><br><span class="line">	u4 offset;  //指定类型数据的文件偏移</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面就是一个例子，需要注意的是这里字节存放的顺序是，内存中存放的顺序是 0100，但实际上是 0001</p>
+<p><img src="image-20221208183031517.png" alt="image-20221208183031517"></p>
+<p>结构体中的 type 字段为一个枚举常量，如下所示，通过对比数值可以知道它的具体类型</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">enum &#123;</span><br><span class="line">    kDexTypeHeaderItem               = 0x0000,</span><br><span class="line">    kDexTypeStringIdItem             = 0x0001,</span><br><span class="line">    kDexTypeTypeIdItem               = 0x0002,</span><br><span class="line">    kDexTypeProtoIdItem              = 0x0003,</span><br><span class="line">    kDexTypeFieldIdItem              = 0x0004,</span><br><span class="line">    kDexTypeMethodIdItem             = 0x0005,</span><br><span class="line">    kDexTypeClassDefItem             = 0x0006,</span><br><span class="line">    kDexTypeMapList                  = 0x1000,</span><br><span class="line">    kDexTypeTypeList                 = 0x1001,</span><br><span class="line">    kDexTypeAnnotationSetRefList     = 0x1002,</span><br><span class="line">    kDexTypeAnnotationSetItem        = 0x1003,</span><br><span class="line">    kDexTypeClassDataItem            = 0x2000,</span><br><span class="line">    kDexTypeCodeItem                 = 0x2001,</span><br><span class="line">    kDexTypeStringDataItem           = 0x2002,</span><br><span class="line">    kDexTypeDebugInfoItem            = 0x2003,</span><br><span class="line">    kDexTypeAnnotationItem           = 0x2004,</span><br><span class="line">    kDexTypeEncodedArrayItem         = 0x2005,</span><br><span class="line">    kDexTypeAnnotationsDirectoryItem = 0x2006,</span><br><span class="line">&#125;;</span><br><span class="line">上图中的例子：0x0001----&gt;kDexTypeStringIdItem</span><br></pre></td></tr></table></figure>
+<p>根据这个名字也可以理解，map 地图，有指向、引导的意思，我们可以根据 dex map list 找到不同 Type 的内容在 dex 文件中的位置和大小，从而可以对其内容进行解析</p>
+<h4 id="string-ids">string_ids</h4>
+<p>由 DexStringId 结构体对象构成，可以根据该结构体对象的字段在 dex 文件中获取字符串</p>
+<p>在 KDexTypeIdItem 的 size 和 offset 以及 DexHeader 的 stringIdsSize 和 stringIdsOff 字段都有说明，分别是连续的 DexStringId 对象个数、第一个对象所在的偏移处</p>
+<p>DesStringId 结构体只有一个字段，声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">struct DexStringId &#123;</span><br><span class="line">    u4 stringDataOff;	//字符串数据偏移</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>下面的例子就表明在 0x1CE 偏移处有字符串 “<init>”</p>
+<p><img src="image-20221208202443153.png" alt="image-20221208202443153"></p>
+<p><img src="image-20221208202606062.png" alt="image-20221208202606062"></p>
+<p>代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">private void parseDexString() &#123;</span><br><span class="line">    log(&quot;\nparse DexString&quot;);</span><br><span class="line">    try &#123;</span><br><span class="line">        int stringIdsSize = dex.getDexHeader().string_ids__size;</span><br><span class="line">        for (int i = 0; i &lt; stringIdsSize; i++) &#123;</span><br><span class="line">            int string_data_off = reader.readInt();</span><br><span class="line">            byte size = dexData[string_data_off]; // 第一个字节表示该字符串的长度，之后是字符串内容</span><br><span class="line">            String string_data = new String(Utils.copy(dexData, string_data_off + 1, size));</span><br><span class="line">            DexString string = new DexString(string_data_off, string_data);</span><br><span class="line">            dexStrings.add(string);</span><br><span class="line">            log(&quot;string[%d] data: %s&quot;, i, string.string_data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="type-ids">type_ids</h4>
+<p>由结构体 DexTypeId 对象构成，用于表示类型信息</p>
+<p>在 KDexTypeTypeIdItem 以及 DexHeader 中也均有说明，说明字段和 string_ids 十分类似</p>
+<p>DexType 结构体定义如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeId</span><br><span class="line">&#123;</span><br><span class="line">	u4 descriptorIdx;	/指向 DexStringId 列表的索引</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>意思就是 descriptorIdx 的值为字符串索引，指向 string_ids 中的内容，通过字符串索引得到的值在 data 池中得到字符串，最后根据所得字符串解析对应类型</p>
+<p>下面的例子，通过 descriptorIdx 的值 0x8 指向 string_ids 中的 string_id[8]，通过 string_id[8] 的值找到字符串 ‘V’，字符串 ‘V’ 对应类型就是 void</p>
+<p><img src="image-20221208211249721.png" alt="image-20221208211249721"></p>
+<p><img src="image-20221208211421397.png" alt="image-20221208211421397"></p>
+<p><img src="image-20221208211440603.png" alt="image-20221208211440603"></p>
+<p>代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private void parseDexType() &#123;</span><br><span class="line">    log(&quot;\nparse DexTypeId&quot;);</span><br><span class="line">    try &#123;</span><br><span class="line">        int typeIdsSize = dex.getDexHeader().type_ids__size;</span><br><span class="line">        for (int i = 0; i &lt; typeIdsSize; i++) &#123;</span><br><span class="line">            int descriptor_idx = reader.readInt();</span><br><span class="line">            DexTypeId dexTypeId = new DexTypeId(descriptor_idx, dexStringIds.get(descriptor_idx).string_data);</span><br><span class="line">            dexTypeIds.add(dexTypeId);</span><br><span class="line">            log(&quot;type[%d] data: %s&quot;, i, dexTypeId.string_data);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="proto-ids">proto_ids</h4>
+<p>由结构体 DexProtoId 对象构成，该结构体是一个方法声明结构体</p>
+<p>DexProtorId 结构体定义如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct DexProtoId </span><br><span class="line">&#123;</span><br><span class="line">    u4  shortyIdx;          //指向 DexStringId 列表的索引</span><br><span class="line">    u4  returnTypeIdx;      //指向 DexTypeId 列表的索引        </span><br><span class="line">    u4  parametersOff;      //指向 DexTypeList 的偏移</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>shortyIdx：方法声明字符串</li>
+<li>returnTypeIdx：方法返回类型字符串</li>
+<li>parametersOff：指向一个 DexTypeList 结构体，存放了方法的参数列表</li>
+</ul>
+<p>DexTypeList 结构体的定义如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">struct DexTypeList </span><br><span class="line">&#123;</span><br><span class="line">    u4  size;               //接下来 DexTypeItem 结构体个数</span><br><span class="line">    DexTypeItem list[1];    //DexTypeItem 结构</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct DexTypeItem </span><br><span class="line">&#123;</span><br><span class="line">    u2  typeIdx;            //指向 DexTypeId 列表的索引</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>例子如下：</p>
+<p><img src="image-20221209102341948.png" alt="image-20221209102341948"></p>
+<p>根据这些字段，获得 DexStringId、DexTypeId 列表的索引值 0x2、0x0 以及 DexTypeList 的偏移</p>
+<p>根据索引值找到方法声明、方法返回类型</p>
+<p><img src="image-20221209102851197.png" alt="image-20221209102851197"></p>
+<p><img src="image-20221209102903170.png" alt="image-20221209102903170"></p>
+<p>根据偏移量找到 DexTypeList 结构体，根据该结构中的字段可以获取参数个数以及参数类型</p>
+<p><img src="image-20221209103450152.png" alt="image-20221209103450152"></p>
+<p>最后就可以获得结果</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">方法声明</th>
+<th style="text-align:center">返回类型</th>
+<th style="text-align:center">参数列表</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">III</td>
+<td style="text-align:center">I(int)</td>
+<td style="text-align:center">2个参数，类型均为I</td>
+</tr>
+</tbody>
+</table>
+<p>解析代码如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">private void parseDexProto() </span><br><span class="line">&#123;</span><br><span class="line">    log(&quot;\nparse DexProto&quot;);</span><br><span class="line">    try &#123;</span><br><span class="line">        int protoIdsSize = dex.getDexHeader().proto_ids__size;</span><br><span class="line">        for (int i = 0; i &lt; protoIdsSize; i++) &#123;</span><br><span class="line">            int shorty_idx = reader.readInt();</span><br><span class="line">            int return_type_idx = reader.readInt();</span><br><span class="line">            int parameters_off = reader.readInt();</span><br><span class="line"></span><br><span class="line">            DexProtoId dexProtoId = new DexProtoId(shorty_idx, return_type_idx, parameters_off);</span><br><span class="line">            log(&quot;proto[%d]: %s %s %d&quot;, i, dexStringIds.get(shorty_idx).string_data,</span><br><span class="line">                    dexTypeIds.get(return_type_idx).string_data, parameters_off);</span><br><span class="line"></span><br><span class="line">            if (parameters_off &gt; 0) &#123;</span><br><span class="line">                parseDexProtoParameters(parameters_off);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            dexProtos.add(dexProtoId);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; catch (IOException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="fieId-ids">fieId_ids</h4>
+<p>DexFieldId结构体对象组成，结构中的数据均为索引值，该结构体定义如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct DexFieldId </span><br><span class="line">&#123;</span><br><span class="line">    u2  classIdx;           //类的类型，指向 DexTypeId 列表的索引</span><br><span class="line">    u2  typeIdx;            //字段类型，指向 DexTypeId 列表的索引</span><br><span class="line">    u4  nameIdx;            //字段名，指向 DexStringId 列表的索引</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><img src="image-20221209105359921.png" alt="image-20221209105359921"></p>
+<p>得到的结果如下</p>
+<table>
+<thead>
+<tr>
+<th>类类型</th>
+<th>字段类型</th>
+<th>字段名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ljava/lang/System;</td>
+<td>Ljava/io/PrintStream;</td>
+<td>out</td>
+</tr>
+</tbody>
+</table>
+<h4 id="method-ids">method_ids</h4>
+<p>由 DexMethodId 结构体对象组成，结构中的数据也均为索引值，指明了方法所在的类、方法的声明以及方法名</p>
+<p>该结构体定义如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct DexMethodId </span><br><span class="line">&#123;</span><br><span class="line">    u2  classIdx;           /* 类的类型，指向 DexTypeId 列表的索引 */</span><br><span class="line">    u2  protoIdx;           /* 声明类型，指向 DexProtoId 列表的索引 */</span><br><span class="line">    u4  nameIdx;            /* 方法名，指向 DexStringId 列表的索引 */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><img src="image-20221209110645690.png" alt="image-20221209110645690"></p>
+<p>获得的结果如下</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">类类型</th>
+<th style="text-align:center">方法声明</th>
+<th style="text-align:center">方法名</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Main</td>
+<td style="text-align:center">III(int(int,int))</td>
+<td style="text-align:center">add</td>
+</tr>
+</tbody>
+</table>
+<h4 id="class-def">class_def</h4>
+<p>由 DexClassDef 结构体组成，该结构体的声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct DexClassDef </span><br><span class="line">&#123;</span><br><span class="line">    u4  classIdx;           /* 类的类型，指向 DexTypeId 列表的索引 */</span><br><span class="line">    u4  accessFlags;        /* 访问标志 */	   </span><br><span class="line">    u4  superclassIdx;      /* 父类类型，指向 DexTypeId 列表的索引 */</span><br><span class="line">    u4  interfacesOff;      /* 接口，指向 DexTypeList 的偏移 */</span><br><span class="line">    u4  sourceFileIdx;      /* 源文件名，指向 DexTypeStringId 列表的索引 */</span><br><span class="line">    u4  annotationsOff;     /* 注解，指向 DexAnnotationsDirectoryItem 结构 */</span><br><span class="line">    u4  classDataOff;       /* 指向 DexClassData 结构的偏移 */</span><br><span class="line">    u4  staticValuesOff;    /* 指向 DexEncodedArray 结构的偏移 */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>DexClassDef 比上面的结构体更加复杂</p>
+<ul>
+<li>
+<p>classdex：索引值，表示类的类型</p>
+</li>
+<li>
+<p>accessFlags：类的访问标志，是以 ACC_ 开头的一个枚举值</p>
+<p><img src="image-20221209135531490.png" alt="image-20221209135531490"></p>
+</li>
+<li>
+<p>superclassIdx：父类类型索引值</p>
+</li>
+<li>
+<p>interfacesOff：如果类中有接口的声明或实现，该字段会指向一个 DexTypeList 结构，否则该值为 0</p>
+</li>
+<li>
+<p>sourceFileIdx：字符串索引值，表示类所在的源文件的名称</p>
+</li>
+<li>
+<p>annotationsOff：指向注解目录结构，根据类型不同会有注解类、注解方法、注解字段与注解参数。如果类中没有注解，则该值为0</p>
+</li>
+<li>
+<p>classDataOff：指向 DexclassData 结构，是类的数据部分</p>
+</li>
+<li>
+<p>StaticValuesOff：指向 DexEncodedArray 结构，记录类中的静态数据</p>
+</li>
+</ul>
+<p>其中的 DexClassData 结构声明在 DexClass.h 文件中，声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">struct DexClassData </span><br><span class="line">&#123;</span><br><span class="line">    DexClassDataHeader header;			// 指定字段与方法的个数</span><br><span class="line">    DexField*          staticFields;	//  静态字段，DexField 结构</span><br><span class="line">    DexField*          instanceFields;	//  实例字段，DexField 结构</span><br><span class="line">    DexMethod*         directMethods;   //  直接方法，DexMethod 结构</span><br><span class="line">    DexMethod*         virtualMethods;  //  虚方法，DexMethod 结构</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">其中的 DexClassDataHeader 结构记录了当前类中字段与方法的数目，在 DexClass.h 文件中声明，声明如下 </span><br><span class="line">struct DexClassDataHeader </span><br><span class="line">&#123;</span><br><span class="line">    u4 staticFieldsSize;	// 静态字段个数</span><br><span class="line">    u4 instanceFieldsSize;  // 实例字段个数</span><br><span class="line">    u4 directMethodsSize;   // 直接方法个数 </span><br><span class="line">    u4 virtualMethodsSize;  // 虚方法个数</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Ps：在 DexClass.h 文件中所有结构的 u4 类型都是 uleb128 类型，这是一个可变长度类型，由于大多数情况下这些字段的值可以用小于2个字节的空间来表示，所以采用 uleb128 会节省更多的储存空间</span><br></pre></td></tr></table></figure>
+<p>DexField 结构描述了字段的类型与访问标志，它的结构声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">struct DexField &#123;</span><br><span class="line">    u4 fieldIdx;    /* 指向 DexFieldId 的索引 */</span><br><span class="line">    u4 accessFlags;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>DexMethod 结构描述方法的原型、名称、访问标志以及代码数据块，它的结构声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">struct DexMethod </span><br><span class="line">&#123;</span><br><span class="line">    u4 methodIdx;    /* 指向 DexMethodId 的索引 */</span><br><span class="line">    u4 accessFlags;  /* 访问标志 */</span><br><span class="line">    u4 codeOff;      /* 指向 DexCode 结构的偏移 */</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">其中的 codeOff 字段指向了一个 DexCode 结构体，DexCode 结构体描述了方法更详细的信息以及方法中指令的内容，该结构体声明如下</span><br><span class="line">struct DexCode &#123;</span><br><span class="line">    u2  registersSize;  // 使用的寄存器个数</span><br><span class="line">    u2  insSize;        // 参数个数</span><br><span class="line">    u2  outsSize;       // 调用其他方法时使用的寄存器个数</span><br><span class="line">    u2  triesSize;      // try/catch 语句个数</span><br><span class="line">    u4  debugInfoOff;   // 指向调试信息的偏移</span><br><span class="line">    u4  insnsSize;      // 指令集的个数，以2字节为单位</span><br><span class="line">    u2  insns[1];       // 指令集</span><br><span class="line">    /* 2字节空间用于结构体对齐 */  </span><br><span class="line">    /* try_item[triesSize] DexTry 结构 */</span><br><span class="line">    /* Try/Catch 中 handler 的个数 */</span><br><span class="line">    /* catch_handler_item[handlersSize]，DexCatchHandler结构 */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>终于到了存放指令集的结构了，我们从上到下来好好分析一下</p>
+<p>图片中的红色方框上下内容一一对应，按照结构体中各个字段的说明，理解其含义难度不大，在这里就不展开细说</p>
+<p><img src="image-20221209163341433.png" alt="image-20221209163341433"></p>
+<p>关注最后的 class_data_off 字段，它指向了一个 DexClassData 结构体，我们根据其偏移量 0x28E 找到结构体中的内容</p>
+<p><img src="image-20221209163716702.png" alt="image-20221209163716702"></p>
+<p>前面 4 个字段为结构体 DexClassDataHeader 中的内容，4个 uleb128 值结果分别为 0、0、2、1，表示该类不含字段，有2个直接方法与1个虚方法</p>
+<p>直接对 DexMethod 进行解析</p>
+<p><img src="image-20221209164352778.png" alt="image-20221209164352778"></p>
+<p>第一个字段的为 DexMethodId 索引，值为 0x0，得到 “<init>” 方法；第二个字段为访问标志，类型为 ACC_PUBLIC|ACC_CONSTRUCTOR；第三个字段为 DexCode 的偏移，值为0x150</p>
+<p>从 0x150 处开始解析 DexCode 结构体</p>
+<p><img src="image-20221209164949003.png" alt="image-20221209164949003"></p>
+<p>前面三个字段得出的结果为：寄存器个数、参数、内部函数使用寄存器的个数都为1个。insns_size 的字段值为 4，说明方法中有4条指令，指令为 “7010 0400 0000 0e00”。之后按照 dalvik 指令分析的方式去分析这些指令即可</p>
+<ul>
+<li>
+<p>根据 70 查找获得 opcode 为 invoke-direct</p>
+</li>
+<li>
+<p>指令格式标识为 35c</p>
+</li>
+<li>
+<p>查找到 35c 的指令格式为 “A|G|op BBBB F|E|D|C”</p>
+<p>且有 7 种表示方式</p>
+<blockquote>
+<p>[<code>A=5</code>] <code>op</code> {vC, vD, vE, vF, vG}, meth@BBBB<br>
+<em>[<code>A=5</code>] <code>op</code></em> {vC, vD, vE, vF, vG}, site@BBBB<br>
+<em>[<code>A=5</code>] <code>op</code></em> {vC, vD, vE, vF, vG}, type@BBBB<br>
+<em>[<code>A=4</code>] <code>op</code></em> {vC, vD, vE, vF}, <em><code>kind</code></em>@BBBB<br>
+<em>[<code>A=3</code>] <code>op</code></em> {vC, vD, vE}, <em><code>kind</code></em>@BBBB<br>
+<em>[<code>A=2</code>] <code>op</code></em> {vC, vD}, <em><code>kind</code></em>@BBBB<br>
+<em>[<code>A=1</code>] <code>op</code></em> {vC}, <em><code>kind</code></em>@BBBB<br>
+<em>[<code>A=0</code>] <code>op</code></em> {}, <em><code>kind</code></em>@BBBB</p>
+</blockquote>
+<p>根据指令 7010 0400 0000 得到 A、G 的值分别为 1、0；BBBB 为 0x4，F=E=D=C=0。按照格式 <em>[<code>A=1</code>] <code>op</code></em> {vC}, <em><code>kind</code></em>@BBBB 去解析，由于 BBBB 为 kind@ 类型，它是指向 DexMethod 列表的索引值，通过其索引找到方法名 “<init>”。指令 0e00 直接查表得到 return-void，最后得到结果如下的指令代码</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">7010 0400 0000 invoke-direct &#123;0&#125;, Ljava/lang/Object; .&lt;init&gt;: ()v</span><br><span class="line">0e00 return-void</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="第五章——静态分析Android程序">第五章——静态分析Android程序</h2>
+<p>一直都搞不清楚各种类型文件的关系，大致理了一下也不知道对不对</p>
+<ul>
+<li>apk文件就相当于是压缩包，里面有在 dalvik 虚拟机中运行的 dex 文件以及各种资源和运行 apk 时所需的库</li>
+<li>对 apk 文件进行反编译就相当于将 dex 文件转化为具有进一步可读性的 smali 汇编</li>
+<li>通过工具 dex2jar 可以直接将 .dex 文件转化为 .jar 文件，.jar 文件就是反编译后的 java 源码文件。</li>
+<li>工具 jd-gui 能够查看反编译后的 Java 源码文件，简单来说就是能将 .jar 文件变成 java 代码展现出来</li>
+</ul>
+<p>之前一直在纠结这个 apktool 反编译之后的文件和工具反编译之后的文件之间有什么关系，那现在看来就是没啥大关系</p>
+<h3 id="smali代码阅读">smali代码阅读</h3>
+<h4 id="循环语句">循环语句</h4>
+<h4 id="switch-分支语句">switch 分支语句</h4>
+<p>看 switch 分支语句推理出所对应的 java 代码没有什么太大的难度，重点来讲讲如何从 dex 文件中分析得出 switch 语句中的 case 语句块的位置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">.method private packedSwitch(I)Ljava/lang/String;</span><br><span class="line">    .locals 1</span><br><span class="line">    .parameter &quot;i&quot;</span><br><span class="line"></span><br><span class="line">    .prologue</span><br><span class="line">    .line 21</span><br><span class="line">    const/4 v0, 0x0</span><br><span class="line"></span><br><span class="line">    .line 22</span><br><span class="line">    .local v0, str:Ljava/lang/String;</span><br><span class="line">    packed-switch p1, :pswitch_data_0	# packed-switch 分支，pswitch_data_0 为 case 区域</span><br><span class="line"></span><br><span class="line">    .line 36						# default 分支</span><br><span class="line">    const-string v0, &quot;she is a person&quot;</span><br><span class="line"></span><br><span class="line">    .line 39</span><br><span class="line">    :goto_0</span><br><span class="line">    return-object v0</span><br><span class="line"></span><br><span class="line">    .line 24</span><br><span class="line">    :pswitch_0</span><br><span class="line">    const-string v0, &quot;she is a baby&quot;</span><br><span class="line"></span><br><span class="line">    .line 25</span><br><span class="line">    goto :goto_0</span><br><span class="line"></span><br><span class="line">    .line 27</span><br><span class="line">    :pswitch_1</span><br><span class="line">    const-string v0, &quot;she is a girl&quot;</span><br><span class="line"></span><br><span class="line">    .line 28</span><br><span class="line">    goto :goto_0</span><br><span class="line"></span><br><span class="line">    .line 30</span><br><span class="line">    :pswitch_2</span><br><span class="line">    const-string v0, &quot;she is a woman&quot;</span><br><span class="line"></span><br><span class="line">    .line 31</span><br><span class="line">    goto :goto_0</span><br><span class="line"></span><br><span class="line">    .line 33</span><br><span class="line">    :pswitch_3</span><br><span class="line">    const-string v0, &quot;she is an obasan&quot;</span><br><span class="line"></span><br><span class="line">    .line 34</span><br><span class="line">    goto :goto_0</span><br><span class="line"></span><br><span class="line">    .line 22</span><br><span class="line">    nop</span><br><span class="line"></span><br><span class="line">    :pswitch_data_0</span><br><span class="line">    .packed-switch 0x0	# case 区域，数值起始值为 0</span><br><span class="line">        :pswitch_0	# pswitch_ 后的数值为 case 分支需要判断的值</span><br><span class="line">        :pswitch_1</span><br><span class="line">        :pswitch_2</span><br><span class="line">        :pswitch_3</span><br><span class="line">    .end packed-switch</span><br><span class="line">.end method</span><br></pre></td></tr></table></figure>
+<p>指令 packed_switch 表示 switch 分支的开始，该指令对应的机器码为 <code>2B 02 13 00 00 00</code>，具体分析如下</p>
+<ul>
+<li>2B 为 opcode 代表指令 packed_switch，该指令在 Dalvik 中的格式为：packed_switch vAA,+BBBBBBBB。其中 “+BBBBBBBB” 为 packed-switch-payload 格式的偏移</li>
+<li>02 为 VAA 即寄存器 p1</li>
+<li>00000013 为偏移量 0x13</li>
+</ul>
+<p>在 ida 中找到 packed_switch 语句的偏移地址：0x2cb1a。计算得出结构体 packed-switch-payload 的偏移地址：0x2cb1a+2*0x13=0x2cb40</p>
+<p><img src="image-20230119153550211.png" alt="image-20230119153550211"></p>
+<p>找到 packed-switch-payload 所对应的内容</p>
+<p><img src="image-20230119154039185.png" alt="image-20230119154039185"></p>
+<p>该结构体的格式如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct packed-switch-payload</span><br><span class="line">&#123;</span><br><span class="line"> ushort ident; //值固定为0x100</span><br><span class="line"> ushort size; //case数目</span><br><span class="line"> int first_key; //初始case的值</span><br><span class="line"> int[] targets; //每个case相对switch指令处的偏移</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>也就是说</p>
+<p><img src="image-20230119154314939.png" alt="image-20230119154314939"></p>
+<p>那么 6，9，0xc，0xf 都代表着4个 case 对于语句 packed_switch 的偏移量，再根据 packed_switch 语句的地址 0x2cb1a 就可以计算得出 case0-case3 每一块的偏移地址</p>
+<p>switch 分支除了 packed_switch 还有 sparse_switch，它们之间的区别就在于 packed_switch 的 case 判断值是顺序递增的，而 sparse_switch 的 case 判断值是由<code>case 值-&gt; case 标号</code> 的形式给出的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:sswitch_data_0</span><br><span class="line">    .sparse-switch</span><br><span class="line">        0x5 -&gt; :sswitch_0	#case 5</span><br><span class="line">        0xf -&gt; :sswitch_1	#case 15(0xf)</span><br><span class="line">        0x23 -&gt; :sswitch_2	#case 35(0x23)</span><br><span class="line">        0x41 -&gt; :sswitch_3	#case 65(0x41)</span><br></pre></td></tr></table></figure>
+<p>其他分析过程都和 packed_switch 大同小异，由于 case 判断值不再是顺序递增，因此 spare-switch-payload 结构和上面的 packed 也有所区别</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">struct sparse-switch-payload</span><br><span class="line">&#123;</span><br><span class="line"> ushort ident; //值固定为0x0200</span><br><span class="line"> ushort size; //case数目</span><br><span class="line"> int[] keys; //每个case的值，顺序从低到高</span><br><span class="line"> int[] targets; //每个case相对switch指令处的偏移</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>也就是说</p>
+<p><img src="image-20230119160309436.png" alt="image-20230119160309436"></p>
+<h4 id="try-catch-语句">try/catch 语句</h4>
+<p>不同于 switch 语句，try/catch 语句没有对应的 dalvik 指令，它是通过相关的数据结构来保存相关信息，在 dex 文件格式中有 Dexcode 数据结构，声明如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">struct DexCode &#123;</span><br><span class="line">    u2  registersSize;  // 使用的寄存器个数</span><br><span class="line">    u2  insSize;        // 参数个数</span><br><span class="line">    u2  outsSize;       // 调用其他方法时使用的寄存器个数</span><br><span class="line">    u2  triesSize;      // try/catch 语句个数</span><br><span class="line">    u4  debugInfoOff;   // 指向调试信息的偏移</span><br><span class="line">    u4  insnsSize;      // 指令集的个数，以2字节为单位</span><br><span class="line">    u2  insns[1];       // 指令集</span><br><span class="line">    /* 2字节空间用于结构体对齐 */  </span><br><span class="line">    /* try_item[triesSize] DexTry 结构 */</span><br><span class="line">    /* Try/Catch 中 handler 的个数 */</span><br><span class="line">    /* catch_handler_item[handlersSize]，DexCatchHandler结构 */</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>通过里面的信息可以得到 try/catch 语句中每个 try 语句块的范围</p>
+<p>如果是嵌套式的 try/catch 语句对应的 smali 语句会多产生虚拟的 try/catch，具体例子如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">private void a()</span><br><span class="line">&#123;</span><br><span class="line">	try</span><br><span class="line">	&#123;</span><br><span class="line">		...</span><br><span class="line">		try</span><br><span class="line">		&#123;</span><br><span class="line">		...</span><br><span class="line">		&#125;catch(xxx)&#123;</span><br><span class="line">		...</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;catch(YYY)&#123;</span><br><span class="line">	...</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当在执行 catch(xxx) 中的代码时，如果也出现了异常，那么这个异常就会向外抛出并判断是不是 YYY 异常。smali 汇编中多出来的那个 try/catch 结构就用于处理这种情况。</p>
+<h3 id="idaPro-静态分析">idaPro 静态分析</h3>
+<p>idapro 支持对 dalvik 指令集的反汇编，对于 Android 程序来对，我们先从 apk 文件中解压得到 classes.dex 文件，然后使用 ida 对该文件进行分析</p>
+<p>导入 dex.idc 文件，里面有大部分 dex文件的数据结构，使用 ALT+Q 修改结构体类型，CTRL+S 段间跳转，可以根据 dex 文件结构和 dex.idc 文件中的数据结构整理 .dex 文件</p>
+<p>dex 文件的所有方法都可以通过 Exports 选项卡查看，方法的命名规则如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">类名.方法名@方法声明</span><br></pre></td></tr></table></figure>
+<p>例子如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">invoke-super                    &#123;this, c&#125;, &lt;ref ResourceCursorAdapter.swapCursor(ref) imp. @ _def_ResourceCursorAdapter_swapCursor@LL&gt;</span><br></pre></td></tr></table></figure>
+<p>其中的前半部分 <code>invoke-super         &#123;this, c&#125;, &lt;ref ResourceCursorAdapter.swapCursor(ref)</code></p>
+<p>前面的 ref 为 swapCursor( ) 方法的返回类型，后面的 ref 为该方法的参数类型</p>
+<p>后半部分 <code>imp. @ _def_ResourceCursorAdapter_swapCursor@LL&gt;</code> 是 ida 的自动识别，imp 表明该方法为 Android SDK 中的 API，@后面的部分为 API 的声明，类名于方法名之间使用下划线做分隔</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>GhDemi
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://ghdemi.github.io/2022/12/27/Android%E6%9D%82%E8%AE%B0/">https://ghdemi.github.io/2022/12/27/Android%E6%9D%82%E8%AE%B0/</a>
+        </p>
+        
+            <strong>
+                <p>文章默认使用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">CC BY-NC-SA 4.0</a> 协议进行许可，使用时请注意遵守协议。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2023-04-02</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E5%9F%BA%E7%A1%80/" class="post-tags__link button"># 基础</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2022/11/05/Python%E9%80%86%E5%90%91/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            Next Post
+                        </div>
+                        <div class="nav__title">
+                            Python逆向
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+
+
+</main>
+
+            <footer class="footer">
+     
+    <a href="#" class="button" id="b2t" aria-label="回到顶部" title="回到顶部">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="32" height="32">
+            <path d="M233.376 722.752L278.624 768 512 534.624 745.376 768l45.248-45.248L512 444.128zM192 352h640V288H192z" fill="currentColor"></path>
+        </svg>
+    </a>
+
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2022&nbsp;-&nbsp;2023 <a href="/">早点睡zZZ</a>
+        </p>
+    
+    
+    <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p>
+</footer>
+
+        </div>
+         
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+
+    
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.css">
+
+    
+<script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.4.1/dist/jquery.fancybox.min.js"></script>
+
+    <script>
+        let lazyloadT = Boolean('false'),
+            auto_fancybox = Boolean('true')
+        if (auto_fancybox) {
+            $(".post__content").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        } else {
+            $(".post__content").find("fancybox").find('img').each(function () {
+                var element = document.createElement("a");
+                $(element).attr("data-fancybox", "gallery");
+                $(element).attr("href", $(this).attr("src"));
+                if (lazyloadT) {
+                    $(element).attr("href", $(this).attr("data-srcset"));
+                }
+                $(this).wrap(element);
+            });
+        }
+    </script>
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    </body>
+</html>
